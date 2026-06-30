@@ -85,6 +85,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
   const [showAddBizModal, setShowAddBizModal] = useState(false);
   const [showAddTxModal, setShowAddTxModal] = useState(false);
   const [showAddGoalModal, setShowAddGoalModal] = useState(false);
+  const [activeGoalInput, setActiveGoalInput] = useState<string | null>(null);
 
   // Form states
   const [bizForm, setBizForm] = useState({ name: '', category: '', description: '', phone: '', email: '' });
@@ -439,7 +440,9 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
         <div className="space-y-4">
           {/* User Profile */}
           <div className="flex items-center gap-2 p-1.5 bg-accent/40 rounded-xl">
-            <img src={profile.avatar_url} alt="Profile" className="w-9 h-9 rounded-full object-cover border border-border" />
+            <div className="w-9 h-9 bg-accent border border-border rounded-full flex items-center justify-center text-slate-400 shrink-0">
+              <User className="w-5 h-5" />
+            </div>
             <div className="truncate max-w-[120px]">
               <div className="text-xs font-bold">{profile.name}</div>
               <div className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
@@ -866,7 +869,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-slate-400 mb-2">Amount (USD)</label>
+                            <label className="block text-xs font-medium text-slate-400 mb-2">Amount ({profile.currency})</label>
                             <input
                               type="number"
                               required
@@ -995,18 +998,53 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                           </div>
 
                           {goal.status !== 'achieved' && (
-                            <button
-                              onClick={() => {
-                                const amt = prompt('Enter contribution amount ($):');
-                                if (amt) {
-                                  const cents = Math.round(parseFloat(amt) * 100);
-                                  contributeToGoal(goal.id, cents);
-                                }
-                              }}
-                              className="w-full py-2 bg-accent hover:bg-accent-hover text-foreground text-xs font-semibold rounded-lg transition-colors"
-                            >
-                              Log Contribution
-                            </button>
+                            activeGoalInput === goal.id ? (
+                              <div className="space-y-2">
+                                <div className="flex gap-2">
+                                  <div className="relative flex-1">
+                                    <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 font-medium">
+                                      {profile.currency === 'INR' ? '₹' : profile.currency === 'EUR' ? '€' : profile.currency === 'GBP' ? '£' : '$'}
+                                    </span>
+                                    <input
+                                      type="number"
+                                      step="0.01"
+                                      min="0.01"
+                                      placeholder="0.00"
+                                      autoFocus
+                                      id={`input-goal-${goal.id}`}
+                                      className="w-full pl-6 pr-2 py-1.5 bg-accent border border-border rounded-lg text-xs focus:outline-none focus:border-primary text-slate-800 dark:text-slate-100"
+                                    />
+                                  </div>
+                                  <button
+                                    onClick={() => {
+                                      const inputEl = document.getElementById(`input-goal-${goal.id}`) as HTMLInputElement;
+                                      const amt = inputEl?.value;
+                                      if (amt && parseFloat(amt) > 0) {
+                                        const cents = Math.round(parseFloat(amt) * 100);
+                                        contributeToGoal(goal.id, cents);
+                                        setActiveGoalInput(null);
+                                      }
+                                    }}
+                                    className="px-3 py-1.5 bg-success hover:bg-success/90 text-white text-xs font-semibold rounded-lg transition-colors whitespace-nowrap shadow-glow"
+                                  >
+                                    Add
+                                  </button>
+                                  <button
+                                    onClick={() => setActiveGoalInput(null)}
+                                    className="px-2 py-1.5 bg-accent hover:bg-accent-hover text-slate-500 hover:text-foreground text-xs font-semibold rounded-lg border border-border transition-colors"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </div>
+                            ) : (
+                              <button
+                                onClick={() => setActiveGoalInput(goal.id)}
+                                className="w-full py-2 bg-success hover:bg-success/90 text-white text-xs font-semibold rounded-lg transition-colors shadow-glow"
+                              >
+                                Today's contribution
+                              </button>
+                            )
                           )}
                         </div>
                       );
@@ -1420,7 +1458,9 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Amount ($)</label>
+                <label className="block text-xs font-medium text-slate-400 mb-1.5">
+                  Amount ({profile.currency === 'INR' ? '₹' : profile.currency === 'EUR' ? '€' : profile.currency === 'GBP' ? '£' : '$'})
+                </label>
                 <input
                   type="number"
                   step="0.01"
@@ -1512,7 +1552,9 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Target Amount ($)</label>
+                <label className="block text-xs font-medium text-slate-400 mb-1.5">
+                  Target Amount ({profile.currency === 'INR' ? '₹' : profile.currency === 'EUR' ? '€' : profile.currency === 'GBP' ? '£' : '$'})
+                </label>
                 <input
                   type="number"
                   required

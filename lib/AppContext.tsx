@@ -137,9 +137,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const addGoal = (name: string, targetCents: number, deadline: string) => {
+    const targetInUSD = convertCurrency(targetCents, profile.currency, 'USD');
     MockDB.addGoal({
       name,
-      target_amount_cents: targetCents,
+      target_amount_cents: targetInUSD,
       current_amount_cents: 0,
       deadline
     });
@@ -149,10 +150,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const contributeToGoal = (id: string, amountCents: number) => {
     const goal = savingsGoals.find(g => g.id === id);
     if (!goal) return;
-    const newAmt = goal.current_amount_cents + amountCents;
+    const amountInUSD = convertCurrency(amountCents, profile.currency, 'USD');
+    const newAmt = goal.current_amount_cents + amountInUSD;
     MockDB.updateGoal(id, { current_amount_cents: newAmt });
     
-    // Log expense under Savings
+    // Log expense under Savings in profile currency
     MockDB.addTransaction({
       business_id: null,
       type: 'expense',
@@ -163,7 +165,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
 
     if (newAmt >= goal.target_amount_cents) {
-      MockDB.addNotification('Savings Goal Achieved! 🏆', `Congratulations! You hit your target of ${formatCurrency(goal.target_amount_cents, profile.currency)} for "${goal.name}".`, 'goal');
+      const formattedTarget = formatCurrency(convertCurrency(goal.target_amount_cents, 'USD', profile.currency), profile.currency);
+      MockDB.addNotification('Savings Goal Achieved! 🏆', `Congratulations! You hit your target of ${formattedTarget} for "${goal.name}".`, 'goal');
     }
     
     refreshData();

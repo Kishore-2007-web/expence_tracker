@@ -192,77 +192,15 @@ const DEFAULT_PROFILE: Profile = {
 };
 
 // Preset Businesses
-const INITIAL_BUSINESSES: Business[] = [
-  {
-    id: 'biz-1',
-    user_id: 'user-default-uuid',
-    name: 'Aether Software Studio',
-    category: 'Technology & SaaS',
-    description: 'Bespoke web development and UI/UX consulting firm.',
-    address: '42 Wall Street, Floor 18, New York, NY',
-    phone: '+1 (212) 555-0150',
-    email: 'hello@aetherstudio.com',
-    currency: 'USD',
-    timezone: 'America/New_York',
-    status: 'active',
-    created_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    id: 'biz-2',
-    user_id: 'user-default-uuid',
-    name: 'Vanguard Cafe',
-    category: 'Food & Beverage',
-    description: 'Specialty coffee roastery and community workspace.',
-    address: '89 Main St, Austin, TX',
-    phone: '+1 (512) 555-3920',
-    email: 'info@vanguardcafe.co',
-    currency: 'USD',
-    timezone: 'America/Chicago',
-    status: 'active',
-    created_at: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString()
-  }
-];
+const INITIAL_BUSINESSES: Business[] = [];
 
 // Preset Transactions (past 14 days)
 const generatePresetTransactions = (): Transaction[] => {
-  const list: Transaction[] = [];
-  const now = new Date();
-  
-  // Personal transactions
-  list.push(
-    { id: 'tx-p1', user_id: 'user-default-uuid', business_id: null, type: 'income', category_name: 'Salary', amount_cents: 650000, currency: 'USD', description: 'Monthly Tech Lead Salary', transaction_date: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: 'tx-p2', user_id: 'user-default-uuid', business_id: null, type: 'expense', category_name: 'Rent', amount_cents: 180000, currency: 'USD', description: 'Apartment Rental', transaction_date: new Date(now.getTime() - 12 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: 'tx-p3', user_id: 'user-default-uuid', business_id: null, type: 'expense', category_name: 'Shopping', amount_cents: 45000, currency: 'USD', description: 'Ergonomic Desk Chair', transaction_date: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: 'tx-p4', user_id: 'user-default-uuid', business_id: null, type: 'expense', category_name: 'Food', amount_cents: 7850, currency: 'USD', description: 'Whole Foods Grocery', transaction_date: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: 'tx-p5', user_id: 'user-default-uuid', business_id: null, type: 'income', category_name: 'Freelancing', amount_cents: 120000, currency: 'USD', description: 'Landing page design consulting', transaction_date: new Date(now.getTime() - 8 * 24 * 60 * 60 * 1000).toISOString() }
-  );
-
-  // Business 1 Transactions (Aether Software Studio)
-  list.push(
-    { id: 'tx-b1-1', user_id: 'user-default-uuid', business_id: 'biz-1', type: 'income', category_name: 'Services', amount_cents: 850000, currency: 'USD', description: 'Q2 Web Portal Retainer', transaction_date: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: 'tx-b1-2', user_id: 'user-default-uuid', business_id: 'biz-1', type: 'expense', category_name: 'Rent', amount_cents: 250000, currency: 'USD', description: 'WeWork Office Space', transaction_date: new Date(now.getTime() - 10 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: 'tx-b1-3', user_id: 'user-default-uuid', business_id: 'biz-1', type: 'expense', category_name: 'Salary', amount_cents: 400000, currency: 'USD', description: 'Contractor Dev Payroll', transaction_date: new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: 'tx-b1-4', user_id: 'user-default-uuid', business_id: 'biz-1', type: 'income', category_name: 'Sales', amount_cents: 480000, currency: 'USD', description: 'Software license renewals', transaction_date: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: 'tx-b1-5', user_id: 'user-default-uuid', business_id: 'biz-1', type: 'expense', category_name: 'Marketing', amount_cents: 80000, currency: 'USD', description: 'Google Search Ads campaign', transaction_date: new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000).toISOString() }
-  );
-
-  // Business 2 Transactions (Vanguard Cafe)
-  list.push(
-    { id: 'tx-b2-1', user_id: 'user-default-uuid', business_id: 'biz-2', type: 'income', category_name: 'Sales', amount_cents: 345000, currency: 'USD', description: 'Weekly Counter Sales & Beans', transaction_date: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: 'tx-b2-2', user_id: 'user-default-uuid', business_id: 'biz-2', type: 'expense', category_name: 'Inventory', amount_cents: 120000, currency: 'USD', description: 'Ethiopian & Colombian coffee bags', transaction_date: new Date(now.getTime() - 9 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: 'tx-b2-3', user_id: 'user-default-uuid', business_id: 'biz-2', type: 'expense', category_name: 'Utilities', amount_cents: 45000, currency: 'USD', description: 'Electric & Water billing', transaction_date: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: 'tx-b2-4', user_id: 'user-default-uuid', business_id: 'biz-2', type: 'income', category_name: 'Sales', amount_cents: 290000, currency: 'USD', description: 'Catering event at Austin Tech Lab', transaction_date: new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000).toISOString() }
-  );
-
-  return list;
+  return [];
 };
 
 // Preset Savings Goals
-const INITIAL_SAVINGS_GOALS: SavingsGoal[] = [
-  { id: 'goal-1', user_id: 'user-default-uuid', name: 'Emergency Fund', target_amount_cents: 2000000, current_amount_cents: 1550000, deadline: '2026-12-31T00:00:00.000Z', status: 'in_progress', created_at: new Date().toISOString() },
-  { id: 'goal-2', user_id: 'user-default-uuid', name: 'MacBook Pro Setup', target_amount_cents: 350000, current_amount_cents: 350000, deadline: '2026-06-15T00:00:00.000Z', status: 'achieved', created_at: new Date().toISOString() },
-  { id: 'goal-3', user_id: 'user-default-uuid', name: 'Eurotrip Summer 2027', target_amount_cents: 800000, current_amount_cents: 120000, deadline: '2027-07-01T00:00:00.000Z', status: 'in_progress', created_at: new Date().toISOString() }
-];
+const INITIAL_SAVINGS_GOALS: SavingsGoal[] = [];
 
 // Preset Subscription
 const DEFAULT_SUBSCRIPTION: Subscription = {
@@ -298,7 +236,7 @@ class MockDBClass {
   private load() {
     if (typeof window === 'undefined') return;
     try {
-      const stored = localStorage.getItem('moneyflow_mock_db');
+      const stored = localStorage.getItem('moneyflow_mock_db_v2');
       if (stored) {
         this.data = JSON.parse(stored);
       } else {
@@ -315,7 +253,7 @@ class MockDBClass {
   save() {
     if (typeof window === 'undefined') return;
     try {
-      localStorage.setItem('moneyflow_mock_db', JSON.stringify(this.data));
+      localStorage.setItem('moneyflow_mock_db_v2', JSON.stringify(this.data));
     } catch (e) {
       console.warn("Could not save to localStorage", e);
     }

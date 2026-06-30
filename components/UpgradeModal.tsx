@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { useApp, formatCurrency } from '@/lib/AppContext';
+import { useApp, formatCurrency, convertCurrency } from '@/lib/AppContext';
 import { PLANS } from '@/lib/mock-db';
 import { PaymentsManager } from '@/lib/payments';
 import { X, Check, CreditCard, Sparkles, Receipt } from 'lucide-react';
@@ -155,7 +155,7 @@ export const UpgradeModal: React.FC = () => {
               <div className="flex justify-between items-baseline mb-2">
                 <span className="text-sm font-medium text-slate-500">Plan Total:</span>
                 <span className="text-2xl font-bold">
-                  {formatCurrency(finalPrice, profile.currency)}
+                  {formatCurrency(convertCurrency(finalPrice, 'USD', profile.currency), profile.currency)}
                   <span className="text-xs font-normal text-slate-400">/{billingCycle === 'monthly' ? 'mo' : 'yr'}</span>
                 </span>
               </div>
@@ -163,7 +163,7 @@ export const UpgradeModal: React.FC = () => {
               {couponApplied && (
                 <div className="flex justify-between text-xs text-success font-medium">
                   <span>Discount Applied ({couponApplied.code}):</span>
-                  <span>-{formatCurrency(basePrice - finalPrice, profile.currency)}</span>
+                  <span>-{formatCurrency(convertCurrency(basePrice - finalPrice, 'USD', profile.currency), profile.currency)}</span>
                 </div>
               )}
             </div>
