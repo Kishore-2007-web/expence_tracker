@@ -570,6 +570,50 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     </div>
                   </div>
 
+                  {/* First Time Entry / Quick Start Guide */}
+                  {transactions.length === 0 && (
+                    <div className="p-6 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 rounded-2xl shadow-premium relative overflow-hidden">
+                      <div className="absolute right-0 top-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+                      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Sparkles className="w-5 h-5 text-primary animate-pulse" />
+                            <h3 className="text-base font-bold text-slate-900 dark:text-white">Welcome to MoneyFlow Pro!</h3>
+                          </div>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
+                            It looks like you're setting up your workspace for the first time. Follow these simple steps to start tracking your finances and personal wealth:
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap gap-3">
+                          <button
+                            onClick={() => setShowAddTxModal(true)}
+                            className="px-4 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl transition-all shadow-glow flex items-center gap-1.5"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                            <span>1. Add First Transaction</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              setCurrentBusiness(null);
+                              setActiveTab('savings');
+                            }}
+                            className="px-4 py-2 bg-success hover:bg-success/90 text-white text-xs font-bold rounded-xl transition-all shadow-glow flex items-center gap-1.5"
+                          >
+                            <PiggyBank className="w-3.5 h-3.5" />
+                            <span>2. Create Savings Goal</span>
+                          </button>
+                          <button
+                            onClick={() => setShowAddBizModal(true)}
+                            className="px-4 py-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white text-xs font-bold rounded-xl transition-all flex items-center gap-1.5"
+                          >
+                            <Briefcase className="w-3.5 h-3.5" />
+                            <span>3. Register a Business</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Recharts Graphical Visuals */}
                   <div className="grid lg:grid-cols-3 gap-6">
                     <div className="p-6 bg-card border border-border rounded-2xl shadow-premium lg:col-span-2">
