@@ -151,7 +151,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#090d16',
+    backgroundColor: '#000000',
   },
   scrollContent: {
     padding: 20,
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   input: {
-    backgroundColor: '#090d16',
+    backgroundColor: '#000000',
     borderRadius: 8,
     color: '#fff',
     fontSize: 13,
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
   },
   progressContainer: {
     height: 6,
-    backgroundColor: '#090d16',
+    backgroundColor: '#000000',
     borderRadius: 3,
     overflow: 'hidden',
     marginTop: 4,

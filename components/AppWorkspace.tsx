@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { useApp, formatCurrency, convertCurrency } from '@/lib/AppContext';
+import { useApp, formatCurrency, convertCurrency, getCurrencySymbol, EXCHANGE_RATES } from '@/lib/AppContext';
 import { AdBanner } from './AdBanner';
 import {
   LayoutDashboard,
@@ -1308,10 +1308,11 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             onChange={e => setProfileForm({ ...profileForm, currency: e.target.value })}
                             className="w-full bg-accent border border-border rounded-xl px-3 py-2.5 text-xs focus:outline-none"
                           >
-                            <option value="USD">USD ($)</option>
-                            <option value="EUR">EUR (&euro;)</option>
-                            <option value="INR">INR (&#8377;)</option>
-                            <option value="GBP">GBP (&pound;)</option>
+                            {Object.keys(EXCHANGE_RATES).sort().map(cur => (
+                              <option key={cur} value={cur}>
+                                {cur} ({getCurrencySymbol(cur)})
+                              </option>
+                            ))}
                           </select>
                         </div>
                         <div>
@@ -1503,7 +1504,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
               <div>
                 <label className="block text-xs font-medium text-slate-400 mb-1.5">
-                  Amount ({profile.currency === 'INR' ? '₹' : profile.currency === 'EUR' ? '€' : profile.currency === 'GBP' ? '£' : '$'})
+                  Amount ({getCurrencySymbol(profile.currency)})
                 </label>
                 <input
                   type="number"
@@ -1597,7 +1598,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
               </div>
               <div>
                 <label className="block text-xs font-medium text-slate-400 mb-1.5">
-                  Target Amount ({profile.currency === 'INR' ? '₹' : profile.currency === 'EUR' ? '€' : profile.currency === 'GBP' ? '£' : '$'})
+                  Target Amount ({getCurrencySymbol(profile.currency)})
                 </label>
                 <input
                   type="number"
