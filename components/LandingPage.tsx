@@ -35,7 +35,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
             <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center text-white font-black text-xl shadow-glow">
               M
             </div>
-            <span className="font-bold text-lg tracking-tight">MoneyFlow <span className="text-primary font-black">Pro</span></span>
+            <span className="font-bold text-lg tracking-tight">My Pocket <span className="text-primary font-black">Tracker</span></span>
           </div>
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -65,7 +65,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
 
       {/* Hero Section */}
       <section className="relative pt-20 pb-24 md:pt-32 md:pb-36 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.06),transparent_45%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.06),transparent_45%)]"></div>
         <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -94,7 +94,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
               onClick={onEnterApp}
               className="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-xl flex items-center justify-center gap-2 shadow-glow hover:shadow-glow/15 hover:-translate-y-0.5 transition-all text-base"
             >
-              <span>Launch MoneyFlow App</span>
+              <span>Launch My Pocket Tracker</span>
               <ArrowRight className="w-4 h-4" />
             </button>
             <a
@@ -114,14 +114,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
             onClick={onEnterApp}
           >
             <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10">
-              <span className="px-6 py-3 bg-white text-slate-900 rounded-xl font-bold shadow-lg flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform">
+              <span className="px-6 py-3 bg-white text-zinc-950 rounded-xl font-bold shadow-lg flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform">
                 Open Sandbox Demo
                 <ArrowRight className="w-4 h-4" />
               </span>
             </div>
             <img
               src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&h=600&fit=crop"
-              alt="MoneyFlow Pro Dashboard Preview"
+              alt="My Pocket Tracker Dashboard Preview"
               className="w-full object-cover select-none group-hover:scale-[1.01] transition-transform duration-700"
             />
           </motion.div>
@@ -237,7 +237,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
                 Most Popular
               </div>
               <div>
-                <h3 className="text-lg font-bold mb-2">MoneyFlow Pro Premium</h3>
+                <h3 className="text-lg font-bold mb-2">My Pocket Tracker Premium</h3>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Built for expanding businesses, shop owners, and seasoned creators.</p>
                 <div className="text-3xl font-black mb-6">
                   {billingCycle === 'monthly' ? '$9.99' : '$8.32'}{' '}
@@ -270,7 +270,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
           <div>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">Our Mission to Simplify Finances</h2>
             <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base leading-relaxed mb-6">
-              MoneyFlow Pro was founded by team of engineers and accountants who were frustrated with using multiple web interfaces. Your payroll was on one service, personal coffee budgets on another, and side-hustle invoices on a third.
+              My Pocket Tracker was founded by team of engineers and accountants who were frustrated with using multiple web interfaces. Your payroll was on one service, personal coffee budgets on another, and side-hustle invoices on a third.
             </p>
             <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base leading-relaxed">
               We combined everything into one seamless dashboard with automated limits, secure local-storage syncing, and immediate Supabase configuration access, ensuring your private financial indicators remain reliable and scalable.
@@ -306,7 +306,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary shrink-0" />
-                <span className="text-sm">support@moneyflowpro.io</span>
+                <span className="text-sm">support@mypockettracker.io</span>
               </div>
             </div>
           </div>
@@ -400,13 +400,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
             <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-lg">
               M
             </div>
-            <span className="font-bold text-sm">MoneyFlow Pro</span>
+            <span className="font-bold text-sm">My Pocket Tracker</span>
           </div>
 
           <div className="flex items-center gap-6 text-xs text-slate-500 dark:text-slate-400">
             <a href="#" className="hover:text-foreground">Privacy Policy</a>
             <a href="#" className="hover:text-foreground">Terms of Service</a>
-            <span>&copy; {new Date().getFullYear()} MoneyFlow Pro Inc. All rights reserved.</span>
+            <span>&copy; {new Date().getFullYear()} My Pocket Tracker Inc. All rights reserved.</span>
           </div>
         </div>
       </footer>

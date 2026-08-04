@@ -1,10 +1,10 @@
-// MoneyFlow Pro - Local Validation Suite
+// My Pocket Tracker - Local Validation Suite
 import { MockDB, PLANS } from './mock-db';
 import { PaymentsManager } from './payments';
 import { AdManager } from './ads-manager';
 
 export function runValidationSuite() {
-  console.log("=== MONEYFLOW PRO AUTOMATED VALIDATION SUITE ===");
+  console.log("=== MY POCKET TRACKER AUTOMATED VALIDATION SUITE ===");
   const results = { passed: 0, failed: 0, logs: [] as string[] };
 
   const assert = (condition: boolean, message: string) => {

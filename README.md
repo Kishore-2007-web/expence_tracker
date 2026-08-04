@@ -1,6 +1,6 @@
-# MoneyFlow Pro - Unified Personal & Business Finance Platform
+# My Pocket Tracker - Unified Personal & Business Finance Platform
 
-MoneyFlow Pro is a complete SaaS financial dashboard built to manage personal wealth and multiple company accounts under a single workspace.
+My Pocket Tracker is a complete SaaS financial dashboard built to manage personal wealth and multiple company accounts under a single workspace.
 
 ## 🚀 Key Modules
 1. **Unified Dashboard**: Metrics for Cashflow, Income, Expenses, and Net Worth.
@@ -60,7 +60,7 @@ MoneyFlow Pro is a complete SaaS financial dashboard built to manage personal we
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
    ```
-   *Note: If no environment keys are supplied, MoneyFlow Pro automatically activates the stateful Local Storage mock database.*
+   *Note: If no environment keys are supplied, My Pocket Tracker automatically activates the stateful Local Storage mock database.*
 
 4. **Running Automated Tests**:
    Open browser dev tools console when loading the dashboard to view automated validation checks for coupon calculations and business limits.

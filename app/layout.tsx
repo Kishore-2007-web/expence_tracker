@@ -2,19 +2,19 @@ import './globals.css';
 import { AppProvider } from '@/lib/AppContext';
 
 export const metadata = {
-  title: 'MoneyFlow Pro - Unified Personal & Business Finance Platform',
+  title: 'My Pocket Tracker - Unified Personal & Business Finance Platform',
   description: 'One beautiful dashboard to manage personal incomes, expenses, savings goals, and multiple businesses seamlessly. Built for creators, builders, and modern enterprises.',
   keywords: 'fintech, saas, personal finance, business accounting, multi-currency, budget tracker, invoice generator, AI insights',
   openGraph: {
-    title: 'MoneyFlow Pro',
+    title: 'My Pocket Tracker',
     description: 'Unified Personal & Business Finance Platform',
     type: 'website',
-    url: 'https://moneyflowpro.io',
+    url: 'https://mypockettracker.io',
     images: [{ url: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&h=630&fit=crop' }]
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'MoneyFlow Pro',
+    title: 'My Pocket Tracker',
     description: 'Unified Personal & Business Finance Platform'
   }
 };

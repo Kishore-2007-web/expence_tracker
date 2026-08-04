@@ -1,4 +1,4 @@
-// Ad Manager Service for MoneyFlow Pro
+// Ad Manager Service for My Pocket Tracker
 
 export interface AdPlacement {
   id: string;
@@ -14,7 +14,7 @@ const PLACEMENTS: Record<string, AdPlacement> = {
     name: 'Dashboard Bottom Banner',
     provider: 'adsense',
     type: 'banner',
-    fallbackText: 'Grow your business faster with MoneyFlow Pro Premium. Unlock AI insights now.'
+    fallbackText: 'Grow your business faster with My Pocket Tracker Premium. Unlock AI insights now.'
   },
   reports: {
     id: 'placement-reports-native',

@@ -1,4 +1,4 @@
-// MoneyFlow Pro - High-Fidelity Stateful Mock Database
+// My Pocket Tracker - High-Fidelity Stateful Mock Database
 // Synchronizes with localStorage where available for persistence
 
 export interface Profile {
@@ -14,6 +14,7 @@ export interface Profile {
   is_admin: boolean;
   notification_email: boolean;
   notification_push: boolean;
+  onboarded?: boolean;
 }
 
 export interface Plan {
@@ -179,7 +180,7 @@ const INITIAL_COUPONS: Coupon[] = [
 const DEFAULT_PROFILE: Profile = {
   id: 'user-default-uuid',
   name: 'Alex Mercer',
-  email: 'alex@moneyflowpro.io',
+  email: 'alex@mypockettracker.io',
   phone: '+1 (555) 019-2834',
   country: 'United States',
   currency: 'USD',
@@ -188,7 +189,8 @@ const DEFAULT_PROFILE: Profile = {
   avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&h=256&fit=crop',
   is_admin: true,
   notification_email: true,
-  notification_push: true
+  notification_push: true,
+  onboarded: true
 };
 
 // Preset Businesses
@@ -225,7 +227,7 @@ class MockDBClass {
     coupons: INITIAL_COUPONS,
     payments: [] as Payment[],
     notifications: [
-      { id: 'notif-1', user_id: 'user-default-uuid', title: 'Welcome to MoneyFlow Pro', message: 'Set up your first business or log a personal transaction to get started.', type: 'info' as const, is_read: false, created_at: new Date().toISOString() }
+      { id: 'notif-1', user_id: 'user-default-uuid', title: 'Welcome to My Pocket Tracker', message: 'Set up your first business or log a personal transaction to get started.', type: 'info' as const, is_read: false, created_at: new Date().toISOString() }
     ] as Notification[]
   };
 
@@ -236,6 +238,12 @@ class MockDBClass {
   private load() {
     if (typeof window === 'undefined') return;
     try {
+      const mig = localStorage.getItem('moneyflow_db_reset_v3');
+      if (!mig) {
+        localStorage.removeItem('moneyflow_mock_db_v2');
+        localStorage.setItem('moneyflow_db_reset_v3', 'true');
+      }
+
       const stored = localStorage.getItem('moneyflow_mock_db_v2');
       if (stored) {
         this.data = JSON.parse(stored);
@@ -321,7 +329,7 @@ class MockDBClass {
     // Notify user
     this.addNotification(
       'Subscription Activated',
-      `Welcome to MoneyFlow Pro ${plan.name}! Your account has been upgraded successfully.`,
+      `Welcome to My Pocket Tracker ${plan.name}! Your account has been upgraded successfully.`,
       'payment'
     );
 

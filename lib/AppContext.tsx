@@ -32,6 +32,7 @@ interface AppContextType {
   theme: string;
   firebaseUser: FirebaseUser | null;
   isFirebaseBlocked: boolean;
+  authLoading: boolean;
   loginOffline: () => void;
   signUpWithEmail: (email: string, password: string, name: string) => Promise<void>;
   loginWithEmail: (email: string, password: string) => Promise<void>;
@@ -72,6 +73,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [exchangeRates, setExchangeRates] = useState<Record<string, number>>(EXCHANGE_RATES);
   const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
   const [isFirebaseBlocked, setIsFirebaseBlocked] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
 
   const isPremium = subscription.plan_id !== 'FREE';
   const planFeatures = PLANS.find(p => p.id === subscription.plan_id)?.features || [];
@@ -92,16 +94,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const loginOffline = () => {
     const mockUid = 'mock-offline-uuid';
+    const isNewUserLogin = MockDB.getProfile().id !== mockUid;
     const updatedProfile = MockDB.updateProfile({
       id: mockUid,
       name: 'Demo User',
-      email: 'demo@moneyflowpro.io'
+      email: 'demo@mypockettracker.io',
+      ...(isNewUserLogin ? { onboarded: false } : {})
     });
     setProfile(updatedProfile);
     localStorage.setItem('moneyflow_auth_mode', 'offline');
     setFirebaseUser({
       uid: mockUid,
-      email: 'demo@moneyflowpro.io',
+      email: 'demo@mypockettracker.io',
       displayName: 'Demo User',
       photoURL: null
     } as any);
@@ -134,66 +138,98 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     let isMounted = true;
     let unsubscribe: (() => void) | null = null;
 
+    // 1. Synchronous initial check for offline mode to prevent ANY delay
+    if (typeof window !== 'undefined') {
+      const isOffline = localStorage.getItem('moneyflow_auth_mode') === 'offline';
+      if (isOffline) {
+        const offlineProfile = MockDB.getProfile();
+        setProfile(offlineProfile);
+        setFirebaseUser({
+          uid: offlineProfile.id || 'mock-user-id',
+          email: offlineProfile.email || 'demo@mypockettracker.io',
+          displayName: offlineProfile.name || 'Demo User',
+          photoURL: offlineProfile.avatar_url || null
+        } as any);
+        setAuthLoading(false);
+      }
+    }
+
+    // 2. Register Firebase Auth state listener immediately in parallel (takes milliseconds)
+    try {
+      unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (!isMounted) return;
+        if (user) {
+          setIsFirebaseBlocked(false); // Self-healing
+          setFirebaseUser(user);
+          const isNewUserLogin = MockDB.getProfile().id !== user.uid;
+          const updatedProfile = MockDB.updateProfile({
+            id: user.uid,
+            email: user.email || '',
+            name: user.displayName || user.email?.split('@')[0] || 'Alex Mercer',
+            avatar_url: user.photoURL || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&h=256&fit=crop',
+            ...(isNewUserLogin ? { onboarded: false } : {})
+          });
+          setProfile(updatedProfile);
+        } else {
+          // Check if we are in local offline session
+          const isOffline = localStorage.getItem('moneyflow_auth_mode') === 'offline';
+          if (isOffline) {
+            const offlineProfile = MockDB.getProfile();
+            if (offlineProfile && offlineProfile.id !== 'user-default-uuid') {
+              setFirebaseUser({
+                uid: offlineProfile.id,
+                email: offlineProfile.email,
+                displayName: offlineProfile.name,
+                photoURL: offlineProfile.avatar_url
+              } as any);
+            }
+          } else {
+            setFirebaseUser(null);
+          }
+        }
+        setAuthLoading(false);
+      });
+    } catch (authError) {
+      console.error("Failed to register onAuthStateChanged:", authError);
+      setAuthLoading(false);
+    }
+
+    // 3. Run Firebase reachability check in the background without blocking the UI
     const checkFirebaseReachability = async () => {
+      let reachable = false;
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2000);
+        const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 second timeout
         
-        await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCKhp7p_1dLtrLoy336AiXNAskpvrF2pto', {
-          method: 'POST',
-          body: JSON.stringify({}),
-          headers: { 'Content-Type': 'application/json' },
+        const res = await fetch('https://www.googleapis.com/identitytoolkit/v3/relyingparty/getProjectConfig?key=AIzaSyCKhp7p_1dLtrLoy336AiXNAskpvrF2pto', {
+          method: 'GET',
           signal: controller.signal
         });
         clearTimeout(timeoutId);
-        
-        if (!isMounted) return;
-
-        // Firebase is reachable, listen to auth state
-        unsubscribe = onAuthStateChanged(auth, (user) => {
-          if (user) {
-            setFirebaseUser(user);
-            const updatedProfile = MockDB.updateProfile({
-              id: user.uid,
-              email: user.email || '',
-              name: user.displayName || user.email?.split('@')[0] || 'Alex Mercer',
-              avatar_url: user.photoURL || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&h=256&fit=crop'
-            });
-            setProfile(updatedProfile);
-          } else {
-            // Check if we are in local offline session
-            const isOffline = localStorage.getItem('moneyflow_auth_mode') === 'offline';
-            if (isOffline) {
-              const offlineProfile = MockDB.getProfile();
-              if (offlineProfile && offlineProfile.id !== 'user-default-uuid') {
-                setFirebaseUser({
-                  uid: offlineProfile.id,
-                  email: offlineProfile.email,
-                  displayName: offlineProfile.name,
-                  photoURL: offlineProfile.avatar_url
-                } as any);
-              }
-            } else {
-              setFirebaseUser(null);
-            }
-          }
-        });
+        if (res.ok) {
+          reachable = true;
+        }
       } catch (e) {
-        if (!isMounted) return;
-        console.warn("Firebase Auth is unreachable (blocked by ad-blocker or offline). Defaulting to Mock Auth Mode.");
+        reachable = false;
+      }
+
+      if (!isMounted) return;
+
+      if (!reachable) {
+        console.warn("Firebase Auth is unreachable. Defaulting to Mock Auth Mode.");
         setIsFirebaseBlocked(true);
         
-        // Automatically activate offline auth mode if user had a saved offline session
         const isOffline = localStorage.getItem('moneyflow_auth_mode') === 'offline';
         if (isOffline) {
           const offlineProfile = MockDB.getProfile();
           setFirebaseUser({
             uid: offlineProfile.id || 'mock-user-id',
-            email: offlineProfile.email || 'demo@moneyflowpro.io',
+            email: offlineProfile.email || 'demo@mypockettracker.io',
             displayName: offlineProfile.name || 'Demo User',
             photoURL: offlineProfile.avatar_url || null
           } as any);
         }
+        setAuthLoading(false);
       }
     };
 
@@ -214,7 +250,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const updatedProfile = MockDB.updateProfile({
         id: mockUid,
         name: name,
-        email: email
+        email: email,
+        onboarded: false
       });
       setProfile(updatedProfile);
       localStorage.setItem('moneyflow_auth_mode', 'offline');
@@ -233,7 +270,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const updatedProfile = MockDB.updateProfile({
         id: userCredential.user.uid,
         name: name,
-        email: email
+        email: email,
+        onboarded: false
       });
       setProfile(updatedProfile);
       localStorage.setItem('moneyflow_auth_mode', 'firebase');
@@ -244,10 +282,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (isFirebaseBlocked) {
       // Local/Offline Login
       const mockUid = 'mock-' + Math.random().toString(36).substr(2, 9);
+      const isNewUserLogin = MockDB.getProfile().id !== mockUid;
       const updatedProfile = MockDB.updateProfile({
         id: mockUid,
         name: email.split('@')[0],
-        email: email
+        email: email,
+        ...(isNewUserLogin ? { onboarded: false } : {})
       });
       setProfile(updatedProfile);
       localStorage.setItem('moneyflow_auth_mode', 'offline');
@@ -268,10 +308,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (isFirebaseBlocked) {
       // Local/Offline Google Login
       const mockUid = 'mock-google-uid';
+      const isNewUserLogin = MockDB.getProfile().id !== mockUid;
       const updatedProfile = MockDB.updateProfile({
         id: mockUid,
         name: 'Alex Mercer (Google)',
-        email: 'alex.mercer@gmail.com'
+        email: 'alex.mercer@gmail.com',
+        ...(isNewUserLogin ? { onboarded: false } : {})
       });
       setProfile(updatedProfile);
       localStorage.setItem('moneyflow_auth_mode', 'offline');
@@ -301,7 +343,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     MockDB.updateProfile({
       id: 'user-default-uuid',
       name: 'Alex Mercer',
-      email: 'alex@moneyflowpro.io'
+      email: 'alex@mypockettracker.io',
+      onboarded: true
     });
     refreshData();
   };
@@ -373,10 +416,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const addGoal = (name: string, targetCents: number, deadline: string) => {
-    const targetInUSD = convertCurrency(targetCents, profile.currency, 'USD');
     MockDB.addGoal({
       name,
-      target_amount_cents: targetInUSD,
+      target_amount_cents: targetCents,
       current_amount_cents: 0,
       deadline
     });
@@ -386,8 +428,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const contributeToGoal = (id: string, amountCents: number) => {
     const goal = savingsGoals.find(g => g.id === id);
     if (!goal) return;
-    const amountInUSD = convertCurrency(amountCents, profile.currency, 'USD');
-    const newAmt = goal.current_amount_cents + amountInUSD;
+    const newAmt = goal.current_amount_cents + amountCents;
     MockDB.updateGoal(id, { current_amount_cents: newAmt });
     
     // Log expense under Savings in profile currency
@@ -401,7 +442,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
 
     if (newAmt >= goal.target_amount_cents) {
-      const formattedTarget = formatCurrency(convertCurrency(goal.target_amount_cents, 'USD', profile.currency), profile.currency);
+      const formattedTarget = formatCurrency(goal.target_amount_cents, profile.currency);
       MockDB.addNotification('Savings Goal Achieved! 🏆', `Congratulations! You hit your target of ${formattedTarget} for "${goal.name}".`, 'goal');
     }
     
@@ -431,7 +472,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const updateProfileDetails = (name: string, phone: string, country: string, currency: string, language: string) => {
-    MockDB.updateProfile({ name, phone, country, currency, language });
+    MockDB.updateProfile({ name, phone, country, currency, language, onboarded: true });
     refreshData();
   };
 
@@ -455,6 +496,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       theme,
       firebaseUser,
       isFirebaseBlocked,
+      authLoading,
       loginOffline,
       signUpWithEmail,
       loginWithEmail,
@@ -498,6 +540,9 @@ export const EXCHANGE_RATES: Record<string, number> = {
 };
 
 export const convertCurrency = (cents: number, from = 'USD', to = 'USD'): number => {
+  if (from.toUpperCase() === to.toUpperCase()) {
+    return cents;
+  }
   const fromRate = EXCHANGE_RATES[from.toUpperCase()] || 1.0;
   const toRate = EXCHANGE_RATES[to.toUpperCase()] || 1.0;
   return Math.round((cents / fromRate) * toRate);

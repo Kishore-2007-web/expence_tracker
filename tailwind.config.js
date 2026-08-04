@@ -32,6 +32,19 @@ module.exports = {
           DEFAULT: '#f43f5e', // Rose
           dark: '#e11d48',
         },
+        slate: {
+          50: 'var(--slate-50)',
+          100: 'var(--slate-100)',
+          200: 'var(--slate-200)',
+          300: 'var(--slate-300)',
+          400: 'var(--slate-400)',
+          500: 'var(--slate-500)',
+          600: 'var(--slate-600)',
+          700: 'var(--slate-700)',
+          800: 'var(--slate-800)',
+          900: 'var(--slate-900)',
+          955: 'var(--slate-950)',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

@@ -83,7 +83,7 @@ export const UpgradeModal: React.FC = () => {
         <div className="flex-1 p-8 bg-slate-50 dark:bg-slate-900/50 border-r border-border">
           <div className="flex items-center gap-2 text-primary font-semibold mb-4">
             <Sparkles className="w-5 h-5" />
-            <span>MoneyFlow Pro Premium</span>
+            <span>My Pocket Tracker Premium</span>
           </div>
           <h2 className="text-2xl font-bold tracking-tight mb-2">Supercharge your finances</h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">

@@ -42,7 +42,7 @@ export const AdBanner: React.FC<AdBannerProps> = ({ placementKey }) => {
               <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.5 rounded tracking-wide uppercase">
                 Sponsored Sponsor
               </span>
-              <span className="text-xs font-semibold text-slate-400">MoneyFlow Pro Ad System</span>
+              <span className="text-xs font-semibold text-slate-400">My Pocket Tracker Ad System</span>
             </div>
             <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
               {placement.fallbackText}

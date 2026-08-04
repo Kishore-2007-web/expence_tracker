@@ -19,7 +19,8 @@ export default function Home() {
     logout, 
     resetPassword,
     isFirebaseBlocked,
-    loginOffline
+    loginOffline,
+    authLoading
   } = useApp();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authView, setAuthView] = useState<'landing' | 'login' | 'signup' | 'forgot' | 'verify' | 'onboarding'>('landing');
@@ -27,18 +28,55 @@ export default function Home() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [currency, setCurrency] = useState('USD');
+  const [mounted, setMounted] = useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   React.useEffect(() => {
     if (firebaseUser) {
       setIsAuthenticated(true);
-      // Only set to onboarding if it's a new or default profile
-      if (profile.id !== firebaseUser.uid) {
+      // Only set to onboarding if the user profile specifically hasn't onboarded yet.
+      // Defensively treat new/changed profiles as not onboarded, and fallback to checking the default profile ID.
+      const isUserOnboarded = profile.onboarded !== undefined ? profile.onboarded : (profile.id !== 'user-default-uuid');
+      if (!isUserOnboarded) {
         setAuthView('onboarding');
       }
     } else {
       setIsAuthenticated(false);
     }
-  }, [firebaseUser]);
+  }, [firebaseUser, profile]);
+
+  if (!mounted || authLoading) {
+    return (
+      <div className="relative min-h-screen bg-black flex flex-col items-center justify-center overflow-hidden">
+        {/* Ambient background glow */}
+        <div className="absolute w-[300px] h-[300px] bg-primary/10 rounded-full blur-[80px] -top-10 -left-10 animate-pulse duration-[4000ms]" />
+        <div className="absolute w-[300px] h-[300px] bg-emerald-500/5 rounded-full blur-[80px] -bottom-10 -right-10 animate-pulse duration-[3000ms]" />
+
+        <div className="flex flex-col items-center gap-4 relative z-10">
+          {/* Logo container with custom ring spinner */}
+          <div className="relative w-16 h-16 flex items-center justify-center">
+            {/* outer spinning track */}
+            <div className="absolute inset-0 rounded-2xl border-2 border-slate-800" />
+            {/* outer spinning active border */}
+            <div className="absolute inset-0 rounded-2xl border-2 border-t-primary border-r-primary animate-spin" />
+            
+            {/* logo mark in center */}
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-black text-xl shadow-glow">
+              M
+            </div>
+          </div>
+          
+          <div className="flex flex-col items-center gap-1">
+            <span className="font-bold text-sm tracking-tight text-white">My Pocket Tracker</span>
+            <span className="text-[10px] text-slate-500 uppercase tracking-widest animate-pulse">Initializing Session...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -109,18 +147,18 @@ export default function Home() {
         )}
 
         {/* LOGIN SCREEN */}
-        {authView === 'login' && (
+        {authView === 'login' && !isAuthenticated && (
           <motion.div
             key="login"
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            className="min-h-screen flex items-center justify-center p-6 bg-slate-900/10"
+            className="min-h-screen flex items-center justify-center p-6 bg-background"
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8 relative">
               <div className="flex items-center gap-2 justify-center mb-8">
                 <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-lg">M</div>
-                <span className="font-bold text-sm tracking-tight">MoneyFlow Pro</span>
+                <span className="font-bold text-sm tracking-tight">My Pocket Tracker</span>
               </div>
 
               <h2 className="text-xl font-bold text-center mb-1">Welcome back</h2>
@@ -128,7 +166,7 @@ export default function Home() {
 
               {isFirebaseBlocked && (
                 <div className="mb-6 p-3 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-[11px] rounded-xl text-center leading-relaxed">
-                  ⚠️ Firebase Authentication is blocked (e.g. by an ad-blocker or offline). You can bypass and use the local-only offline mode below.
+                  ⚠️ Firebase Authentication is blocked (e.g. by an ad-blocker or offline).
                 </div>
               )}
 
@@ -143,7 +181,7 @@ export default function Home() {
                       value={email}
                       onChange={e => setEmail(e.target.value)}
                       className="w-full bg-accent border border-border rounded-xl pl-10 pr-4 py-2.5 text-xs focus:outline-none focus:border-primary"
-                      placeholder="alex@moneyflowpro.io"
+                      placeholder="alex@mypockettracker.io"
                     />
                   </div>
                 </div>
@@ -208,13 +246,7 @@ export default function Home() {
                 <span>Continue with Google</span>
               </button>
 
-              <button
-                type="button"
-                onClick={loginOffline}
-                className="w-full mt-3 py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-xl border border-emerald-500/20 transition-all flex items-center justify-center gap-1.5"
-              >
-                <span>Continue in Local Offline Mode</span>
-              </button>
+
 
               <p className="text-xs text-slate-500 text-center mt-6">
                 Don't have an account?{' '}
@@ -227,18 +259,18 @@ export default function Home() {
         )}
 
         {/* SIGN UP SCREEN */}
-        {authView === 'signup' && (
+        {authView === 'signup' && !isAuthenticated && (
           <motion.div
             key="signup"
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            className="min-h-screen flex items-center justify-center p-6 bg-slate-900/10"
+            className="min-h-screen flex items-center justify-center p-6 bg-background"
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8">
               <div className="flex items-center gap-2 justify-center mb-8">
                 <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-lg">M</div>
-                <span className="font-bold text-sm tracking-tight">MoneyFlow Pro</span>
+                <span className="font-bold text-sm tracking-tight">My Pocket Tracker</span>
               </div>
 
               <h2 className="text-xl font-bold text-center mb-1">Create Account</h2>
@@ -246,7 +278,7 @@ export default function Home() {
 
               {isFirebaseBlocked && (
                 <div className="mb-6 p-3 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-[11px] rounded-xl text-center leading-relaxed">
-                  ⚠️ Firebase Authentication is blocked (e.g. by an ad-blocker or offline). You can bypass and use the local-only offline mode below.
+                  ⚠️ Firebase Authentication is blocked (e.g. by an ad-blocker or offline).
                 </div>
               )}
 
@@ -271,7 +303,7 @@ export default function Home() {
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     className="w-full bg-accent border border-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-primary"
-                    placeholder="alex@moneyflowpro.io"
+                    placeholder="alex@mypockettracker.io"
                   />
                 </div>
 
@@ -316,13 +348,7 @@ export default function Home() {
                 <span>Continue with Google</span>
               </button>
 
-              <button
-                type="button"
-                onClick={loginOffline}
-                className="w-full mt-3 py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-xl border border-emerald-500/20 transition-all flex items-center justify-center gap-1.5"
-              >
-                <span>Continue in Local Offline Mode</span>
-              </button>
+
 
               <p className="text-xs text-slate-500 text-center mt-6">
                 Already have an account?{' '}
@@ -335,13 +361,13 @@ export default function Home() {
         )}
 
         {/* FORGOT PASSWORD SCREEN */}
-        {authView === 'forgot' && (
+        {authView === 'forgot' && !isAuthenticated && (
           <motion.div
             key="forgot"
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            className="min-h-screen flex items-center justify-center p-6 bg-slate-900/10"
+            className="min-h-screen flex items-center justify-center p-6 bg-background"
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8">
               <h2 className="text-lg font-bold mb-1 text-center">Reset Password</h2>
@@ -356,7 +382,7 @@ export default function Home() {
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     className="w-full bg-accent border border-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-primary"
-                    placeholder="alex@moneyflowpro.io"
+                    placeholder="alex@mypockettracker.io"
                   />
                 </div>
 
@@ -380,13 +406,13 @@ export default function Home() {
         )}
 
         {/* EMAIL VERIFICATION SCREEN */}
-        {authView === 'verify' && (
+        {authView === 'verify' && !isAuthenticated && (
           <motion.div
             key="verify"
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            className="min-h-screen flex items-center justify-center p-6 bg-slate-900/10"
+            className="min-h-screen flex items-center justify-center p-6 bg-background"
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8 text-center space-y-6">
               <ShieldCheck className="w-12 h-12 text-primary mx-auto" />
@@ -419,18 +445,18 @@ export default function Home() {
         )}
 
         {/* ONBOARDING SCREEN */}
-        {authView === 'onboarding' && (
+        {authView === 'onboarding' && isAuthenticated && (
           <motion.div
             key="onboarding"
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            className="min-h-screen flex items-center justify-center p-6 bg-slate-900/10"
+            className="min-h-screen flex items-center justify-center p-6 bg-background"
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8 relative">
               <div className="flex items-center gap-2 justify-center mb-6">
                 <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-lg shadow-glow">M</div>
-                <span className="font-bold text-sm tracking-tight">MoneyFlow Pro</span>
+                <span className="font-bold text-sm tracking-tight">My Pocket Tracker</span>
               </div>
 
               <h2 className="text-xl font-bold text-center mb-1">Set Up Your Account</h2>
@@ -477,7 +503,7 @@ export default function Home() {
         )}
 
         {/* APPLICATION DASHBOARD WORKSPACE */}
-        {isAuthenticated && (
+        {isAuthenticated && authView !== 'onboarding' && (
           <motion.div
             key="app"
             initial={{ opacity: 0 }}

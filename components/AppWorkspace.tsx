@@ -29,7 +29,9 @@ import {
   Moon,
   Upload,
   User,
-  Ticket
+  Ticket,
+  Menu,
+  X
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -81,6 +83,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
   } = useApp();
 
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showBusinessDropdown, setShowBusinessDropdown] = useState(false);
   const [showAddBizModal, setShowAddBizModal] = useState(false);
   const [showAddTxModal, setShowAddTxModal] = useState(false);
@@ -122,11 +125,11 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
     }));
   };
 
-  // Calculations for current workspace selection (Personal vs Selected Business)
+  // Calculations for current workspace selection (Home vs Selected Business)
   const currentTransactions = useMemo(() => {
     if (currentBusiness === null) {
-      // Personal mode
-      return transactions.filter(t => t.business_id === null);
+      // Home mode - aggregated summary of all personal and business transactions
+      return transactions;
     } else {
       // Specific business mode
       return transactions.filter(t => t.business_id === currentBusiness.id);
@@ -148,7 +151,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
     const balance = income - expense;
     const savingsTotal = currentBusiness === null 
-      ? savingsGoals.reduce((sum, g) => sum + convertCurrency(g.current_amount_cents, 'USD', profile.currency), 0)
+      ? savingsGoals.reduce((sum, g) => sum + g.current_amount_cents, 0)
       : 0;
 
     return {
@@ -204,36 +207,86 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
   // Chart Data preparation
   const monthlyChartData = useMemo(() => {
-    // Group transactions by simple labels (Week 1, Week 2 etc.)
-    return [
-      { name: 'Week 1', Income: stats.income * 0.25 / 100, Expense: stats.expense * 0.22 / 100 },
-      { name: 'Week 2', Income: stats.income * 0.35 / 100, Expense: stats.expense * 0.38 / 100 },
-      { name: 'Week 3', Income: stats.income * 0.20 / 100, Expense: stats.expense * 0.18 / 100 },
-      { name: 'Week 4', Income: stats.income * 0.20 / 100, Expense: stats.expense * 0.22 / 100 }
+    const weeks = [
+      { name: 'Week 1', Income: 0, Expense: 0, Balance: 0, Accumulated: 0 },
+      { name: 'Week 2', Income: 0, Expense: 0, Balance: 0, Accumulated: 0 },
+      { name: 'Week 3', Income: 0, Expense: 0, Balance: 0, Accumulated: 0 },
+      { name: 'Week 4', Income: 0, Expense: 0, Balance: 0, Accumulated: 0 }
     ];
-  }, [stats]);
+
+    const today = new Date();
+    const todayMs = today.getTime();
+    const msInDay = 24 * 60 * 60 * 1000;
+
+    // Calculate starting cumulative balance from transactions older than 28 days
+    let initialBalance = 0;
+    currentTransactions.forEach(t => {
+      const txDate = new Date(t.transaction_date);
+      const diffTime = todayMs - txDate.getTime();
+      const diffDays = Math.floor(diffTime / msInDay);
+
+      const convertedValue = convertCurrency(t.amount_cents, t.currency || 'USD', profile.currency) / 100;
+
+      if (diffDays >= 28) {
+        if (t.type === 'income') {
+          initialBalance += convertedValue;
+        } else {
+          initialBalance -= convertedValue;
+        }
+      } else {
+        // Group into weeks:
+        // diffDays < 0 (future) or 0-7 days ago -> Week 4
+        // 8-14 days ago -> Week 3
+        // 15-21 days ago -> Week 2
+        // 22-27 days ago -> Week 1
+        let weekIndex = 3 - Math.floor(Math.max(0, diffDays) / 7);
+        if (weekIndex >= 0 && weekIndex < 4) {
+          if (t.type === 'income') {
+            weeks[weekIndex].Income += convertedValue;
+          } else {
+            weeks[weekIndex].Expense += convertedValue;
+          }
+        }
+      }
+    });
+
+    let cumulative = initialBalance;
+    weeks.forEach(w => {
+      w.Balance = w.Income - w.Expense;
+      cumulative += w.Balance;
+      w.Accumulated = cumulative;
+      // Round to 2 decimal places to avoid floating point representation issues
+      w.Income = Math.round(w.Income * 100) / 100;
+      w.Expense = Math.round(w.Expense * 100) / 100;
+      w.Balance = Math.round(w.Balance * 100) / 100;
+      w.Accumulated = Math.round(w.Accumulated * 100) / 100;
+    });
+
+    return weeks;
+  }, [currentTransactions, profile.currency]);
 
   const categoryChartData = useMemo(() => {
     const cats: Record<string, number> = {};
     currentTransactions.forEach(t => {
       if (t.type === 'expense') {
-        cats[t.category_name] = (cats[t.category_name] || 0) + t.amount_cents / 100;
+        const converted = convertCurrency(t.amount_cents, t.currency || 'USD', profile.currency);
+        cats[t.category_name] = (cats[t.category_name] || 0) + converted / 100;
       }
     });
     return Object.entries(cats).map(([name, value]) => ({ name, value }));
-  }, [currentTransactions]);
+  }, [currentTransactions, profile.currency]);
 
   const CATEGORY_COLORS: Record<string, string> = {
     Food: '#f97316',      // Orange
-    Travel: '#06b6d4',    // Cyan
+    Travel: '#0d9488',    // Teal
     Shopping: '#ec4899',  // Pink
     Bills: '#ef4444',     // Red
     Salary: '#10b981',    // Emerald
     Rent: '#a855f7',      // Purple
-    Marketing: '#6366f1', // Indigo
+    Marketing: '#d97706', // Amber/Orange
     Utilities: '#eab308', // Yellow
     Inventory: '#f59e0b', // Amber
-    'Savings Contribution': '#3b82f6', // Blue
+    'Savings Contribution': '#c084fc', // Fuchsia/Purple
   };
 
   const filteredTransactions = useMemo(() => {
@@ -262,7 +315,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', `moneyflow_report_${currentBusiness ? currentBusiness.name.replace(/\s+/g, '_') : 'personal'}_${new Date().toISOString().substring(0, 10)}.${format === 'excel' ? 'xlsx' : format}`);
+    link.setAttribute('download', `mypocket_report_${currentBusiness ? currentBusiness.name.replace(/\s+/g, '_') : 'personal'}_${new Date().toISOString().substring(0, 10)}.${format === 'excel' ? 'xlsx' : format}`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -335,7 +388,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
             <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-lg shadow-glow">
               M
             </div>
-            <span className="font-bold text-sm tracking-tight">MoneyFlow <span className="text-primary font-black">Pro</span></span>
+            <span className="font-bold text-sm tracking-tight">My Pocket <span className="text-primary font-black">Tracker</span></span>
           </div>
 
           {/* Account/Business Switcher */}
@@ -349,7 +402,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                   {currentBusiness ? currentBusiness.name[0] : 'P'}
                 </div>
                 <div className="truncate max-w-[120px]">
-                  {currentBusiness ? currentBusiness.name : 'Personal Finance'}
+                  {currentBusiness ? currentBusiness.name : 'Home'}
                 </div>
               </div>
               <ChevronDown className="w-4 h-4 text-slate-400" />
@@ -367,7 +420,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                   }`}
                 >
                   <Wallet className="w-3.5 h-3.5" />
-                  <span>Personal Account</span>
+                  <span className="font-semibold">Home</span>
                 </button>
 
                 {businesses.map(biz => (
@@ -477,41 +530,233 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
       {/* Main Workspace Frame */}
       <main className="flex-1 flex flex-col min-w-0">
         {/* Top bar header */}
-        <header className="h-16 border-b border-border bg-card px-6 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-4">
-            {/* Mobile Switcher placeholder */}
-            <div className="md:hidden flex items-center gap-2">
-              <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-lg">M</div>
+        <header className="h-16 border-b border-border bg-card px-4 sm:px-6 flex items-center justify-between shrink-0 sticky top-0 z-30">
+          <div className="flex items-center gap-2.5 sm:gap-4 overflow-hidden">
+            {/* Mobile Hamburger Toggle */}
+            <button
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+              className="md:hidden p-2 rounded-xl border border-border bg-accent hover:bg-accent-hover text-foreground transition-colors shrink-0"
+              aria-label="Toggle Navigation Menu"
+            >
+              {showMobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+
+            <div className="flex items-center gap-2 overflow-hidden">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-base sm:text-lg shrink-0 shadow-glow">
+                M
+              </div>
+              <h1 className="text-xs sm:text-base font-bold tracking-tight truncate max-w-[130px] sm:max-w-none">
+                {currentBusiness ? currentBusiness.name : 'Home Workspace'}
+              </h1>
             </div>
-            
-            <h1 className="text-base font-bold tracking-tight">
-              {currentBusiness ? `Business Workspace: ${currentBusiness.name}` : 'Personal Wealth Workspace'}
-            </h1>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {!isPremium && (
               <button
                 onClick={openUpgradeModal}
-                className="px-4 py-2 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary-hover hover:to-emerald-600 text-white text-xs font-bold rounded-xl transition-all shadow-glow hover:shadow-glow/15 flex items-center gap-1.5"
+                className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary-hover hover:to-emerald-600 text-white text-[11px] sm:text-xs font-bold rounded-xl transition-all shadow-glow flex items-center gap-1 shrink-0"
               >
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Upgrade Pro</span>
+                <span className="hidden sm:inline">Upgrade Pro</span>
+                <span className="sm:hidden">Pro</span>
               </button>
             )}
 
             <button
               onClick={() => setShowAddTxModal(true)}
-              className="px-4 py-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white dark:hover:bg-slate-700 text-xs font-semibold rounded-xl transition-all flex items-center gap-1.5"
+              className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-accent hover:bg-accent-hover text-foreground border border-border text-[11px] sm:text-xs font-semibold rounded-xl transition-all flex items-center gap-1 shrink-0"
             >
               <Plus className="w-4 h-4" />
-              <span>Add Transaction</span>
+              <span className="hidden sm:inline">Add Transaction</span>
+              <span className="sm:hidden">Add</span>
             </button>
           </div>
         </header>
 
+        {/* Mobile Slide-Over Navigation Drawer */}
+        <AnimatePresence>
+          {showMobileMenu && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 md:hidden bg-slate-950/80 backdrop-blur-sm flex"
+              onClick={() => setShowMobileMenu(false)}
+            >
+              <motion.div
+                initial={{ x: '-100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '-100%' }}
+                transition={{ type: 'spring', damping: 25, stiffness: 250 }}
+                className="w-4/5 max-w-xs bg-card border-r border-border h-full p-5 flex flex-col justify-between overflow-y-auto"
+                onClick={e => e.stopPropagation()}
+              >
+                <div>
+                  {/* Drawer Header */}
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-lg shadow-glow">
+                        M
+                      </div>
+                      <span className="font-bold text-sm tracking-tight">My Pocket <span className="text-primary font-black">Tracker</span></span>
+                    </div>
+                    <button
+                      onClick={() => setShowMobileMenu(false)}
+                      className="p-1.5 rounded-lg border border-border bg-accent text-slate-400 hover:text-foreground"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  {/* Business Switcher */}
+                  <div className="relative mb-6">
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 tracking-wider">Active Workspace</label>
+                    <button
+                      onClick={() => setShowBusinessDropdown(!showBusinessDropdown)}
+                      className="w-full flex items-center justify-between p-3 rounded-xl border border-border bg-accent hover:bg-accent-hover transition-all text-left text-xs font-semibold"
+                    >
+                      <div className="flex items-center gap-2 truncate">
+                        <div className="w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center text-white text-[10px] font-black shrink-0">
+                          {currentBusiness ? currentBusiness.name[0] : 'P'}
+                        </div>
+                        <div className="truncate">
+                          {currentBusiness ? currentBusiness.name : 'Home Workspace'}
+                        </div>
+                      </div>
+                      <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
+                    </button>
+
+                    {showBusinessDropdown && (
+                      <div className="mt-1 bg-card border border-border rounded-xl shadow-lg p-1.5 space-y-1">
+                        <button
+                          onClick={() => {
+                            setCurrentBusiness(null);
+                            setShowBusinessDropdown(false);
+                            setShowMobileMenu(false);
+                          }}
+                          className={`w-full text-left px-3 py-2 text-xs font-medium rounded-lg hover:bg-accent transition-colors flex items-center gap-2 ${
+                            currentBusiness === null ? 'bg-primary/10 text-primary font-bold' : ''
+                          }`}
+                        >
+                          <Wallet className="w-3.5 h-3.5" />
+                          <span>Home Workspace</span>
+                        </button>
+
+                        {businesses.map(biz => (
+                          <button
+                            key={biz.id}
+                            onClick={() => {
+                              setCurrentBusiness(biz);
+                              setShowBusinessDropdown(false);
+                              setShowMobileMenu(false);
+                            }}
+                            className={`w-full text-left px-3 py-2 text-xs font-medium rounded-lg hover:bg-accent transition-colors flex items-center gap-2 truncate ${
+                              currentBusiness?.id === biz.id ? 'bg-primary/10 text-primary font-bold' : ''
+                            }`}
+                          >
+                            <Briefcase className="w-3.5 h-3.5" />
+                            <span className="truncate">{biz.name}</span>
+                          </button>
+                        ))}
+
+                        <div className="h-px bg-border my-1"></div>
+
+                        <button
+                          onClick={() => {
+                            setShowBusinessDropdown(false);
+                            setShowMobileMenu(false);
+                            setShowAddBizModal(true);
+                          }}
+                          className="w-full text-left px-3 py-2 text-xs font-bold text-primary hover:bg-primary/10 rounded-lg transition-colors flex items-center gap-2"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                          <span>Add Business</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Navigation Links */}
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 tracking-wider">Navigation Menu</label>
+                  <nav className="space-y-1">
+                    {[
+                      { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+                      { id: 'transactions', label: 'Transactions', icon: Wallet },
+                      { id: 'business', label: 'Business Settings', icon: Briefcase, businessOnly: true },
+                      { id: 'savings', label: 'Savings Goals', icon: PiggyBank, personalOnly: true },
+                      { id: 'reports', label: 'Reports Manager', icon: FileSpreadsheet },
+                      { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+                      { id: 'settings', label: 'Settings & Profile', icon: SettingsIcon }
+                    ].map(item => {
+                      if (item.businessOnly && currentBusiness === null) return null;
+                      if (item.personalOnly && currentBusiness !== null) return null;
+
+                      const isCurrent = activeTab === item.id;
+
+                      return (
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            setActiveTab(item.id);
+                            setShowMobileMenu(false);
+                          }}
+                          className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                            isCurrent
+                              ? 'bg-primary text-white shadow-glow'
+                              : 'text-slate-500 hover:bg-accent hover:text-foreground'
+                          }`}
+                        >
+                          <item.icon className="w-4 h-4 shrink-0" />
+                          <span>{item.label}</span>
+                        </button>
+                      );
+                    })}
+                  </nav>
+                </div>
+
+                {/* Footer Controls */}
+                <div className="pt-4 border-t border-border space-y-3">
+                  <div className="flex items-center gap-2 p-2 bg-accent/40 rounded-xl">
+                    <div className="w-8 h-8 bg-accent border border-border rounded-full flex items-center justify-center text-slate-400 shrink-0">
+                      <User className="w-4 h-4" />
+                    </div>
+                    <div className="truncate flex-1">
+                      <div className="text-xs font-bold truncate">{profile.name}</div>
+                      <div className="text-[10px] text-slate-400">
+                        {isPremium ? <span className="text-emerald-500 font-bold uppercase">PRO Plan</span> : 'Free Tier'}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-1">
+                    <button
+                      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                      className="flex items-center gap-2 px-3 py-1.5 hover:bg-accent rounded-xl text-xs font-medium text-slate-400 hover:text-foreground transition-colors"
+                    >
+                      {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
+                      <span>{theme === 'dark' ? 'Light' : 'Dark'} Mode</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setShowMobileMenu(false);
+                        onLogout();
+                      }}
+                      className="flex items-center gap-1.5 text-xs text-danger font-bold hover:underline p-1.5 hover:bg-danger/5 rounded-xl"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>Logout</span>
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Dynamic Inner Page Viewer */}
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 pb-28 md:pb-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab + (currentBusiness ? currentBusiness.id : 'personal')}
@@ -525,43 +770,43 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
               {activeTab === 'dashboard' && (
                 <div className="space-y-6">
                   {/* Summary Metric Cards */}
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                    <div className="p-6 bg-card border border-border rounded-2xl shadow-premium">
-                      <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Net Worth Cashflow</div>
-                      <div className="text-xl md:text-2xl font-black text-slate-900 dark:text-white">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+                    <div className="p-4 sm:p-6 bg-card border border-border rounded-2xl shadow-premium">
+                      <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Net Worth Cashflow</div>
+                      <div className="text-lg sm:text-2xl font-black text-foreground">
                         {formatCurrency(stats.netWorth, profile.currency)}
                       </div>
                       <div className="text-[10px] text-slate-400 mt-1 flex items-center gap-1">
-                        <TrendingUp className="w-3 h-3 text-success" />
+                        <TrendingUp className="w-3 h-3 text-success shrink-0" />
                         <span>Calculated including savings targets</span>
                       </div>
                     </div>
 
-                    <div className="p-6 bg-card border border-border rounded-2xl shadow-premium">
-                      <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Workspace Incomes</div>
-                      <div className="text-xl md:text-2xl font-black text-success">
+                    <div className="p-4 sm:p-6 bg-card border border-border rounded-2xl shadow-premium">
+                      <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Workspace Incomes</div>
+                      <div className="text-lg sm:text-2xl font-black text-success">
                         {formatCurrency(stats.income, profile.currency)}
                       </div>
                       <div className="text-[10px] text-slate-400 mt-1 flex items-center gap-1">
-                        <ArrowUpRight className="w-3 h-3 text-success" />
+                        <ArrowUpRight className="w-3 h-3 text-success shrink-0" />
                         <span>Aggregated ledger transactions</span>
                       </div>
                     </div>
 
-                    <div className="p-6 bg-card border border-border rounded-2xl shadow-premium">
-                      <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Workspace Expenses</div>
-                      <div className="text-xl md:text-2xl font-black text-danger">
+                    <div className="p-4 sm:p-6 bg-card border border-border rounded-2xl shadow-premium">
+                      <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Workspace Expenses</div>
+                      <div className="text-lg sm:text-2xl font-black text-danger">
                         {formatCurrency(stats.expense, profile.currency)}
                       </div>
                       <div className="text-[10px] text-slate-400 mt-1 flex items-center gap-1">
-                        <ArrowDownRight className="w-3 h-3 text-danger" />
+                        <ArrowDownRight className="w-3 h-3 text-danger shrink-0" />
                         <span>Outflow costs list</span>
                       </div>
                     </div>
 
-                    <div className="p-6 bg-card border border-border rounded-2xl shadow-premium">
-                      <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Net Balance</div>
-                      <div className={`text-xl md:text-2xl font-black ${stats.balance >= 0 ? 'text-blue-600 dark:text-blue-400' : 'text-danger'}`}>
+                    <div className="p-4 sm:p-6 bg-card border border-border rounded-2xl shadow-premium">
+                      <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Net Balance</div>
+                      <div className={`text-lg sm:text-2xl font-black ${stats.balance >= 0 ? 'text-emerald-500 dark:text-emerald-400' : 'text-danger'}`}>
                         {formatCurrency(stats.balance, profile.currency)}
                       </div>
                       <div className="text-[10px] text-slate-400 mt-1">
@@ -578,7 +823,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                         <div className="space-y-2">
                           <div className="flex items-center gap-2">
                             <Sparkles className="w-5 h-5 text-primary animate-pulse" />
-                            <h3 className="text-base font-bold text-slate-900 dark:text-white">Welcome to MoneyFlow Pro!</h3>
+                             <h3 className="text-base font-bold text-foreground">Welcome to My Pocket Tracker!</h3>
                           </div>
                           <p className="text-xs text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
                             It looks like you're setting up your workspace for the first time. Follow these simple steps to start tracking your finances and personal wealth:
@@ -604,7 +849,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                           </button>
                           <button
                             onClick={() => setShowAddBizModal(true)}
-                            className="px-4 py-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white text-xs font-bold rounded-xl transition-all flex items-center gap-1.5"
+                            className="px-4 py-2 bg-accent hover:bg-accent-hover text-foreground border border-border text-xs font-bold rounded-xl transition-all flex items-center gap-1.5"
                           >
                             <Briefcase className="w-3.5 h-3.5" />
                             <span>3. Register a Business</span>
@@ -696,12 +941,12 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                               {tx.type === 'income' ? '+' : '-'}
                             </div>
                             <div>
-                              <div className="text-xs font-bold text-slate-700 dark:text-slate-200">{tx.description}</div>
+                              <div className="text-xs font-bold text-slate-700">{tx.description}</div>
                               <div className="text-[10px] text-slate-400 mt-0.5">{tx.category_name} &bull; {tx.transaction_date.substring(0, 10)}</div>
                             </div>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className={`text-xs font-bold ${tx.type === 'income' ? 'text-success' : 'text-slate-700 dark:text-slate-200'}`}>
+                            <span className={`text-xs font-bold ${tx.type === 'income' ? 'text-success' : 'text-slate-700'}`}>
                               {formatCurrency(convertCurrency(tx.amount_cents, tx.currency || 'USD', profile.currency), profile.currency)}
                             </span>
                             <button
@@ -770,7 +1015,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                       <h3 className="font-bold text-sm">Ledger Entries ({filteredTransactions.length})</h3>
                       <button
                         onClick={() => handleExport('csv')}
-                        className="px-3 py-1.5 bg-accent hover:bg-accent-hover text-foreground text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-all"
+                        className="px-4 py-2 bg-accent hover:bg-accent-hover text-foreground border border-border text-xs font-semibold rounded-xl transition-all flex items-center gap-1.5"
                       >
                         <Download className="w-3.5 h-3.5" />
                         <span>Export CSV</span>
@@ -792,12 +1037,20 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                                 <span className="bg-accent px-1.5 py-0.5 rounded">{tx.category_name}</span>
                                 <span>&bull;</span>
                                 <span>{tx.transaction_date.substring(0, 10)}</span>
+                                {currentBusiness === null && (
+                                  <>
+                                    <span>&bull;</span>
+                                    <span className="text-emerald-500 font-semibold uppercase tracking-wider text-[9px] bg-emerald-500/10 px-1.5 py-0.5 rounded">
+                                      {tx.business_id ? (businesses.find(b => b.id === tx.business_id)?.name || 'Business') : 'Home'}
+                                    </span>
+                                  </>
+                                )}
                               </div>
                             </div>
                           </div>
                           
                           <div className="flex items-center gap-4">
-                            <span className={`text-xs font-bold ${tx.type === 'income' ? 'text-success' : 'text-slate-700 dark:text-slate-200'}`}>
+                            <span className={`text-xs font-bold ${tx.type === 'income' ? 'text-success' : 'text-slate-700'}`}>
                               {formatCurrency(convertCurrency(tx.amount_cents, tx.currency || 'USD', profile.currency), profile.currency)}
                             </span>
                             <button
@@ -829,15 +1082,15 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
                         <span className="block text-xs font-semibold text-slate-400 uppercase">Company Name</span>
-                        <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{currentBusiness.name}</span>
+                        <span className="text-sm font-bold text-slate-800">{currentBusiness.name}</span>
                       </div>
                       <div>
                         <span className="block text-xs font-semibold text-slate-400 uppercase">Sector Category</span>
-                        <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{currentBusiness.category}</span>
+                        <span className="text-sm font-bold text-slate-800">{currentBusiness.category}</span>
                       </div>
                       <div>
                         <span className="block text-xs font-semibold text-slate-400 uppercase">Workspace Email</span>
-                        <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{currentBusiness.email}</span>
+                        <span className="text-sm font-bold text-slate-800">{currentBusiness.email}</span>
                       </div>
                       <div>
                         <span className="block text-xs font-semibold text-slate-400 uppercase">Description</span>
@@ -1036,8 +1289,8 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             </div>
 
                             <div className="flex justify-between text-xs mb-6">
-                              <span className="text-slate-400">Current: {formatCurrency(convertCurrency(goal.current_amount_cents, 'USD', profile.currency), profile.currency)}</span>
-                              <span className="font-bold">Target: {formatCurrency(convertCurrency(goal.target_amount_cents, 'USD', profile.currency), profile.currency)}</span>
+                              <span className="text-slate-400">Current: {formatCurrency(goal.current_amount_cents, profile.currency)}</span>
+                              <span className="font-bold">Target: {formatCurrency(goal.target_amount_cents, profile.currency)}</span>
                             </div>
                           </div>
 
@@ -1056,7 +1309,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                                       placeholder="0.00"
                                       autoFocus
                                       id={`input-goal-${goal.id}`}
-                                      className="w-full pl-6 pr-2 py-1.5 bg-accent border border-border rounded-lg text-xs focus:outline-none focus:border-primary text-slate-800 dark:text-slate-100"
+                                      className="w-full pl-6 pr-2 py-1.5 bg-accent border border-border rounded-lg text-xs focus:outline-none focus:border-primary text-slate-800"
                                     />
                                   </div>
                                   <button
@@ -1147,7 +1400,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     <div className="flex flex-wrap gap-3">
                       <button
                         onClick={() => handleExport('csv')}
-                        className="px-4 py-2 bg-slate-900 dark:bg-slate-800 text-white hover:bg-slate-800 text-xs font-semibold rounded-xl transition-all flex items-center gap-1.5"
+                        className="px-4 py-2 bg-accent hover:bg-accent-hover text-foreground border border-border text-xs font-semibold rounded-xl transition-all flex items-center gap-1.5"
                       >
                         <Download className="w-3.5 h-3.5" />
                         <span>Export CSV</span>
@@ -1176,7 +1429,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                       {currentTransactions.map(tx => (
                         <div key={tx.id} className="py-3 flex justify-between items-center text-xs">
                           <div>
-                            <span className="font-bold text-slate-700 dark:text-slate-200">{tx.description}</span>
+                            <span className="font-bold text-slate-700">{tx.description}</span>
                             <span className="ml-2 text-slate-400">({tx.category_name})</span>
                           </div>
                           <span className={`font-bold ${tx.type === 'income' ? 'text-success' : 'text-danger'}`}>
@@ -1245,11 +1498,18 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                       <div className="h-64 w-full">
                         <ResponsiveContainer width="100%" height="100%">
                           <AreaChart data={monthlyChartData}>
+                            <defs>
+                              <linearGradient id="colorAccum" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#10b981" stopOpacity={0.2}/>
+                                <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                              </linearGradient>
+                            </defs>
                             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                             <XAxis dataKey="name" stroke="var(--foreground)" fontSize={11} />
                             <YAxis stroke="var(--foreground)" fontSize={11} />
                             <Tooltip />
-                            <Area type="monotone" dataKey="Income" stroke="#6366f1" fill="#6366f1" fillOpacity={0.05} />
+                            <Legend />
+                            <Area type="monotone" name="Accumulated Balance" dataKey="Accumulated" stroke="#10b981" fillOpacity={1} fill="url(#colorAccum)" />
                           </AreaChart>
                         </ResponsiveContainer>
                       </div>
@@ -1280,24 +1540,6 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             type="text"
                             value={profileForm.name}
                             onChange={e => setProfileForm({ ...profileForm, name: e.target.value })}
-                            className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-medium text-slate-400 mb-2">Contact Phone</label>
-                          <input
-                            type="text"
-                            value={profileForm.phone}
-                            onChange={e => setProfileForm({ ...profileForm, phone: e.target.value })}
-                            className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-medium text-slate-400 mb-2">Country Code</label>
-                          <input
-                            type="text"
-                            value={profileForm.country}
-                            onChange={e => setProfileForm({ ...profileForm, country: e.target.value })}
                             className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
                           />
                         </div>
@@ -1382,6 +1624,56 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
         </div>
       </main>
 
+      {/* Mobile Fixed Bottom Navigation Bar */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-card border-t border-border backdrop-blur-xl md:hidden px-2 py-1 flex justify-around items-center shadow-lg">
+        <button
+          onClick={() => setActiveTab('dashboard')}
+          className={`flex flex-col items-center gap-0.5 p-1.5 rounded-xl transition-colors ${
+            activeTab === 'dashboard' ? 'text-primary font-bold' : 'text-slate-400 hover:text-foreground'
+          }`}
+        >
+          <LayoutDashboard className="w-5 h-5" />
+          <span className="text-[9px] tracking-tight">Home</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('transactions')}
+          className={`flex flex-col items-center gap-0.5 p-1.5 rounded-xl transition-colors ${
+            activeTab === 'transactions' ? 'text-primary font-bold' : 'text-slate-400 hover:text-foreground'
+          }`}
+        >
+          <Wallet className="w-5 h-5" />
+          <span className="text-[9px] tracking-tight">Ledger</span>
+        </button>
+
+        {/* Center Floating Action Button */}
+        <button
+          onClick={() => setShowAddTxModal(true)}
+          className="w-10 h-10 -mt-5 bg-primary hover:bg-primary-hover text-white rounded-full flex items-center justify-center shadow-glow transition-transform active:scale-95 shrink-0"
+          aria-label="Add Transaction"
+        >
+          <Plus className="w-5 h-5" />
+        </button>
+
+        <button
+          onClick={() => setActiveTab('analytics')}
+          className={`flex flex-col items-center gap-0.5 p-1.5 rounded-xl transition-colors ${
+            activeTab === 'analytics' ? 'text-primary font-bold' : 'text-slate-400 hover:text-foreground'
+          }`}
+        >
+          <BarChart3 className="w-5 h-5" />
+          <span className="text-[9px] tracking-tight">Analytics</span>
+        </button>
+
+        <button
+          onClick={() => setShowMobileMenu(true)}
+          className="flex flex-col items-center gap-0.5 p-1.5 rounded-xl text-slate-400 hover:text-foreground transition-colors"
+        >
+          <Menu className="w-5 h-5" />
+          <span className="text-[9px] tracking-tight">Menu</span>
+        </button>
+      </nav>
+
       {/* ========================================================================= */}
       {/* DIALOG FORM MODALS */}
       {/* ========================================================================= */}
@@ -1389,7 +1681,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
       {/* Add Business Modal */}
       {showAddBizModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-6">
+          <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-6 max-h-[90vh] overflow-y-auto">
             <h3 className="font-bold text-base mb-4">Register Business</h3>
             
             <form onSubmit={handleAddBusinessSubmit} className="space-y-4">
@@ -1411,24 +1703,6 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                   placeholder="e.g. Retail, Consulting"
                   value={bizForm.category}
                   onChange={e => setBizForm({ ...bizForm, category: e.target.value })}
-                  className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Workspace Email</label>
-                <input
-                  type="email"
-                  value={bizForm.email}
-                  onChange={e => setBizForm({ ...bizForm, email: e.target.value })}
-                  className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Phone Number</label>
-                <input
-                  type="text"
-                  value={bizForm.phone}
-                  onChange={e => setBizForm({ ...bizForm, phone: e.target.value })}
                   className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
                 />
               </div>
@@ -1465,7 +1739,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
       {/* Add Transaction Modal */}
       {showAddTxModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-6">
+          <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-6 max-h-[90vh] overflow-y-auto">
             <h3 className="font-bold text-base mb-4">Add Transaction</h3>
             
             <form onSubmit={handleAddTransactionSubmit} className="space-y-4">
@@ -1581,7 +1855,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
       {/* Add Goal Modal */}
       {showAddGoalModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-6">
+          <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-6 max-h-[90vh] overflow-y-auto">
             <h3 className="font-bold text-base mb-4">Set Savings Target Goal</h3>
             
             <form onSubmit={handleAddGoalSubmit} className="space-y-4">

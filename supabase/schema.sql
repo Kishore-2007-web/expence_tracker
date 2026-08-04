@@ -1,4 +1,4 @@
--- MoneyFlow Pro Supabase Database Schema
+-- My Pocket Tracker Supabase Database Schema
 
 -- Enable UUID extension
 create extension if not exists "uuid-ossp";

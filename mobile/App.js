@@ -1,4 +1,4 @@
-// MoneyFlow Pro - React Native Mobile Application (Expo Entry point)
+// My Pocket Tracker - React Native Mobile Application (Expo Entry point)
 // Shared business logic integration with Web Dashboard
 
 import React, { useState } from 'react';
@@ -46,7 +46,7 @@ export default function App() {
 
   const handleUpgrade = () => {
     setIsPremium(true);
-    Alert.alert('Premium Upgraded', 'Welcome to MoneyFlow Pro Premium! Unlimited businesses unlocked.');
+    Alert.alert('Premium Upgraded', 'Welcome to My Pocket Tracker Premium! Unlimited businesses unlocked.');
   };
 
   return (
@@ -58,7 +58,7 @@ export default function App() {
         <View style={styles.header}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={styles.logoBadge}><Text style={styles.logoText}>M</Text></View>
-            <Text style={styles.headerTitle}>MoneyFlow <Text style={styles.accentText}>Pro</Text></Text>
+            <Text style={styles.headerTitle}>My Pocket <Text style={styles.accentText}>Tracker</Text></Text>
           </View>
           <TouchableOpacity onPress={handleUpgrade} style={isPremium ? styles.premiumLabel : styles.upgradeBtn}>
             <Text style={styles.btnText}>{isPremium ? 'PRO MEMBER' : 'UPGRADE PRO'}</Text>
@@ -71,7 +71,7 @@ export default function App() {
             onPress={() => setCurrentBiz(null)}
             style={[styles.switchTab, currentBiz === null && styles.activeSwitchTab]}
           >
-            <Text style={[styles.switchText, currentBiz === null && styles.activeSwitchText]}>Personal</Text>
+            <Text style={[styles.switchText, currentBiz === null && styles.activeSwitchText]}>Home</Text>
           </TouchableOpacity>
           {businesses.map(biz => (
             <TouchableOpacity 
@@ -86,7 +86,7 @@ export default function App() {
 
         {/* Wallet Metrics Card */}
         <View style={styles.metricCard}>
-          <Text style={styles.metricLabel}>{currentBiz ? `${currentBiz.name} Balance` : 'Personal Cashflow Net Worth'}</Text>
+          <Text style={styles.metricLabel}>{currentBiz ? `${currentBiz.name} Balance` : 'Home Cashflow Net Worth'}</Text>
           <Text style={styles.metricValue}>${balance.toFixed(2)}</Text>
 
           <View style={styles.flowRow}>
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   logoBadge: {
     width: 32,
     height: 32,
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#10b981',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -183,10 +183,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   accentText: {
-    color: '#6366f1',
+    color: '#10b981',
   },
   upgradeBtn: {
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#10b981',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 6,
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   switcherContainer: {
     flexDirection: 'row',
     marginBottom: 20,
-    backgroundColor: '#111827',
+    backgroundColor: '#0a0a0a',
     padding: 4,
     borderRadius: 10,
   },
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   activeSwitchTab: {
-    backgroundColor: '#1f2937',
+    backgroundColor: '#1a1a1a',
   },
   switchText: {
     color: '#94a3b8',
@@ -227,11 +227,11 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   metricCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#0a0a0a',
     borderRadius: 16,
     padding: 20,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#222222',
     marginBottom: 20,
   },
   metricLabel: {
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderTopWidth: 1,
-    borderTopColor: '#1f2937',
+    borderTopColor: '#222222',
     paddingTop: 15,
   },
   flowLabel: {
@@ -266,11 +266,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   formCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#0a0a0a',
     borderRadius: 16,
     padding: 20,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#222222',
     marginBottom: 20,
   },
   formTitle: {
@@ -287,10 +287,10 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#222222',
   },
   submitBtn: {
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#10b981',
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
@@ -310,11 +310,11 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   goalCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#0a0a0a',
     borderRadius: 16,
     padding: 15,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#222222',
   },
   goalName: {
     color: '#fff',
@@ -334,6 +334,6 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: '100%',
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#10b981',
   }
 });
