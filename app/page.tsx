@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useApp, getCurrencySymbol, EXCHANGE_RATES } from '@/lib/AppContext';
 import LandingPage from '@/components/LandingPage';
 import AppWorkspace from '@/components/AppWorkspace';
-import { UpgradeModal } from '@/components/UpgradeModal';
 import { Sparkles, Mail, Lock, ArrowRight, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -515,9 +514,6 @@ export default function Home() {
         )}
 
       </AnimatePresence>
-
-      {/* Global Upgrade Subscription Modal Drawer */}
-      <UpgradeModal />
     </div>
   );
 }

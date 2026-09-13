@@ -114,57 +114,22 @@ export interface Notification {
 export const PLANS: Plan[] = [
   {
     id: 'FREE',
-    name: 'Free Starter',
+    name: 'Free Unlimited',
     price_cents: 0,
     currency: 'USD',
     billing_interval: 'none',
-    business_limit: 3,
-    features: [
-      'Maximum 3 Businesses',
-      'Unlimited Personal Transactions',
-      'Basic Dashboard',
-      'Daily/Weekly/Monthly Reports',
-      'Savings Goals',
-      'Basic Analytics'
-    ]
-  },
-  {
-    id: 'PREMIUM_MONTHLY',
-    name: 'Premium Monthly',
-    price_cents: 999, // $9.99
-    currency: 'USD',
-    billing_interval: 'month',
-    business_limit: 9999,
+    business_limit: 99999,
     features: [
       'Unlimited Businesses',
+      'Unlimited Personal & Business Transactions',
       'Advanced Analytics & PDF Export',
       'AI Financial Insights',
       'Business Comparison Dashboard',
       'Custom Categories',
-      'Advanced Reports (CSV/Excel)',
+      'Advanced Reports (CSV/Excel/PDF)',
       'Business Logo Upload & Invoices',
-      'Priority Email Support',
-      'Multiple Currency Support'
-    ]
-  },
-  {
-    id: 'PREMIUM_YEARLY',
-    name: 'Premium Yearly',
-    price_cents: 9990, // $99.90
-    currency: 'USD',
-    billing_interval: 'year',
-    business_limit: 9999,
-    features: [
-      'Unlimited Businesses',
-      'Advanced Analytics & PDF Export',
-      'AI Financial Insights',
-      'Business Comparison Dashboard',
-      'Custom Categories',
-      'Advanced Reports (CSV/Excel)',
-      'Business Logo Upload & Invoices',
-      'Priority Email Support',
       'Multiple Currency Support',
-      'Save 20% over Monthly Plan'
+      'Zero Ads & 100% Free Forever'
     ]
   }
 ];
@@ -354,13 +319,6 @@ class MockDBClass {
   }
 
   addBusiness(biz: Omit<Business, 'id' | 'user_id' | 'created_at'>) {
-    const activePlan = this.getPlan();
-    const currentCount = this.data.businesses.length;
-    
-    if (activePlan.business_limit > 0 && currentCount >= activePlan.business_limit) {
-      throw new Error(`LimitReached: You can create a maximum of ${activePlan.business_limit} businesses under the Free tier. Upgrade to Premium for unlimited businesses.`);
-    }
-
     const newBiz: Business = {
       ...biz,
       id: 'biz-' + Math.random().toString(36).substr(2, 9),

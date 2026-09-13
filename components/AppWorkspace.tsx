@@ -499,11 +499,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
             <div className="truncate max-w-[120px]">
               <div className="text-xs font-bold">{profile.name}</div>
               <div className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                {isPremium ? (
-                  <span className="text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider text-[8px] bg-emerald-50 dark:bg-emerald-950/50 px-1 rounded">PRO</span>
-                ) : (
-                  <span className="text-slate-400">Free Tier</span>
-                )}
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider text-[8px] bg-emerald-50 dark:bg-emerald-950/50 px-1 rounded">Free Unlimited</span>
               </div>
             </div>
           </div>
@@ -552,20 +548,9 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {!isPremium && (
-              <button
-                onClick={openUpgradeModal}
-                className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary-hover hover:to-emerald-600 text-white text-[11px] sm:text-xs font-bold rounded-xl transition-all shadow-glow flex items-center gap-1 shrink-0"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Upgrade Pro</span>
-                <span className="sm:hidden">Pro</span>
-              </button>
-            )}
-
             <button
               onClick={() => setShowAddTxModal(true)}
-              className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-accent hover:bg-accent-hover text-foreground border border-border text-[11px] sm:text-xs font-semibold rounded-xl transition-all flex items-center gap-1 shrink-0"
+              className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-primary hover:bg-primary-hover text-white text-[11px] sm:text-xs font-bold rounded-xl transition-all shadow-glow flex items-center gap-1 shrink-0"
             >
               <Plus className="w-4 h-4" />
               <span className="hidden sm:inline">Add Transaction</span>
@@ -724,7 +709,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     <div className="truncate flex-1">
                       <div className="text-xs font-bold truncate">{profile.name}</div>
                       <div className="text-[10px] text-slate-400">
-                        {isPremium ? <span className="text-emerald-500 font-bold uppercase">PRO Plan</span> : 'Free Tier'}
+                        <span className="text-emerald-500 font-bold uppercase">Free Unlimited</span>
                       </div>
                     </div>
                   </div>
@@ -1579,41 +1564,20 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     </form>
                   </div>
 
-                  {/* Subscriptions info */}
                   <div className="p-6 bg-card border border-border rounded-2xl shadow-premium">
-                    <h3 className="font-bold text-sm mb-4">Subscription Billing Details</h3>
+                    <h3 className="font-bold text-sm mb-4">Account Access & Features</h3>
 
-                    <div className="p-4 bg-slate-50 dark:bg-slate-900 border border-border rounded-xl mb-6">
+                    <div className="p-4 bg-slate-50 dark:bg-slate-900 border border-border rounded-xl">
                       <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs text-slate-500">Current Plan Status:</span>
-                        <span className="text-xs font-bold uppercase text-primary">{subscription.plan_id}</span>
+                        <span className="text-xs text-slate-500">Account Tier Status:</span>
+                        <span className="text-xs font-bold uppercase text-emerald-500">100% Free Unlimited</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-xs text-slate-500">Next Renewal Period:</span>
-                        <span className="text-xs font-medium">{subscription.current_period_end.substring(0, 10)}</span>
+                        <span className="text-xs text-slate-500">Plan Renewal / Fee:</span>
+                        <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">$0 / Lifetime Free Access</span>
                       </div>
                     </div>
-
-                    {isPremium ? (
-                      <button
-                        type="button"
-                        onClick={downgradeToFree}
-                        className="px-4 py-2 border border-danger text-danger hover:bg-danger/5 text-xs font-semibold rounded-xl transition-all"
-                      >
-                        Cancel Auto Renewal
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={openUpgradeModal}
-                        className="px-4 py-2 bg-primary text-white text-xs font-bold rounded-xl transition-all shadow-glow hover:shadow-glow/10"
-                      >
-                        Upgrade Subscription
-                      </button>
-                    )}
                   </div>
-
-                  <AdBanner placementKey="settings" />
                 </div>
               )}
 

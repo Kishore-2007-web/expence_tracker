@@ -40,7 +40,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-500 dark:text-slate-400">
             <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-            <a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a>
+            <a href="#overview" className="hover:text-foreground transition-colors">Overview</a>
             <a href="#about" className="hover:text-foreground transition-colors">About Us</a>
             <a href="#contact" className="hover:text-foreground transition-colors">Contact</a>
             <a href="#faq" className="hover:text-foreground transition-colors">FAQ</a>
@@ -74,13 +74,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
           >
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold mb-6">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Next-Gen Personal & Business Accounting Platform</span>
+              <span>100% Free & Open Platform — All Features Unlocked</span>
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6">
               Manage personal wealth & <span className="bg-gradient-to-r from-primary to-emerald-400 bg-clip-text text-transparent">multiple businesses</span> in one app
             </h1>
             <p className="text-base md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Why use separate tools? Track salaries, investments, grocery expense lists, invoices, tax calculations, and profit forecasts together under a single, unified workspace.
+              Track salaries, investments, grocery expense lists, invoices, tax calculations, and profit forecasts together under a single, unified workspace with zero fees and no ads.
             </p>
           </motion.div>
 
@@ -98,10 +98,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
               <ArrowRight className="w-4 h-4" />
             </button>
             <a
-              href="#pricing"
+              href="#features"
               className="w-full sm:w-auto px-8 py-4 bg-card border border-border text-foreground font-semibold rounded-xl flex items-center justify-center hover:bg-accent transition-all text-base"
             >
-              Compare Plans
+              Explore Features
             </a>
           </motion.div>
 
@@ -157,7 +157,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
               </div>
               <h3 className="text-lg font-bold mb-3">Multi-Business Accounts</h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-                Add, manage, and scale up to 3 business profiles on the free plan, or upgrade to support unlimited businesses with individual custom settings.
+                Add, manage, and scale unlimited business profiles with individual custom settings, full currency support, and no artificial limits.
               </p>
             </div>
 
@@ -166,7 +166,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
               <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl flex items-center justify-center text-primary mb-6">
                 <BarChart3 className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold mb-3">Premium Forecasting & Invoices</h3>
+              <h3 className="text-lg font-bold mb-3">Forecasting & Invoices</h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
                 Generate professional Invoice PDFs, upload logos, inspect AI-driven growth charts, forecast quarterly earnings, and budget with precision.
               </p>
@@ -175,91 +175,50 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-20 border-t border-border">
+      {/* Free Platform Overview Section */}
+      <section id="overview" className="py-20 border-t border-border">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Pricing Plans built for all Builders</h2>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">100% Free Forever for Every User</h2>
             <p className="text-slate-500 dark:text-slate-400 mb-6 max-w-xl mx-auto text-sm">
-              Start for free, then choose a billing cycle that suits your scale. Support for credit cards, UPI, and global wire transfers.
+              All pro capabilities—unlimited business workspaces, AI financial insights, invoice PDF generators, and multi-format exports—are completely free for everyone.
             </p>
-
-            <div className="inline-flex items-center gap-2 p-1 bg-accent rounded-lg">
-              <button
-                type="button"
-                onClick={() => setBillingCycle('monthly')}
-                className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all ${
-                  billingCycle === 'monthly' ? 'bg-card text-foreground shadow-sm' : 'text-slate-400'
-                }`}
-              >
-                Monthly Billing
-              </button>
-              <button
-                type="button"
-                onClick={() => setBillingCycle('yearly')}
-                className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
-                  billingCycle === 'yearly' ? 'bg-card text-foreground shadow-sm' : 'text-slate-400'
-                }`}
-              >
-                Yearly Billing <span className="bg-primary/10 text-primary text-[9px] px-1.5 py-0.5 rounded font-black">SAVE 20%</span>
-              </button>
-            </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Free pricing card */}
-            <div className="p-8 rounded-2xl bg-card border border-border flex flex-col justify-between hover:shadow-premium transition-all">
-              <div>
-                <h3 className="text-lg font-bold mb-2">Free Starter</h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Perfect for freelancers and individual salary earners starting out.</p>
-                <div className="text-3xl font-black mb-6">$0 <span className="text-xs font-normal text-slate-400">/ forever</span></div>
-                
-                <ul className="space-y-3 mb-8">
-                  {['Up to 3 Business Profiles', 'Unlimited Personal Transactions', 'Basic Savings Goals', 'Daily / Weekly Reports', 'Consolidated Balance sheet', 'Google AdSense (With Ads)'].map((f, i) => (
-                    <li key={i} className="flex items-center gap-2.5 text-sm">
-                      <Check className="w-4 h-4 text-success shrink-0" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <button
-                onClick={onEnterApp}
-                className="w-full py-3 bg-accent hover:bg-accent-hover text-foreground font-semibold rounded-xl transition-all"
-              >
-                Get Started Free
-              </button>
+          <div className="max-w-3xl mx-auto p-8 rounded-2xl bg-card border-2 border-primary hover:shadow-premium transition-all relative">
+            <div className="absolute top-0 right-8 -translate-y-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+              All Features Included
+            </div>
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold mb-2">Unlimited Access</h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">Zero subscriptions, zero paywalls, zero advertisements.</p>
+              <div className="text-4xl font-black text-primary">$0 <span className="text-sm font-normal text-slate-400">/ forever free</span></div>
             </div>
 
-            {/* Premium pricing card */}
-            <div className="p-8 rounded-2xl bg-card border-2 border-primary flex flex-col justify-between hover:shadow-premium transition-all relative">
-              <div className="absolute top-0 right-8 -translate-y-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                Most Popular
-              </div>
-              <div>
-                <h3 className="text-lg font-bold mb-2">My Pocket Tracker Premium</h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Built for expanding businesses, shop owners, and seasoned creators.</p>
-                <div className="text-3xl font-black mb-6">
-                  {billingCycle === 'monthly' ? '$9.99' : '$8.32'}{' '}
-                  <span className="text-xs font-normal text-slate-400">/ month ({billingCycle === 'monthly' ? '$9.99/mo' : '$99.90/yr'})</span>
+            <div className="grid md:grid-cols-2 gap-4 mb-8">
+              {[
+                'Unlimited Business Profiles',
+                'AI Financial Insights',
+                'Invoice PDF Generator',
+                'Advanced Reports (CSV, Excel, PDF)',
+                'Multi-Currency Exchange Conversion',
+                'Savings Goals & Cashflow Analytics',
+                'Zero Advertisements',
+                'Local & Firebase Security'
+              ].map((f, i) => (
+                <div key={i} className="flex items-center gap-2.5 text-sm">
+                  <Check className="w-4 h-4 text-success shrink-0" />
+                  <span className="font-medium">{f}</span>
                 </div>
-
-                <ul className="space-y-3 mb-8">
-                  {['Unlimited Business Profiles', 'Everything in Free Starter', 'Zero Advertisements', 'AI Financial Insights', 'Invoice PDF Generator', 'Advanced analytics comparisons', 'Multi-currency support', 'Priority Customer Support'].map((f, i) => (
-                    <li key={i} className="flex items-center gap-2.5 text-sm">
-                      <Check className="w-4 h-4 text-success shrink-0" />
-                      <span className="font-medium">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <button
-                onClick={onEnterApp}
-                className="w-full py-3 bg-primary hover:bg-primary-hover text-white font-semibold rounded-xl transition-all shadow-glow hover:shadow-glow/15"
-              >
-                Unlock Premium Now
-              </button>
+              ))}
             </div>
+
+            <button
+              onClick={onEnterApp}
+              className="w-full py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl transition-all shadow-glow hover:shadow-glow/15"
+            >
+              Start Using My Pocket Tracker Now
+            </button>
           </div>
         </div>
       </section>
@@ -372,16 +331,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
                 a: 'It gives you a complete overview of your true net worth. You can see how much revenue your businesses are bringing in while budgeting for personal living expenditures simultaneously without switching logins.'
               },
               {
-                q: 'What happens when I hit the 3-business limit on the Free Plan?',
-                a: 'If you attempt to register a 4th business profile, you will see a Premium Upgrade screen. Upgrading unlocks unlimited business registers, detailed comparative analytics, and invoice PDFs.'
+                q: 'Are there any limits on how many businesses or transactions I can create?',
+                a: 'No! My Pocket Tracker is 100% free with unlimited business profiles, unlimited transaction entries, and full access to AI insights and invoice generators.'
               },
               {
                 q: 'How can I connect this application to my Supabase instance?',
                 a: 'Simply fill in your Supabase variables in your `.env` configuration file. The code client checks for keys at startup and switches from mock local storage to Supabase dynamic queries automatically.'
               },
               {
-                q: 'Are coupon codes supported during checkout?',
-                a: 'Yes! You can enter SAVE20 for a 20% discount, WELCOME50 for a flat $50 discount, or FLOWFREE for a 100% discount to demo subscription modifications.'
+                q: 'Is my financial data kept private?',
+                a: 'Yes, your data is stored securely in your local environment or synced to your private Firebase / Supabase instance with end-to-end security.'
               }
             ].map((faq, idx) => (
               <div key={idx} className="p-6 rounded-2xl bg-card border border-border">
