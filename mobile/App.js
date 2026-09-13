@@ -35,7 +35,10 @@ export default function App() {
       return;
     }
     const amt = parseFloat(txAmt);
-    if (isNaN(amt)) return;
+    if (isNaN(amt) || amt <= 0) {
+      Alert.alert('Error', 'Please enter a valid positive transaction amount');
+      return;
+    }
 
     setExpense(prev => prev + amt);
     setBalance(prev => prev - amt);

@@ -175,50 +175,91 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
         </div>
       </section>
 
-      {/* Free Platform Overview Section */}
-      <section id="overview" className="py-20 border-t border-border">
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 border-t border-border">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">100% Free Forever for Every User</h2>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Pricing Plans built for all Builders</h2>
             <p className="text-slate-500 dark:text-slate-400 mb-6 max-w-xl mx-auto text-sm">
-              All pro capabilities—unlimited business workspaces, AI financial insights, invoice PDF generators, and multi-format exports—are completely free for everyone.
+              Start for free, then choose a billing cycle that suits your scale. Support for credit cards, UPI, and global wire transfers.
             </p>
+
+            <div className="inline-flex items-center gap-2 p-1 bg-accent rounded-lg">
+              <button
+                type="button"
+                onClick={() => setBillingCycle('monthly')}
+                className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all ${
+                  billingCycle === 'monthly' ? 'bg-card text-foreground shadow-sm' : 'text-slate-400'
+                }`}
+              >
+                Monthly Billing
+              </button>
+              <button
+                type="button"
+                onClick={() => setBillingCycle('yearly')}
+                className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
+                  billingCycle === 'yearly' ? 'bg-card text-foreground shadow-sm' : 'text-slate-400'
+                }`}
+              >
+                Yearly Billing <span className="bg-primary/10 text-primary text-[9px] px-1.5 py-0.5 rounded font-black">SAVE 20%</span>
+              </button>
+            </div>
           </div>
 
-          <div className="max-w-3xl mx-auto p-8 rounded-2xl bg-card border-2 border-primary hover:shadow-premium transition-all relative">
-            <div className="absolute top-0 right-8 -translate-y-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-              All Features Included
-            </div>
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold mb-2">Unlimited Access</h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">Zero subscriptions, zero paywalls, zero advertisements.</p>
-              <div className="text-4xl font-black text-primary">$0 <span className="text-sm font-normal text-slate-400">/ forever free</span></div>
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Free pricing card */}
+            <div className="p-8 rounded-2xl bg-card border border-border flex flex-col justify-between hover:shadow-premium transition-all">
+              <div>
+                <h3 className="text-lg font-bold mb-2">Free Starter</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Perfect for freelancers and individual salary earners starting out.</p>
+                <div className="text-3xl font-black mb-6">$0 <span className="text-xs font-normal text-slate-400">/ forever</span></div>
+                
+                <ul className="space-y-3 mb-8">
+                  {['Up to 3 Business Profiles', 'Unlimited Personal Transactions', 'Basic Savings Goals', 'Daily / Weekly Reports', 'Consolidated Balance sheet', 'Sponsored Banners (With Ads)'].map((f, i) => (
+                    <li key={i} className="flex items-center gap-2.5 text-sm">
+                      <Check className="w-4 h-4 text-success shrink-0" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <button
+                onClick={onEnterApp}
+                className="w-full py-3 bg-accent hover:bg-accent-hover text-foreground font-semibold rounded-xl transition-all"
+              >
+                Get Started Free
+              </button>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-4 mb-8">
-              {[
-                'Unlimited Business Profiles',
-                'AI Financial Insights',
-                'Invoice PDF Generator',
-                'Advanced Reports (CSV, Excel, PDF)',
-                'Multi-Currency Exchange Conversion',
-                'Savings Goals & Cashflow Analytics',
-                'Zero Advertisements',
-                'Local & Firebase Security'
-              ].map((f, i) => (
-                <div key={i} className="flex items-center gap-2.5 text-sm">
-                  <Check className="w-4 h-4 text-success shrink-0" />
-                  <span className="font-medium">{f}</span>
+            {/* Premium pricing card */}
+            <div className="p-8 rounded-2xl bg-card border-2 border-primary flex flex-col justify-between hover:shadow-premium transition-all relative">
+              <div className="absolute top-0 right-8 -translate-y-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                Most Popular
+              </div>
+              <div>
+                <h3 className="text-lg font-bold mb-2">My Pocket Tracker Premium</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Built for expanding businesses, shop owners, and seasoned creators.</p>
+                <div className="text-3xl font-black mb-6">
+                  {billingCycle === 'monthly' ? '$9.99' : '$8.32'}{' '}
+                  <span className="text-xs font-normal text-slate-400">/ month ({billingCycle === 'monthly' ? '$9.99/mo' : '$99.90/yr'})</span>
                 </div>
-              ))}
-            </div>
 
-            <button
-              onClick={onEnterApp}
-              className="w-full py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl transition-all shadow-glow hover:shadow-glow/15"
-            >
-              Start Using My Pocket Tracker Now
-            </button>
+                <ul className="space-y-3 mb-8">
+                  {['Unlimited Business Profiles', 'Everything in Free Starter', 'Zero Advertisements', 'AI Financial Insights', 'Invoice PDF Generator', 'Advanced analytics comparisons', 'Multi-currency support', 'Priority Customer Support'].map((f, i) => (
+                    <li key={i} className="flex items-center gap-2.5 text-sm">
+                      <Check className="w-4 h-4 text-success shrink-0" />
+                      <span className="font-medium">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <button
+                onClick={onEnterApp}
+                className="w-full py-3 bg-primary hover:bg-primary-hover text-white font-semibold rounded-xl transition-all shadow-glow hover:shadow-glow/15"
+              >
+                Unlock Premium Now
+              </button>
+            </div>
           </div>
         </div>
       </section>

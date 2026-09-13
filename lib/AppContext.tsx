@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { MockDB, Profile, Subscription, Business, Transaction, SavingsGoal, Notification, Coupon, PLANS } from './mock-db';
 
+import AdManager from './ads-manager';
 import { 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
@@ -75,8 +76,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isFirebaseBlocked, setIsFirebaseBlocked] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
 
-  const isPremium = true;
-  const planFeatures = PLANS[0]?.features || [];
+  const isPremium = subscription.plan_id !== 'FREE';
+  const planFeatures = PLANS.find(p => p.id === subscription.plan_id)?.features || [];
 
   const refreshData = () => {
     setProfile({ ...MockDB.getProfile() });
@@ -87,6 +88,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setSavingsGoals([...MockDB.getGoals()]);
     setNotifications([...MockDB.getNotifications()]);
     setCouponList([...MockDB.getCoupons()]);
+    
+    // Set ad tier
+    AdManager.setTier(sub.plan_id !== 'FREE' ? 'premium' : 'free');
   };
 
   const loginOffline = () => {
