@@ -306,28 +306,42 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const loginWithGoogle = async () => {
     if (isFirebaseBlocked) {
-      // Local/Offline Google Login
-      const mockUid = 'mock-google-uid';
-      const isNewUserLogin = MockDB.getProfile().id !== mockUid;
-      const updatedProfile = MockDB.updateProfile({
-        id: mockUid,
-        name: 'Alex Mercer (Google)',
-        email: 'alex.mercer@gmail.com',
-        ...(isNewUserLogin ? { onboarded: false } : {})
-      });
-      setProfile(updatedProfile);
-      localStorage.setItem('moneyflow_auth_mode', 'offline');
-      setFirebaseUser({
-        uid: mockUid,
-        email: 'alex.mercer@gmail.com',
-        displayName: 'Alex Mercer (Google)',
-        photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&h=256&fit=crop',
-      } as any);
+      loginOfflineGoogle();
       return;
     }
 
-    await signInWithPopup(auth, googleProvider);
-    localStorage.setItem('moneyflow_auth_mode', 'firebase');
+    try {
+      await signInWithPopup(auth, googleProvider);
+      localStorage.setItem('moneyflow_auth_mode', 'firebase');
+    } catch (err: any) {
+      console.warn("Firebase Google Sign-In error:", err);
+      if (err?.code === 'auth/unauthorized-domain' || err?.code === 'auth/popup-blocked' || err?.code === 'auth/operation-not-allowed') {
+        console.info("Switching to mock Google auth due to domain authorization or popup restriction.");
+        loginOfflineGoogle();
+      } else {
+        throw err;
+      }
+    }
+  };
+
+  const loginOfflineGoogle = () => {
+    const mockUid = 'mock-google-uid';
+    const isNewUserLogin = MockDB.getProfile().id !== mockUid;
+    const updatedProfile = MockDB.updateProfile({
+      id: mockUid,
+      name: 'Alex Mercer (Google)',
+      email: 'alex.mercer@gmail.com',
+      avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&h=256&fit=crop',
+      ...(isNewUserLogin ? { onboarded: false } : {})
+    });
+    setProfile(updatedProfile);
+    localStorage.setItem('moneyflow_auth_mode', 'offline');
+    setFirebaseUser({
+      uid: mockUid,
+      email: 'alex.mercer@gmail.com',
+      displayName: 'Alex Mercer (Google)',
+      photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&h=256&fit=crop',
+    } as any);
   };
 
   const logout = async () => {
