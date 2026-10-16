@@ -140,6 +140,40 @@ export default function App() {
           </View>
         )}
 
+        {/* Business Settings & Danger Zone */}
+        {currentBiz !== null && (
+          <View style={styles.bizSettingsCard}>
+            <Text style={styles.sectionTitle}>Business Settings</Text>
+            <Text style={styles.bizDescText}>
+              Manage {currentBiz.name} ({currentBiz.category})
+            </Text>
+            <TouchableOpacity 
+              onPress={() => {
+                Alert.alert(
+                  'Delete Business',
+                  `Are you sure you want to permanently delete "${currentBiz.name}"? This action cannot be undone.`,
+                  [
+                    { text: 'Cancel', style: 'cancel' },
+                    { 
+                      text: 'Delete', 
+                      style: 'destructive',
+                      onPress: () => {
+                        const targetId = currentBiz.id;
+                        setBusinesses(prev => prev.filter(b => b.id !== targetId));
+                        setCurrentBiz(null);
+                        Alert.alert('Deleted', 'Business workspace has been removed.');
+                      }
+                    }
+                  ]
+                );
+              }} 
+              style={styles.deleteBizBtn}
+            >
+              <Text style={styles.deleteBizBtnText}>Delete This Business</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -332,5 +366,30 @@ const styles = StyleSheet.create({
   progressBar: {
     height: '100%',
     backgroundColor: '#10b981',
+  },
+  bizSettingsCard: {
+    backgroundColor: '#0a0a0a',
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#7f1d1d',
+    marginBottom: 20,
+  },
+  bizDescText: {
+    color: '#94a3b8',
+    fontSize: 12,
+    marginBottom: 14,
+  },
+  deleteBizBtn: {
+    backgroundColor: '#dc2626',
+    borderRadius: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  deleteBizBtnText: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '700',
   }
 });
