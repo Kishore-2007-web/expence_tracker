@@ -1219,6 +1219,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             </div>
                           )}
                         </div>
+                    </div>
                   </div>
 
                   {/* Danger Zone: Delete Business Workspace */}
