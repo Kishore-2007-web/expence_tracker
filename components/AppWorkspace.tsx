@@ -70,6 +70,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
     setTheme,
     openUpgradeModal,
     addBusiness,
+    deleteBusiness,
     addTransaction,
     deleteTransaction,
     addGoal,
@@ -85,6 +86,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showBusinessDropdown, setShowBusinessDropdown] = useState(false);
   const [showAddBizModal, setShowAddBizModal] = useState(false);
+  const [showDeleteBizModal, setShowDeleteBizModal] = useState(false);
   const [showAddTxModal, setShowAddTxModal] = useState(false);
   const [showAddGoalModal, setShowAddGoalModal] = useState(false);
   const [activeGoalInput, setActiveGoalInput] = useState<string | null>(null);
@@ -1056,24 +1058,37 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
               {activeTab === 'business' && currentBusiness && (
                 <div className="space-y-6">
                   <div className="p-6 bg-card border border-border rounded-2xl shadow-premium">
-                    <h3 className="font-bold text-sm mb-4">Business Parameters</h3>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-4 border-b border-border">
+                      <div>
+                        <h3 className="font-bold text-sm">Business Parameters</h3>
+                        <p className="text-xs text-slate-400">Settings and identity for {currentBusiness.name}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setShowDeleteBizModal(true)}
+                        className="px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 text-xs font-semibold rounded-xl transition-colors flex items-center gap-1.5 self-start sm:self-auto"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Delete Business</span>
+                      </button>
+                    </div>
                     
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
                         <span className="block text-xs font-semibold text-slate-400 uppercase">Company Name</span>
-                        <span className="text-sm font-bold text-slate-800">{currentBusiness.name}</span>
+                        <span className="text-sm font-bold text-foreground">{currentBusiness.name}</span>
                       </div>
                       <div>
                         <span className="block text-xs font-semibold text-slate-400 uppercase">Sector Category</span>
-                        <span className="text-sm font-bold text-slate-800">{currentBusiness.category}</span>
+                        <span className="text-sm font-bold text-foreground">{currentBusiness.category}</span>
                       </div>
                       <div>
                         <span className="block text-xs font-semibold text-slate-400 uppercase">Workspace Email</span>
-                        <span className="text-sm font-bold text-slate-800">{currentBusiness.email}</span>
+                        <span className="text-sm font-bold text-foreground">{currentBusiness.email}</span>
                       </div>
                       <div>
                         <span className="block text-xs font-semibold text-slate-400 uppercase">Description</span>
-                        <p className="text-xs text-slate-500 mt-1 leading-relaxed">{currentBusiness.description}</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{currentBusiness.description}</p>
                       </div>
                     </div>
                   </div>

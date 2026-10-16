@@ -46,6 +46,7 @@ interface AppContextType {
   closeUpgradeModal: () => void;
   refreshData: () => void;
   addBusiness: (name: string, category: string, description: string, phone: string, email: string) => void;
+  deleteBusiness: (id: string) => void;
   addTransaction: (type: 'income' | 'expense', category: string, amountCents: number, description: string, date?: string) => void;
   deleteTransaction: (id: string) => void;
   addGoal: (name: string, targetCents: number, deadline: string) => void;
@@ -408,6 +409,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
+  const deleteBusiness = (id: string) => {
+    MockDB.deleteBusiness(id);
+    if (currentBusiness?.id === id) {
+      setCurrentBusinessState(null);
+    }
+    refreshData();
+  };
+
   const addTransaction = (type: 'income' | 'expense', category: string, amountCents: number, description: string, date?: string) => {
     MockDB.addTransaction({
       business_id: currentBusiness ? currentBusiness.id : null,
@@ -513,6 +522,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       closeUpgradeModal,
       refreshData,
       addBusiness,
+      deleteBusiness,
       addTransaction,
       deleteTransaction,
       addGoal,
