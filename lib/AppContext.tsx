@@ -156,10 +156,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }
     }
 
+    // Safety timeout to ensure session loading never hangs indefinitely
+    const safetyTimer = setTimeout(() => {
+      if (isMounted) {
+        setAuthLoading(false);
+      }
+    }, 1000);
+
     // 2. Register Firebase Auth state listener immediately in parallel (takes milliseconds)
     try {
       unsubscribe = onAuthStateChanged(auth, (user) => {
         if (!isMounted) return;
+        clearTimeout(safetyTimer);
         if (user) {
           setIsFirebaseBlocked(false); // Self-healing
           setFirebaseUser(user);
@@ -239,6 +247,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     return () => {
       isMounted = false;
+      clearTimeout(safetyTimer);
       if (unsubscribe) {
         unsubscribe();
       }
