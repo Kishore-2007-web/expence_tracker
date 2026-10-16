@@ -1,16 +1,16 @@
-# My Pocket Tracker - Unified Personal & Business Finance Platform
+# My Pocket Tracker - 100% Free Unified Personal & Business Finance Platform
 
-My Pocket Tracker is a complete SaaS financial dashboard built to manage personal wealth and multiple company accounts under a single workspace.
+My Pocket Tracker is a completely free, open financial platform built to manage personal wealth and multiple company accounts under a single workspace with zero fees, no subscription walls, and no advertisements.
 
 ## 🚀 Key Modules
-1. **Unified Dashboard**: Metrics for Cashflow, Income, Expenses, and Net Worth.
+1. **Unified Dashboard**: Real-time metrics for Cashflow, Income, Expenses, and Net Worth.
 2. **Ecosystem Switcher**: Seamlessly toggle between personal budgeting and corporate accounts.
 3. **Savings Tracker**: Set financial targets, monitor goals progress, and log milestone achievements.
-4. **Subscription Drawer**: Stripe & Razorpay simulators with coupon discount fields (e.g., `SAVE20`, `WELCOME50`, `FLOWFREE`).
-5. **Invoice Generator**: Custom client receipt designer (available to Premium accounts).
-6. **AI Financial Advisor**: Insight generator evaluating your burn rate and margins.
-7. **Google Ads Placements**: Integrated, closable banner placements only shown to Free users.
-8. **Admin Suite**: Real-time subscriber metrics (MRR/ARR/churn) and coupon codes generator.
+4. **100% Free Forever**: All features unlocked with unlimited businesses, no pro mode, and no payment requirements.
+5. **Invoice Generator**: Custom client receipt designer and branded invoice generation.
+6. **AI Financial Advisor**: Tailormade insights evaluating burn rate, profit margins, and savings pace.
+7. **Zero Advertisements**: Clean, distraction-free interface for all users.
+8. **Multi-Currency Support**: Real-time foreign exchange rate conversion.
 9. **Mobile Portability**: Ready-to-run React Native + Expo structure inside the `/mobile` directory.
 
 ---

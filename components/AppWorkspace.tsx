@@ -2,7 +2,6 @@
 
 import React, { useState, useMemo } from 'react';
 import { useApp, formatCurrency, convertCurrency, getCurrencySymbol, EXCHANGE_RATES } from '@/lib/AppContext';
-import { AdBanner } from './AdBanner';
 import {
   LayoutDashboard,
   Wallet,
@@ -163,14 +162,8 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
     };
   }, [currentTransactions, savingsGoals, currentBusiness, profile.currency]);
 
-  // AI Financial Insights Generator
+  // AI Financial Insights Generator (Always unlocked)
   const aiInsights = useMemo(() => {
-    if (!isPremium) {
-      return [
-        { title: 'Unlock AI Financial Insights', desc: 'Upgrade to Premium to get tailormade recommendations based on your spending history.', isLocked: true }
-      ];
-    }
-    
     const insights = [];
     const ratio = stats.income > 0 ? (stats.expense / stats.income) : 1;
     
@@ -299,12 +292,8 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
     });
   }, [currentTransactions, txSearch, txTypeFilter, txCategoryFilter]);
 
-  // Export handlers (CSV, Excel, PDF simulation)
+  // Export handlers (CSV, Excel, PDF)
   const handleExport = (format: 'pdf' | 'excel' | 'csv') => {
-    if (!isPremium && format !== 'csv') {
-      openUpgradeModal();
-      return;
-    }
 
     const headers = 'ID,Date,Type,Category,Description,Amount,Currency\n';
     const rows = currentTransactions.map(t => 
@@ -507,11 +496,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
             <div className="truncate max-w-[120px]">
               <div className="text-xs font-bold">{profile.name}</div>
               <div className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                {isPremium ? (
-                  <span className="text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider text-[8px] bg-emerald-50 dark:bg-emerald-950/50 px-1 rounded">PRO</span>
-                ) : (
-                  <span className="text-slate-400">Free Tier</span>
-                )}
+                  <span className="text-emerald-500 font-medium">Free & Unlimited</span>
               </div>
             </div>
           </div>
@@ -560,17 +545,6 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {!isPremium && (
-              <button
-                onClick={openUpgradeModal}
-                className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary-hover hover:to-emerald-600 text-white text-[11px] sm:text-xs font-bold rounded-xl transition-all shadow-glow flex items-center gap-1 shrink-0"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Upgrade Pro</span>
-                <span className="sm:hidden">Pro</span>
-              </button>
-            )}
-
             <button
               onClick={() => setShowAddTxModal(true)}
               className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-accent hover:bg-accent-hover text-foreground border border-border text-[11px] sm:text-xs font-semibold rounded-xl transition-all flex items-center gap-1 shrink-0"
@@ -974,9 +948,6 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                       )}
                     </div>
                   </div>
-
-                  {/* Advertisement system banner for free tier */}
-                  <AdBanner placementKey="dashboard" />
                 </div>
               )}
 
@@ -1114,22 +1085,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                       <span>Invoice PDF Generator</span>
                     </h3>
 
-                    {!isPremium ? (
-                      <div className="p-6 rounded-xl border border-dashed border-border bg-slate-50 dark:bg-slate-900/20 text-center">
-                        <Sparkles className="w-8 h-8 text-primary mx-auto mb-2" />
-                        <h4 className="font-bold text-xs mb-1">Invoice Generation is a Premium Feature</h4>
-                        <p className="text-[11px] text-slate-400 mb-4 max-w-md mx-auto">
-                          Upload custom logos, generate branded client receipts, and track payment milestones.
-                        </p>
-                        <button
-                          onClick={openUpgradeModal}
-                          className="px-4 py-2 bg-primary text-white text-xs font-bold rounded-xl transition-all"
-                        >
-                          Upgrade Now
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="grid md:grid-cols-2 gap-8">
+                    <div className="grid md:grid-cols-2 gap-8">
                         {/* Invoice Form */}
                         <form onSubmit={handleInvoiceGenerate} className="space-y-4">
                           <div>
@@ -1249,7 +1205,6 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                           )}
                         </div>
                       </div>
-                    )}
                   </div>
                 </div>
               )}
@@ -1447,8 +1402,6 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                       ))}
                     </div>
                   </div>
-
-                  <AdBanner placementKey="reports" />
                 </div>
               )}
 
@@ -1467,16 +1420,6 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                         <div key={index} className="p-4 bg-white/50 dark:bg-slate-900/60 border border-border rounded-xl">
                           <h4 className="font-bold text-xs mb-1">{insight.title}</h4>
                           <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">{insight.desc}</p>
-                          {insight.isLocked && (
-                            <button
-                              type="button"
-                              onClick={openUpgradeModal}
-                              className="mt-3 text-xs font-bold text-primary hover:underline flex items-center gap-1"
-                            >
-                              <span>Upgrade to unlock</span>
-                              <ArrowUpRight className="w-3.5 h-3.5" />
-                            </button>
-                          )}
                         </div>
                       ))}
                     </div>
@@ -1587,41 +1530,20 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     </form>
                   </div>
 
-                  {/* Subscriptions info */}
+                  {/* Plan & License status */}
                   <div className="p-6 bg-card border border-border rounded-2xl shadow-premium">
-                    <h3 className="font-bold text-sm mb-4">Subscription Billing Details</h3>
+                    <h3 className="font-bold text-sm mb-4">Plan & Access</h3>
 
-                    <div className="p-4 bg-slate-50 dark:bg-slate-900 border border-border rounded-xl mb-6">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs text-slate-500">Current Plan Status:</span>
-                        <span className="text-xs font-bold uppercase text-primary">{subscription.plan_id}</span>
+                    <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <Sparkles className="w-4 h-4 text-emerald-500" />
+                        <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">100% Free Forever</span>
                       </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-slate-500">Next Renewal Period:</span>
-                        <span className="text-xs font-medium">{subscription.current_period_end.substring(0, 10)}</span>
-                      </div>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                        All features, unlimited businesses, analytics, and invoice generation are unlocked with no charges or subscriptions.
+                      </p>
                     </div>
-
-                    {isPremium ? (
-                      <button
-                        type="button"
-                        onClick={downgradeToFree}
-                        className="px-4 py-2 border border-danger text-danger hover:bg-danger/5 text-xs font-semibold rounded-xl transition-all"
-                      >
-                        Cancel Auto Renewal
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={openUpgradeModal}
-                        className="px-4 py-2 bg-primary text-white text-xs font-bold rounded-xl transition-all shadow-glow hover:shadow-glow/10"
-                      >
-                        Upgrade Subscription
-                      </button>
-                    )}
                   </div>
-
-                  <AdBanner placementKey="settings" />
                 </div>
               )}
 

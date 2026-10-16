@@ -16,7 +16,6 @@ import {
 } from 'react-native';
 
 export default function App() {
-  const [isPremium, setIsPremium] = useState(false);
   const [balance, setBalance] = useState(6380.00);
   const [income, setIncome] = useState(8700.00);
   const [expense, setExpense] = useState(2320.00);
@@ -47,11 +46,6 @@ export default function App() {
     Alert.alert('Success', 'Ledger transaction logged!');
   };
 
-  const handleUpgrade = () => {
-    setIsPremium(true);
-    Alert.alert('Premium Upgraded', 'Welcome to My Pocket Tracker Premium! Unlimited businesses unlocked.');
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -63,9 +57,9 @@ export default function App() {
             <View style={styles.logoBadge}><Text style={styles.logoText}>M</Text></View>
             <Text style={styles.headerTitle}>My Pocket <Text style={styles.accentText}>Tracker</Text></Text>
           </View>
-          <TouchableOpacity onPress={handleUpgrade} style={isPremium ? styles.premiumLabel : styles.upgradeBtn}>
-            <Text style={styles.btnText}>{isPremium ? 'PRO MEMBER' : 'UPGRADE PRO'}</Text>
-          </TouchableOpacity>
+          <View style={styles.premiumLabel}>
+            <Text style={styles.btnText}>FREE & UNLIMITED</Text>
+          </View>
         </View>
 
         {/* Dashboard Switcher */}

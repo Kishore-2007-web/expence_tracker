@@ -76,8 +76,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isFirebaseBlocked, setIsFirebaseBlocked] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
 
-  const isPremium = subscription.plan_id !== 'FREE';
-  const planFeatures = PLANS.find(p => p.id === subscription.plan_id)?.features || [];
+  const isPremium = true; // 100% Free & completely unlocked for all users
+  const planFeatures = PLANS[0]?.features || [];
 
   const refreshData = () => {
     setProfile({ ...MockDB.getProfile() });
@@ -89,8 +89,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setNotifications([...MockDB.getNotifications()]);
     setCouponList([...MockDB.getCoupons()]);
     
-    // Set ad tier
-    AdManager.setTier(sub.plan_id !== 'FREE' ? 'premium' : 'free');
+    // Ads completely disabled
+    AdManager.setTier('premium');
   };
 
   const loginOffline = () => {
@@ -385,7 +385,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setCurrentBusinessState(biz);
   };
 
-  const openUpgradeModal = () => setIsUpgradeModalOpen(true);
+  const openUpgradeModal = () => {};
   const closeUpgradeModal = () => setIsUpgradeModalOpen(false);
 
   const addBusiness = (name: string, category: string, description: string, phone: string, email: string) => {
@@ -404,11 +404,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       refreshData();
       setCurrentBusinessState(newBiz);
     } catch (e: any) {
-      if (e.message.includes('LimitReached')) {
-        openUpgradeModal();
-      } else {
-        alert(e.message);
-      }
+      alert(e.message);
     }
   };
 
@@ -468,18 +464,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return MockDB.validateCoupon(code);
   };
 
-  const upgradeToPremium = async (planId: string, couponApplied?: string) => {
-    // Upgrades
-    MockDB.upgradeSubscription(planId, couponApplied || null);
-    refreshData();
-    closeUpgradeModal();
+  const upgradeToPremium = async () => {
     return true;
   };
 
-  const downgradeToFree = () => {
-    MockDB.downgradeSubscription();
-    refreshData();
-  };
+  const downgradeToFree = () => {};
 
   const markNotificationsRead = () => {
     MockDB.markNotificationsRead();

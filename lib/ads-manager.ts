@@ -41,13 +41,11 @@ class AdManagerClass {
   }
 
   shouldShowAds(): boolean {
-    if (this.currentTier === 'premium') return false;
-    return this.enabled;
+    return false; // Zero ads - Completely free to use
   }
 
   getPlacement(location: keyof typeof PLACEMENTS): AdPlacement | null {
-    if (!this.shouldShowAds()) return null;
-    return PLACEMENTS[location] || null;
+    return null;
   }
 
   toggleAds(state: boolean) {
