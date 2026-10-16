@@ -1571,6 +1571,27 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     </form>
                   </div>
 
+                  {/* Current Business Settings (if business is active) */}
+                  {currentBusiness && (
+                    <div className="p-6 bg-card border border-rose-500/30 rounded-2xl shadow-premium">
+                      <div className="flex items-center gap-2 mb-2 text-rose-500">
+                        <AlertCircle className="w-5 h-5 shrink-0" />
+                        <h3 className="font-bold text-sm">Active Business: {currentBusiness.name}</h3>
+                      </div>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">
+                        You are currently managing <strong>{currentBusiness.name}</strong> ({currentBusiness.category}). You can delete this business workspace below.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setShowDeleteBizModal(true)}
+                        className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-1.5"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Delete "{currentBusiness.name}"</span>
+                      </button>
+                    </div>
+                  )}
+
                   {/* Plan & License status */}
                   <div className="p-6 bg-card border border-border rounded-2xl shadow-premium">
                     <h3 className="font-bold text-sm mb-4">Plan & Access</h3>
