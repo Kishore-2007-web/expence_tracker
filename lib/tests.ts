@@ -56,6 +56,34 @@ export function runValidationSuite() {
     const invoiceTotal = Math.max(0, invoiceSubtotal - invoiceDiscount);
     assert(invoiceTotal === 4000, `Invoice calculation (3 * $15.00 - $5.00) should equal $40.00 in cents (got ${invoiceTotal})`);
 
+    // Test 7: Selected Business Deletion Behavior
+    const testBiz = MockDB.addBusiness({
+      name: 'Temp Delete Test Studio',
+      category: 'Testing',
+      description: 'Temporary business for deletion test',
+      address: 'Test HQ',
+      phone: '123-456-7890',
+      email: 'test@deleteme.com',
+      currency: 'USD',
+      timezone: 'UTC',
+      status: 'active'
+    });
+    MockDB.addTransaction({
+      business_id: testBiz.id,
+      type: 'income',
+      category_name: 'Test Income',
+      amount_cents: 5000,
+      currency: 'USD',
+      description: 'Temp transaction'
+    });
+    assert(MockDB.getBusinesses().some(b => b.id === testBiz.id), `Created business exists before deletion`);
+    assert(MockDB.getTransactions().some(t => t.business_id === testBiz.id), `Associated transaction exists before deletion`);
+    
+    // Delete only this specific business
+    MockDB.deleteBusiness(testBiz.id);
+    assert(!MockDB.getBusinesses().some(b => b.id === testBiz.id), `Deleted business is removed from businesses list`);
+    assert(!MockDB.getTransactions().some(t => t.business_id === testBiz.id), `Transactions belonging to deleted business are removed`);
+
     console.log(`Validation results: ${results.passed} passed, ${results.failed} failed.`);
     results.logs.forEach(log => console.log(log));
   } catch (error: any) {

@@ -1906,6 +1906,74 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
         </div>
       )}
 
+      {/* Delete Current Business Confirmation Modal */}
+      {showDeleteBizModal && currentBusiness && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-2xl p-6 relative">
+            <button
+              onClick={() => setShowDeleteBizModal(false)}
+              className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-foreground hover:bg-accent transition-colors"
+              aria-label="Close"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-500 flex items-center justify-center mb-4">
+              <Trash2 className="w-6 h-6" />
+            </div>
+
+            <h3 className="text-base font-bold text-foreground mb-1">
+              Delete Business Workspace?
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">
+              Are you sure you want to permanently delete <strong className="text-foreground font-semibold">{currentBusiness.name}</strong>?
+              All transactions recorded under this business will be permanently removed. Personal records and other businesses will remain intact.
+            </p>
+
+            <div className="p-3 bg-accent/60 rounded-xl border border-border mb-5 text-xs space-y-1.5">
+              <div className="flex justify-between items-center">
+                <span className="font-medium text-slate-400">Business Name:</span>
+                <span className="font-bold text-foreground">{currentBusiness.name}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="font-medium text-slate-400">Category:</span>
+                <span className="text-foreground">{currentBusiness.category}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="font-medium text-slate-400">Ledger Records:</span>
+                <span className="text-rose-500 font-semibold">
+                  {transactions.filter(t => t.business_id === currentBusiness.id).length} transactions will be deleted
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setShowDeleteBizModal(false)}
+                className="flex-1 py-2.5 rounded-xl border border-border text-xs font-semibold hover:bg-accent transition-colors text-slate-400 hover:text-foreground"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const targetName = currentBusiness.name;
+                  deleteBusiness(currentBusiness.id);
+                  setShowDeleteBizModal(false);
+                  setActiveTab('dashboard');
+                  alert(`Business "${targetName}" and all associated records have been permanently deleted.`);
+                }}
+                className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-all shadow-glow hover:shadow-glow/20 flex items-center justify-center gap-1.5"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Yes, Delete Business</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
