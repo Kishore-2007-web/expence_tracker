@@ -1219,7 +1219,33 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             </div>
                           )}
                         </div>
+                  </div>
+
+                  {/* Danger Zone: Delete Business Workspace */}
+                  <div className="p-6 bg-card border border-rose-500/30 rounded-2xl shadow-premium">
+                    <div className="flex items-center gap-2 mb-2 text-rose-500">
+                      <AlertCircle className="w-5 h-5 shrink-0" />
+                      <h3 className="font-bold text-sm">Danger Zone — Delete Business Workspace</h3>
+                    </div>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                      Permanently delete <strong className="text-foreground font-semibold">{currentBusiness.name}</strong>. This will erase this company workspace and all {transactions.filter(t => t.business_id === currentBusiness.id).length} recorded transaction(s) and receipts from your pocket tracker. This action cannot be undone.
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-rose-500/5 border border-rose-500/20">
+                      <div>
+                        <div className="text-xs font-bold text-foreground">Delete "{currentBusiness.name}"</div>
+                        <div className="text-[11px] text-slate-400">Irreversible action • Permanently removes company records</div>
                       </div>
+
+                      <button
+                        type="button"
+                        onClick={() => setShowDeleteBizModal(true)}
+                        className="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 shrink-0"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        <span>Delete This Business</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
