@@ -860,12 +860,12 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     <div className="p-4 sm:p-5 md:p-6 bg-card border border-border rounded-2xl shadow-premium flex flex-col justify-between hover:border-border/80 transition-all min-h-[110px] sm:min-h-[130px]">
                       <div>
                         <div className="text-[11px] sm:text-xs font-semibold text-black/70 mb-1 sm:mb-2">Net Worth Cashflow</div>
-                        <div className="text-base sm:text-xl md:text-2xl font-black text-black tracking-tight">
+                        <div className="text-base sm:text-xl md:text-2xl font-black text-emerald-600 tracking-tight">
                           {formatCurrency(stats.netWorth, profile.currency)}
                         </div>
                       </div>
                       <div className="text-[10px] sm:text-xs text-black/60 mt-2 sm:mt-3 flex items-center gap-1.5">
-                        <TrendingUp className="w-3.5 h-3.5 text-black shrink-0" />
+                        <TrendingUp className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                         <span className="truncate">Calculated savings targets</span>
                       </div>
                     </div>
@@ -873,12 +873,12 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     <div className="p-4 sm:p-5 md:p-6 bg-card border border-border rounded-2xl shadow-premium flex flex-col justify-between hover:border-border/80 transition-all min-h-[110px] sm:min-h-[130px]">
                       <div>
                         <div className="text-[11px] sm:text-xs font-semibold text-black/70 mb-1 sm:mb-2">Workspace Incomes</div>
-                        <div className="text-base sm:text-xl md:text-2xl font-black text-black tracking-tight">
+                        <div className="text-base sm:text-xl md:text-2xl font-black text-emerald-600 tracking-tight">
                           {formatCurrency(stats.income, profile.currency)}
                         </div>
                       </div>
                       <div className="text-[10px] sm:text-xs text-black/60 mt-2 sm:mt-3 flex items-center gap-1.5">
-                        <ArrowUpRight className="w-3.5 h-3.5 text-black shrink-0" />
+                        <ArrowUpRight className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                         <span className="truncate">Aggregated ledger transactions</span>
                       </div>
                     </div>
@@ -899,12 +899,12 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     <div className="p-4 sm:p-5 md:p-6 bg-card border border-border rounded-2xl shadow-premium flex flex-col justify-between hover:border-border/80 transition-all min-h-[110px] sm:min-h-[130px]">
                       <div>
                         <div className="text-[11px] sm:text-xs font-semibold text-black/70 mb-1 sm:mb-2">Net Balance</div>
-                        <div className={`text-base sm:text-xl md:text-2xl font-black tracking-tight ${stats.balance >= 0 ? 'text-black' : 'text-danger'}`}>
+                        <div className={`text-base sm:text-xl md:text-2xl font-black tracking-tight ${stats.balance >= 0 ? 'text-emerald-600' : 'text-danger'}`}>
                           {formatCurrency(stats.balance, profile.currency)}
                         </div>
                       </div>
                       <div className="text-[10px] sm:text-xs text-black/60 mt-2 sm:mt-3 flex items-center gap-1.5">
-                        <Activity className="w-3.5 h-3.5 text-black shrink-0" />
+                        <Activity className={`w-3.5 h-3.5 shrink-0 ${stats.balance >= 0 ? 'text-emerald-600' : 'text-danger'}`} />
                         <span className="truncate">Profit margin: {stats.income > 0 ? Math.round((stats.balance / stats.income) * 100) : 0}%</span>
                       </div>
                     </div>
@@ -1818,7 +1818,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
         {/* Center Floating Action Button */}
         <button
           onClick={() => setShowAddTxModal(true)}
-          className="w-10 h-10 -mt-5 bg-sunshine hover:bg-sunshine-hover text-black font-black rounded-full flex items-center justify-center transition-transform active:scale-95 shrink-0"
+          className="w-11 h-11 -mt-7 bg-sunshine hover:bg-sunshine-hover text-black font-black rounded-full flex items-center justify-center shadow-md transition-transform active:scale-95 shrink-0"
           aria-label="Add Transaction"
         >
           <Plus className="w-5 h-5 text-black" />

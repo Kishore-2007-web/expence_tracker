@@ -22,15 +22,16 @@ export const TrackoFloatingWidget: React.FC<TrackoFloatingWidgetProps> = ({
   if (isOpen) return null;
 
   return (
-    <div className="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-40 flex items-center gap-2">
+    <div className="fixed bottom-16 md:bottom-6 right-3 sm:right-6 z-40 flex items-center gap-2 max-w-[calc(100vw-1rem)]">
       {/* Friendly Speech Bubble Tooltip */}
       {!dismissedBubble && (
         <div 
           onClick={onOpen}
-          className="cursor-pointer bg-white/95 border border-black/15 shadow-premium px-3 py-1.5 rounded-2xl text-[11px] font-bold text-black flex items-center gap-2 animate-in fade-in slide-in-from-right duration-300 hover:scale-105 transition-transform"
+          className="cursor-pointer bg-white/95 border border-black/15 shadow-premium px-2.5 py-1.5 rounded-2xl text-[11px] font-bold text-black flex items-center gap-1.5 animate-in fade-in slide-in-from-right duration-300 hover:scale-105 transition-transform shrink-0"
         >
           <Sparkles className="w-3.5 h-3.5 text-black animate-pulse" />
-          <span>Ask TRACKO AI</span>
+          <span className="hidden sm:inline">Ask TRACKO AI</span>
+          <span className="sm:hidden">Ask AI</span>
           <button
             onClick={e => {
               e.stopPropagation();
@@ -49,24 +50,15 @@ export const TrackoFloatingWidget: React.FC<TrackoFloatingWidgetProps> = ({
         onClick={onOpen}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="relative group p-1.5 bg-[#96DFCE] border-2 border-black/15 rounded-2xl shadow-xl hover:scale-110 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-black"
-        style={{
-          backgroundImage: 'linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.45) 100%)',
-          boxShadow: '0 10px 25px -4px rgba(7, 38, 32, 0.25), inset 0 1px 1px 0 rgba(255, 255, 255, 0.8)'
-        }}
+        className="relative group hover:scale-110 active:scale-95 transition-transform duration-300 focus:outline-none shrink-0"
         aria-label="Open TRACKO AI Financial Assistant"
         title={`Open TRACKO AI (${currentBusiness ? currentBusiness.name : 'Personal Workspace'})`}
       >
         <TrackoMascot
           state={isHovered ? 'listening' : 'idle'}
-          size={46}
+          size={54}
           interactive={false}
         />
-
-        {/* Small AI Pulse Bead */}
-        <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-sunshine border-2 border-black rounded-full flex items-center justify-center">
-          <span className="w-1.5 h-1.5 bg-black rounded-full animate-ping" />
-        </span>
       </button>
     </div>
   );
