@@ -50,7 +50,9 @@
 
   body {
     font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    @apply bg-background text-foreground transition-colors duration-200;
+    background-color: var(--background);
+    color: var(--foreground);
+    transition: color 200ms ease, background-color 200ms ease;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
@@ -87,7 +89,8 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-accent-hover rounded-full;
+  background-color: var(--accent-hover);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -95,7 +98,11 @@
 }
 
 .hover-lift {
-  @apply transition-transform duration-300 ease-out hover:-translate-y-0.5;
+  transition: transform 300ms ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
 }
 
 /* Select option overrides for light theme */

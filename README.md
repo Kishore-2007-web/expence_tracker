@@ -154,5 +154,9 @@ To delete a business workspace that you no longer need:
 - **Universal Website Background**: PANTONE® 13-5412 TCX Aquatic Green (`#96DFCE`, RGB: `150, 223, 206`)
 - **Primary Interactive Surfaces & Highlights**: PANTONE® 12-0727 TCX Sunshine Yellow (`#FADE85`, RGB: `250, 222, 133`)
   - Applied to CTA buttons, submit actions, active navigation states, badges, floating action buttons (FAB), and metric trend indicators.
-  - Paired with high-contrast dark forest typography (`#072620`) on bright surfaces for 100% WCAG AAA readability.
+- **Typography & Aesthetics**:
+  - High-contrast pure black text (`#000000`) throughout all metric figures, titles, tables, forms, and cards.
+  - **Plus Jakarta Sans**: Applied to all brand titles, headers (`h1`–`h6`), metrics, numbers, and interactive buttons.
+  - **Inter**: Applied to body copy, ledger descriptions, tables, inputs, and form controls.
+  - Permanent clean light theme with frosted translucent glass cards over Aquatic Green (dark mode removed).
 
