@@ -600,15 +600,6 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
         {/* Top bar header */}
         <header className="h-16 border-b border-border bg-card px-4 sm:px-6 flex items-center justify-between shrink-0 sticky top-0 z-30">
           <div className="flex items-center gap-2.5 sm:gap-4 overflow-hidden">
-            {/* Mobile Hamburger Toggle */}
-            <button
-              onClick={() => setShowMobileMenu(!showMobileMenu)}
-              className="md:hidden p-2 rounded-xl border border-border bg-accent hover:bg-accent-hover text-foreground transition-colors shrink-0"
-              aria-label="Toggle Navigation Menu"
-            >
-              {showMobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-
             <div className="flex items-center gap-2 overflow-hidden">
               <div className="w-7 h-7 sm:w-8 sm:h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-base sm:text-lg shrink-0">
                 M
