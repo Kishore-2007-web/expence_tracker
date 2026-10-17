@@ -5,6 +5,16 @@ import { MockDB, Profile, Subscription, Business, Transaction, SavingsGoal, Noti
 
 import AdManager from './ads-manager';
 import { 
+  openOfflineDB, 
+  persistTransactionOffline, 
+  removeTransactionOffline, 
+  persistBusinessOffline, 
+  removeBusinessOffline, 
+  persistGoalOffline, 
+  persistProfileOffline,
+  syncOfflineWithLocalStorage
+} from './offline-storage';
+import { 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
   signOut, 
@@ -34,6 +44,17 @@ interface AppContextType {
   firebaseUser: FirebaseUser | null;
   isFirebaseBlocked: boolean;
   authLoading: boolean;
+  // PWA & Offline State
+  isOnline: boolean;
+  syncStatus: 'offline' | 'saved_locally' | 'syncing' | 'synced';
+  isInstallable: boolean;
+  isInstalled: boolean;
+  isUpdateAvailable: boolean;
+  installApp: () => Promise<boolean>;
+  applyUpdate: () => void;
+  showInstallModal: boolean;
+  setShowInstallModal: (show: boolean) => void;
+  // Actions
   loginOffline: () => void;
   signUpWithEmail: (email: string, password: string, name: string) => Promise<void>;
   loginWithEmail: (email: string, password: string) => Promise<void>;
@@ -76,6 +97,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
   const [isFirebaseBlocked, setIsFirebaseBlocked] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
+
+  // PWA & Offline State
+  const [isOnline, setIsOnline] = useState<boolean>(true);
+  const [syncStatus, setSyncStatus] = useState<'offline' | 'saved_locally' | 'syncing' | 'synced'>('saved_locally');
+  const [isInstallable, setIsInstallable] = useState<boolean>(false);
+  const [isInstalled, setIsInstalled] = useState<boolean>(false);
+  const [isUpdateAvailable, setIsUpdateAvailable] = useState<boolean>(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showInstallModal, setShowInstallModal] = useState<boolean>(false);
+  const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
 
   const isPremium = true; // 100% Free & completely unlocked for all users
   const planFeatures = PLANS[0]?.features || [];
@@ -245,11 +276,88 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     checkFirebaseReachability();
 
+    // 4. Setup PWA Lifecycle & Offline Event Handlers
+    let handleOnline: (() => void) | null = null;
+    let handleOffline: (() => void) | null = null;
+    let handleBeforeInstallPrompt: ((e: Event) => void) | null = null;
+    let handleAppInstalled: (() => void) | null = null;
+
+    if (typeof window !== 'undefined') {
+      handleOnline = () => {
+        setIsOnline(true);
+        setSyncStatus('saved_locally');
+      };
+      handleOffline = () => {
+        setIsOnline(false);
+        setSyncStatus('offline');
+      };
+
+      window.addEventListener('online', handleOnline);
+      window.addEventListener('offline', handleOffline);
+      setIsOnline(navigator.onLine);
+      if (!navigator.onLine) setSyncStatus('offline');
+
+      // Standalone detection (PWA installed and launched from home screen)
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true;
+      if (isStandalone) {
+        setIsInstalled(true);
+      }
+
+      // Capture beforeinstallprompt for native 1-tap installation
+      handleBeforeInstallPrompt = (e: Event) => {
+        e.preventDefault();
+        setDeferredPrompt(e);
+        setIsInstallable(true);
+      };
+
+      handleAppInstalled = () => {
+        setIsInstalled(true);
+        setIsInstallable(false);
+        setDeferredPrompt(null);
+      };
+
+      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.addEventListener('appinstalled', handleAppInstalled);
+
+      // Register Service Worker for offline caching & updates
+      if ('serviceWorker' in navigator && process.env.NODE_ENV !== 'test') {
+        navigator.serviceWorker.register('/sw.js').then((reg) => {
+          reg.onupdatefound = () => {
+            const installing = reg.installing;
+            if (installing) {
+              installing.onstatechange = () => {
+                if (installing.state === 'installed' && navigator.serviceWorker.controller) {
+                  setIsUpdateAvailable(true);
+                  setWaitingWorker(installing);
+                }
+              };
+            }
+          };
+        }).catch((err) => {
+          console.warn('[PWA] ServiceWorker registration notice:', err);
+        });
+      }
+
+      // Reconcile and back up LocalStorage to IndexedDB
+      syncOfflineWithLocalStorage({
+        transactions: MockDB.getTransactions(),
+        businesses: MockDB.getBusinesses(),
+        goals: MockDB.getGoals(),
+        profile: MockDB.getProfile()
+      }).catch((e) => console.warn('[PWA] IndexedDB initial sync notice:', e));
+    }
+
     return () => {
       isMounted = false;
       clearTimeout(safetyTimer);
       if (unsubscribe) {
         unsubscribe();
+      }
+      if (typeof window !== 'undefined') {
+        if (handleOnline) window.removeEventListener('online', handleOnline);
+        if (handleOffline) window.removeEventListener('offline', handleOffline);
+        if (handleBeforeInstallPrompt) window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        if (handleAppInstalled) window.removeEventListener('appinstalled', handleAppInstalled);
       }
     };
   }, []);
@@ -411,8 +519,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         timezone: 'UTC',
         status: 'active'
       });
+      // IndexedDB offline persistence
+      persistBusinessOffline(newBiz).catch(e => console.warn('[PWA] Business offline persist notice:', e));
       refreshData();
       setCurrentBusinessState(newBiz);
+      setSyncStatus(isOnline ? 'saved_locally' : 'offline');
     } catch (e: any) {
       alert(e.message);
     }
@@ -420,6 +531,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const deleteBusiness = (id: string) => {
     MockDB.deleteBusiness(id);
+    removeBusinessOffline(id).catch(e => console.warn('[PWA] Business offline remove notice:', e));
     if (currentBusiness?.id === id) {
       setCurrentBusinessState(null);
     }
@@ -427,7 +539,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const addTransaction = (type: 'income' | 'expense', category: string, amountCents: number, description: string, date?: string) => {
-    MockDB.addTransaction({
+    const newTx = MockDB.addTransaction({
       business_id: currentBusiness ? currentBusiness.id : null,
       type,
       category_name: category,
@@ -436,21 +548,28 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       description,
       transaction_date: date || new Date().toISOString()
     });
+    // IndexedDB offline persistence
+    persistTransactionOffline(newTx).catch(e => console.warn('[PWA] Tx offline persist notice:', e));
     refreshData();
+    setSyncStatus(isOnline ? 'saved_locally' : 'offline');
   };
 
   const deleteTransaction = (id: string) => {
     MockDB.deleteTransaction(id);
+    removeTransactionOffline(id).catch(e => console.warn('[PWA] Tx offline delete notice:', e));
     refreshData();
   };
 
   const addGoal = (name: string, targetCents: number, deadline: string) => {
-    MockDB.addGoal({
+    const newGoal = MockDB.addGoal({
       name,
       target_amount_cents: targetCents,
       current_amount_cents: 0,
       deadline
     });
+    if (newGoal) {
+      persistGoalOffline(newGoal).catch(e => console.warn('[PWA] Goal offline persist notice:', e));
+    }
     refreshData();
   };
 
@@ -458,10 +577,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const goal = savingsGoals.find(g => g.id === id);
     if (!goal) return;
     const newAmt = goal.current_amount_cents + amountCents;
-    MockDB.updateGoal(id, { current_amount_cents: newAmt });
+    const updated = MockDB.updateGoal(id, { current_amount_cents: newAmt });
+    if (updated) {
+      persistGoalOffline(updated).catch(e => console.warn('[PWA] Goal offline persist notice:', e));
+    }
     
     // Log expense under Savings in profile currency
-    MockDB.addTransaction({
+    const newTx = MockDB.addTransaction({
       business_id: null,
       type: 'expense',
       category_name: 'Savings Contribution',
@@ -469,6 +591,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       currency: profile.currency,
       description: `Contributed to savings goal: ${goal.name}`
     });
+    persistTransactionOffline(newTx).catch(e => console.warn('[PWA] Tx offline persist notice:', e));
 
     if (newAmt >= goal.target_amount_cents) {
       const formattedTarget = formatCurrency(goal.target_amount_cents, profile.currency);
@@ -494,8 +617,50 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const updateProfileDetails = (name: string, phone: string, country: string, currency: string, language: string) => {
-    MockDB.updateProfile({ name, phone, country, currency, language, onboarded: true });
+    const updated = MockDB.updateProfile({ name, phone, country, currency, language, onboarded: true });
+    persistProfileOffline(updated).catch(e => console.warn('[PWA] Profile offline persist notice:', e));
     refreshData();
+  };
+
+  const installApp = async (): Promise<boolean> => {
+    if (isInstalled) {
+      return true;
+    }
+    if (deferredPrompt) {
+      try {
+        deferredPrompt.prompt();
+        const choiceResult = await deferredPrompt.userChoice;
+        if (choiceResult && choiceResult.outcome === 'accepted') {
+          setIsInstalled(true);
+          setIsInstallable(false);
+          setDeferredPrompt(null);
+          return true;
+        }
+        return false;
+      } catch (err) {
+        console.warn('[PWA] prompt() failed, opening install guide:', err);
+        setShowInstallModal(true);
+        return false;
+      }
+    } else {
+      setShowInstallModal(true);
+      return false;
+    }
+  };
+
+  const applyUpdate = () => {
+    if (waitingWorker) {
+      waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          window.location.reload();
+        });
+      } else {
+        window.location.reload();
+      }
+    } else {
+      window.location.reload();
+    }
   };
 
   const unreadNotificationCount = notifications.filter(n => !n.is_read).length;
@@ -519,6 +684,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       firebaseUser,
       isFirebaseBlocked,
       authLoading,
+      // PWA & Offline
+      isOnline,
+      syncStatus,
+      isInstallable,
+      isInstalled,
+      isUpdateAvailable,
+      installApp,
+      applyUpdate,
+      showInstallModal,
+      setShowInstallModal,
+      // Actions
       loginOffline,
       signUpWithEmail,
       loginWithEmail,
