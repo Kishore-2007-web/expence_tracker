@@ -32,7 +32,8 @@ import {
   Menu,
   X,
   HardDrive,
-  CheckCircle2
+  CheckCircle2,
+  Activity
 } from 'lucide-react';
 import { PWAStatusIndicator, PWAOfflineBanner } from './PWAStatusBanner';
 import PWAInstallModal from './PWAInstallModal';
@@ -806,48 +807,57 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
               {/* DASHBOARD TAB VIEW */}
               {activeTab === 'dashboard' && (
                 <div className="space-y-6">
-                  {/* Summary Metric Cards */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-                    <div className="p-4 sm:p-6 bg-card border border-border rounded-2xl shadow-premium">
-                      <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Net Worth Cashflow</div>
-                      <div className="text-lg sm:text-2xl font-black text-foreground">
-                        {formatCurrency(stats.netWorth, profile.currency)}
+                  {/* Summary Metric Cards - 2x2 Square Grid */}
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5">
+                    <div className="p-4 sm:p-5 md:p-6 bg-card border border-border rounded-2xl shadow-premium flex flex-col justify-between hover:border-border/80 transition-all min-h-[110px] sm:min-h-[130px]">
+                      <div>
+                        <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Net Worth Cashflow</div>
+                        <div className="text-base sm:text-xl md:text-2xl font-black text-foreground tracking-tight">
+                          {formatCurrency(stats.netWorth, profile.currency)}
+                        </div>
                       </div>
-                      <div className="text-[10px] text-slate-400 mt-1 flex items-center gap-1">
-                        <TrendingUp className="w-3 h-3 text-success shrink-0" />
-                        <span>Calculated including savings targets</span>
-                      </div>
-                    </div>
-
-                    <div className="p-4 sm:p-6 bg-card border border-border rounded-2xl shadow-premium">
-                      <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Workspace Incomes</div>
-                      <div className="text-lg sm:text-2xl font-black text-success">
-                        {formatCurrency(stats.income, profile.currency)}
-                      </div>
-                      <div className="text-[10px] text-slate-400 mt-1 flex items-center gap-1">
-                        <ArrowUpRight className="w-3 h-3 text-success shrink-0" />
-                        <span>Aggregated ledger transactions</span>
+                      <div className="text-[10px] sm:text-xs text-slate-400 mt-2 sm:mt-3 flex items-center gap-1.5">
+                        <TrendingUp className="w-3.5 h-3.5 text-success shrink-0" />
+                        <span className="truncate">Calculated savings targets</span>
                       </div>
                     </div>
 
-                    <div className="p-4 sm:p-6 bg-card border border-border rounded-2xl shadow-premium">
-                      <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Workspace Expenses</div>
-                      <div className="text-lg sm:text-2xl font-black text-danger">
-                        {formatCurrency(stats.expense, profile.currency)}
+                    <div className="p-4 sm:p-5 md:p-6 bg-card border border-border rounded-2xl shadow-premium flex flex-col justify-between hover:border-border/80 transition-all min-h-[110px] sm:min-h-[130px]">
+                      <div>
+                        <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Workspace Incomes</div>
+                        <div className="text-base sm:text-xl md:text-2xl font-black text-success tracking-tight">
+                          {formatCurrency(stats.income, profile.currency)}
+                        </div>
                       </div>
-                      <div className="text-[10px] text-slate-400 mt-1 flex items-center gap-1">
-                        <ArrowDownRight className="w-3 h-3 text-danger shrink-0" />
-                        <span>Outflow costs list</span>
+                      <div className="text-[10px] sm:text-xs text-slate-400 mt-2 sm:mt-3 flex items-center gap-1.5">
+                        <ArrowUpRight className="w-3.5 h-3.5 text-success shrink-0" />
+                        <span className="truncate">Aggregated ledger transactions</span>
                       </div>
                     </div>
 
-                    <div className="p-4 sm:p-6 bg-card border border-border rounded-2xl shadow-premium">
-                      <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Net Balance</div>
-                      <div className={`text-lg sm:text-2xl font-black ${stats.balance >= 0 ? 'text-emerald-500 dark:text-emerald-400' : 'text-danger'}`}>
-                        {formatCurrency(stats.balance, profile.currency)}
+                    <div className="p-4 sm:p-5 md:p-6 bg-card border border-border rounded-2xl shadow-premium flex flex-col justify-between hover:border-border/80 transition-all min-h-[110px] sm:min-h-[130px]">
+                      <div>
+                        <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Workspace Expenses</div>
+                        <div className="text-base sm:text-xl md:text-2xl font-black text-danger tracking-tight">
+                          {formatCurrency(stats.expense, profile.currency)}
+                        </div>
                       </div>
-                      <div className="text-[10px] text-slate-400 mt-1">
-                        Total profit margin: {stats.income > 0 ? Math.round((stats.balance / stats.income) * 100) : 0}%
+                      <div className="text-[10px] sm:text-xs text-slate-400 mt-2 sm:mt-3 flex items-center gap-1.5">
+                        <ArrowDownRight className="w-3.5 h-3.5 text-danger shrink-0" />
+                        <span className="truncate">Outflow costs list</span>
+                      </div>
+                    </div>
+
+                    <div className="p-4 sm:p-5 md:p-6 bg-card border border-border rounded-2xl shadow-premium flex flex-col justify-between hover:border-border/80 transition-all min-h-[110px] sm:min-h-[130px]">
+                      <div>
+                        <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Net Balance</div>
+                        <div className={`text-base sm:text-xl md:text-2xl font-black tracking-tight ${stats.balance >= 0 ? 'text-emerald-500 dark:text-emerald-400' : 'text-danger'}`}>
+                          {formatCurrency(stats.balance, profile.currency)}
+                        </div>
+                      </div>
+                      <div className="text-[10px] sm:text-xs text-slate-400 mt-2 sm:mt-3 flex items-center gap-1.5">
+                        <Activity className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                        <span className="truncate">Profit margin: {stats.income > 0 ? Math.round((stats.balance / stats.income) * 100) : 0}%</span>
                       </div>
                     </div>
                   </div>
