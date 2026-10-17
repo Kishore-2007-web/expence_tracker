@@ -49,28 +49,28 @@ export default function Home() {
 
   if (!mounted || authLoading) {
     return (
-      <div className="relative min-h-screen bg-black flex flex-col items-center justify-center overflow-hidden">
+      <div className="relative min-h-screen bg-background flex flex-col items-center justify-center overflow-hidden">
         {/* Ambient background glow */}
-        <div className="absolute w-[300px] h-[300px] bg-aquatic/15 rounded-full blur-[80px] -top-10 -left-10 animate-pulse duration-[4000ms]" />
-        <div className="absolute w-[300px] h-[300px] bg-sunshine/15 rounded-full blur-[80px] -bottom-10 -right-10 animate-pulse duration-[3000ms]" />
+        <div className="absolute w-[300px] h-[300px] bg-white/30 rounded-full blur-[80px] -top-10 -left-10 animate-pulse duration-[4000ms]" />
+        <div className="absolute w-[300px] h-[300px] bg-sunshine/30 rounded-full blur-[80px] -bottom-10 -right-10 animate-pulse duration-[3000ms]" />
 
         <div className="flex flex-col items-center gap-4 relative z-10">
           {/* Logo container with custom ring spinner */}
           <div className="relative w-16 h-16 flex items-center justify-center">
             {/* outer spinning track */}
-            <div className="absolute inset-0 rounded-2xl border-2 border-slate-800" />
+            <div className="absolute inset-0 rounded-2xl border-2 border-slate-900/15" />
             {/* outer spinning active border */}
-            <div className="absolute inset-0 rounded-2xl border-2 border-t-aquatic border-r-sunshine animate-spin" />
+            <div className="absolute inset-0 rounded-2xl border-2 border-t-primary border-r-sunshine-600 animate-spin" />
             
             {/* logo mark in center */}
-            <div className="w-10 h-10 bg-gradient-to-br from-aquatic to-aquatic-700 rounded-xl flex items-center justify-center text-slate-950 font-black text-xl shadow-glow">
+            <div className="w-10 h-10 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-xl shadow-glow-sunshine">
               M
             </div>
           </div>
           
           <div className="flex flex-col items-center gap-1">
-            <span className="font-bold text-sm tracking-tight text-white">My Pocket Tracker</span>
-            <span className="text-[10px] text-slate-500 uppercase tracking-widest animate-pulse">Initializing Session...</span>
+            <span className="font-bold text-sm tracking-tight text-foreground">My Pocket Tracker</span>
+            <span className="text-[10px] text-slate-600 uppercase tracking-widest animate-pulse font-semibold">Initializing Session...</span>
           </div>
         </div>
       </div>
@@ -156,7 +156,7 @@ export default function Home() {
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8 relative">
               <div className="flex items-center gap-2 justify-center mb-8">
-                <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-lg">M</div>
+                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-glow-sunshine">M</div>
                 <span className="font-bold text-sm tracking-tight">My Pocket Tracker</span>
               </div>
 
@@ -218,7 +218,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl transition-all shadow-glow hover:shadow-glow/10 flex items-center justify-center gap-1.5"
+                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine flex items-center justify-center gap-1.5"
                 >
                   <span>Sign In</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -277,7 +277,7 @@ export default function Home() {
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8">
               <div className="flex items-center gap-2 justify-center mb-8">
-                <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-lg">M</div>
+                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-glow-sunshine">M</div>
                 <span className="font-bold text-sm tracking-tight">My Pocket Tracker</span>
               </div>
 
@@ -329,7 +329,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl transition-all shadow-glow hover:shadow-glow/10 flex items-center justify-center gap-1.5"
+                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine flex items-center justify-center gap-1.5"
                 >
                   <span>Sign Up</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -405,7 +405,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-2.5 bg-primary text-white text-xs font-semibold rounded-xl"
+                  className="w-full py-2.5 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl shadow-glow-sunshine"
                 >
                   Send Reset Link
                 </button>
@@ -453,7 +453,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={handleVerificationConfirm}
-                className="w-full py-3 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl transition-all shadow-glow"
+                className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine"
               >
                 Confirm Verification
               </button>
@@ -472,7 +472,7 @@ export default function Home() {
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8 relative">
               <div className="flex items-center gap-2 justify-center mb-6">
-                <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-lg shadow-glow">M</div>
+                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-glow-sunshine">M</div>
                 <span className="font-bold text-sm tracking-tight">My Pocket Tracker</span>
               </div>
 
@@ -509,7 +509,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl transition-all shadow-glow hover:shadow-glow/10 flex items-center justify-center gap-1.5"
+                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine flex items-center justify-center gap-1.5"
                 >
                   <span>Complete Onboarding</span>
                   <ArrowRight className="w-3.5 h-3.5" />

@@ -148,3 +148,11 @@ To delete a business workspace that you no longer need:
    - Go to the **Application** tab -> **Service Workers** (verify `sw.js` is active).
    - Check **Manifest** (verify icons, standalone display mode, theme colors).
    - Go to the **Network** tab, change throttling to **Offline**, and refresh: the app shell and cached financial records remain accessible.
+
+## 🎨 Brand Color System
+
+- **Universal Website Background**: PANTONE® 13-5412 TCX Aquatic Green (`#96DFCE`, RGB: `150, 223, 206`)
+- **Primary Interactive Surfaces & Highlights**: PANTONE® 12-0727 TCX Sunshine Yellow (`#FADE85`, RGB: `250, 222, 133`)
+  - Applied to CTA buttons, submit actions, active navigation states, badges, floating action buttons (FAB), and metric trend indicators.
+  - Paired with high-contrast dark forest typography (`#072620`) on bright surfaces for 100% WCAG AAA readability.
+

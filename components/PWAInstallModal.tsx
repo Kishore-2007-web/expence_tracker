@@ -58,7 +58,7 @@ export default function PWAInstallModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-md animate-fade-in">
       <div className="relative w-full max-w-lg bg-card border border-border rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden">
         
         {/* Glow ambient decoration */}
@@ -75,7 +75,7 @@ export default function PWAInstallModal({
 
         {/* Modal Header */}
         <div className="flex items-center gap-3.5 mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-white font-black text-xl shadow-glow shrink-0">
+          <div className="w-12 h-12 rounded-2xl bg-sunshine flex items-center justify-center text-[#072620] font-black text-xl shadow-glow-sunshine shrink-0">
             M
           </div>
           <div>
@@ -90,10 +90,10 @@ export default function PWAInstallModal({
 
         {/* Native 1-Click Install Button if supported */}
         {isInstallable && !isInstalled && (
-          <div className="mb-6 p-4 rounded-2xl bg-primary/10 border border-primary/20 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="mb-6 p-4 rounded-2xl bg-sunshine/10 border border-sunshine/30 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div>
-              <div className="text-xs font-bold text-primary flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5" />
+              <div className="text-xs font-bold text-[#072620] dark:text-sunshine flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-sunshine" />
                 <span>Instant Installation Available</span>
               </div>
               <div className="text-[11px] text-slate-400 mt-0.5">
@@ -102,7 +102,7 @@ export default function PWAInstallModal({
             </div>
             <button
               onClick={handleNativeClick}
-              className="w-full sm:w-auto px-5 py-2.5 bg-primary hover:bg-primary-hover active:scale-95 text-white text-xs font-bold rounded-xl transition-all shadow-glow flex items-center justify-center gap-2 shrink-0"
+              className="w-full sm:w-auto px-5 py-2.5 bg-sunshine hover:bg-sunshine-hover active:scale-95 text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine flex items-center justify-center gap-2 shrink-0"
             >
               <Download className="w-4 h-4" />
               <span>Install Now</span>
@@ -130,7 +130,7 @@ export default function PWAInstallModal({
             </div>
             <button
               onClick={onClose}
-              className="w-full py-3 bg-primary text-white text-xs font-bold rounded-xl shadow-glow"
+              className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl shadow-glow-sunshine"
             >
               Open Dashboard
             </button>
@@ -173,19 +173,19 @@ export default function PWAInstallModal({
               {platform === 'android' && (
                 <>
                   <div className="flex items-start gap-3 p-3 rounded-xl bg-accent/50 border border-border">
-                    <div className="w-6 h-6 rounded-lg bg-primary/20 text-primary font-bold flex items-center justify-center shrink-0">1</div>
+                    <div className="w-6 h-6 rounded-lg bg-sunshine/20 text-[#072620] dark:text-sunshine font-black flex items-center justify-center shrink-0">1</div>
                     <div className="text-slate-300">
                       Open this page in <strong>Google Chrome</strong> or your default Android browser.
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 rounded-xl bg-accent/50 border border-border">
-                    <div className="w-6 h-6 rounded-lg bg-primary/20 text-primary font-bold flex items-center justify-center shrink-0">2</div>
+                    <div className="w-6 h-6 rounded-lg bg-sunshine/20 text-[#072620] dark:text-sunshine font-black flex items-center justify-center shrink-0">2</div>
                     <div className="text-slate-300">
                       Tap the <strong>three vertical dots menu (⋮)</strong> in the upper right corner of Chrome.
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 rounded-xl bg-accent/50 border border-border">
-                    <div className="w-6 h-6 rounded-lg bg-primary/20 text-primary font-bold flex items-center justify-center shrink-0">3</div>
+                    <div className="w-6 h-6 rounded-lg bg-sunshine/20 text-[#072620] dark:text-sunshine font-black flex items-center justify-center shrink-0">3</div>
                     <div className="text-slate-300">
                       Select <strong>Install app</strong> or <strong>Add to Home screen</strong> and confirm.
                     </div>
@@ -196,24 +196,24 @@ export default function PWAInstallModal({
               {platform === 'ios' && (
                 <>
                   <div className="flex items-start gap-3 p-3 rounded-xl bg-accent/50 border border-border">
-                    <div className="w-6 h-6 rounded-lg bg-primary/20 text-primary font-bold flex items-center justify-center shrink-0">1</div>
+                    <div className="w-6 h-6 rounded-lg bg-sunshine/20 text-[#072620] dark:text-sunshine font-black flex items-center justify-center shrink-0">1</div>
                     <div className="text-slate-300">
                       Open this page in <strong>Safari</strong> on your iPhone or iPad.
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 rounded-xl bg-accent/50 border border-border">
-                    <div className="w-6 h-6 rounded-lg bg-primary/20 text-primary font-bold flex items-center justify-center shrink-0">2</div>
+                    <div className="w-6 h-6 rounded-lg bg-sunshine/20 text-[#072620] dark:text-sunshine font-black flex items-center justify-center shrink-0">2</div>
                     <div className="text-slate-300 flex items-center gap-1.5 flex-wrap">
                       <span>Tap the <strong>Share button</strong></span>
-                      <Share2 className="w-3.5 h-3.5 text-primary inline" />
+                      <Share2 className="w-3.5 h-3.5 text-sunshine inline" />
                       <span>at the bottom of your screen.</span>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 rounded-xl bg-accent/50 border border-border">
-                    <div className="w-6 h-6 rounded-lg bg-primary/20 text-primary font-bold flex items-center justify-center shrink-0">3</div>
+                    <div className="w-6 h-6 rounded-lg bg-sunshine/20 text-[#072620] dark:text-sunshine font-black flex items-center justify-center shrink-0">3</div>
                     <div className="text-slate-300 flex items-center gap-1.5 flex-wrap">
                       <span>Scroll down and tap <strong>Add to Home Screen</strong></span>
-                      <PlusSquare className="w-3.5 h-3.5 text-primary inline" />
+                      <PlusSquare className="w-3.5 h-3.5 text-sunshine inline" />
                       <span>, then tap <strong>Add</strong> in the top-right.</span>
                     </div>
                   </div>
@@ -223,13 +223,13 @@ export default function PWAInstallModal({
               {platform === 'desktop' && (
                 <>
                   <div className="flex items-start gap-3 p-3 rounded-xl bg-accent/50 border border-border">
-                    <div className="w-6 h-6 rounded-lg bg-primary/20 text-primary font-bold flex items-center justify-center shrink-0">1</div>
+                    <div className="w-6 h-6 rounded-lg bg-sunshine/20 text-[#072620] dark:text-sunshine font-black flex items-center justify-center shrink-0">1</div>
                     <div className="text-slate-300">
-                      In Chrome, Edge, or Brave, look for the <strong>Install Icon</strong> <Download className="w-3 h-3 text-primary inline" /> on the right side of the address bar.
+                      In Chrome, Edge, or Brave, look for the <strong>Install Icon</strong> <Download className="w-3 h-3 text-sunshine inline" /> on the right side of the address bar.
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 rounded-xl bg-accent/50 border border-border">
-                    <div className="w-6 h-6 rounded-lg bg-primary/20 text-primary font-bold flex items-center justify-center shrink-0">2</div>
+                    <div className="w-6 h-6 rounded-lg bg-sunshine/20 text-[#072620] dark:text-sunshine font-black flex items-center justify-center shrink-0">2</div>
                     <div className="text-slate-300">
                       Click <strong>Install</strong> to launch Pocket Tracker as a standalone window.
                     </div>

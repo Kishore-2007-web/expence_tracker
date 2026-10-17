@@ -182,7 +182,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#96DFCE',
   },
   scrollContent: {
     padding: 20,
@@ -197,14 +197,14 @@ const styles = StyleSheet.create({
   logoBadge: {
     width: 32,
     height: 32,
-    backgroundColor: '#96DFCE',
+    backgroundColor: '#FADE85',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 8,
   },
   logoText: {
-    color: '#060e0c',
+    color: '#072620',
     fontWeight: '900',
     fontSize: 16,
   },
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   accentText: {
-    color: '#96DFCE',
+    color: '#FADE85',
   },
   upgradeBtn: {
     backgroundColor: '#FADE85',
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   btnText: {
-    color: '#fff',
+    color: '#072620',
     fontSize: 11,
     fontWeight: '900',
   },
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   activeSwitchTab: {
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#FADE85',
   },
   switchText: {
     color: '#94a3b8',
@@ -255,7 +255,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   activeSwitchText: {
-    color: '#fff',
+    color: '#072620',
+    fontWeight: 'bold',
   },
   metricCard: {
     backgroundColor: '#0a0a0a',
@@ -289,7 +290,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   flowIncome: {
-    color: '#96DFCE',
+    color: '#FADE85',
     fontWeight: 'bold',
   },
   flowExpense: {
@@ -321,15 +322,15 @@ const styles = StyleSheet.create({
     borderColor: '#222222',
   },
   submitBtn: {
-    backgroundColor: '#96DFCE',
+    backgroundColor: '#FADE85',
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
   },
   submitBtnText: {
-    color: '#060e0c',
+    color: '#072620',
     fontSize: 13,
-    fontWeight: 'bold',
+    fontWeight: '900',
   },
   goalsContainer: {
     marginBottom: 20,
@@ -365,7 +366,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: '100%',
-    backgroundColor: '#96DFCE',
+    backgroundColor: '#FADE85',
   },
   bizSettingsCard: {
     backgroundColor: '#0a0a0a',

@@ -46,23 +46,23 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
   };
 
   return (
-    <div className="bg-background text-foreground overflow-x-hidden min-h-screen">
+    <div className="bg-background text-[#072620] overflow-x-hidden min-h-screen">
       {/* Header */}
-      <header className="border-b border-border sticky top-0 bg-background/80 backdrop-blur-md z-40">
+      <header className="border-b border-[#072620]/10 sticky top-0 bg-background/85 backdrop-blur-md z-40">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-gradient-to-br from-aquatic to-aquatic-700 rounded-xl flex items-center justify-center text-slate-950 font-black text-xl shadow-glow">
+            <div className="w-9 h-9 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-xl shadow-glow-sunshine">
               M
             </div>
-            <span className="font-bold text-lg tracking-tight">My Pocket <span className="text-aquatic font-black">Tracker</span></span>
+            <span className="font-bold text-lg tracking-tight text-[#072620]">My Pocket <span className="text-amber-800 dark:text-sunshine font-black">Tracker</span></span>
           </div>
 
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-500 dark:text-slate-400">
-            <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-            <a href="#overview" className="hover:text-foreground transition-colors">Overview</a>
-            <a href="#about" className="hover:text-foreground transition-colors">About Us</a>
-            <a href="#contact" className="hover:text-foreground transition-colors">Contact</a>
-            <a href="#faq" className="hover:text-foreground transition-colors">FAQ</a>
+          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-[#0c332d]">
+            <a href="#features" className="hover:text-black transition-colors">Features</a>
+            <a href="#overview" className="hover:text-black transition-colors">Overview</a>
+            <a href="#about" className="hover:text-black transition-colors">About Us</a>
+            <a href="#contact" className="hover:text-black transition-colors">Contact</a>
+            <a href="#faq" className="hover:text-black transition-colors">FAQ</a>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -77,17 +77,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
             {/* Launch / Install App Button */}
             <button
               onClick={handleInstallClick}
-              className="px-4 py-2 bg-aquatic/10 hover:bg-aquatic/20 text-aquatic text-xs font-bold rounded-xl border border-aquatic/30 transition-all flex items-center gap-1.5 touch-target shadow-sm"
+              className="px-4 py-2 bg-sunshine/25 hover:bg-sunshine/35 text-[#072620] text-xs font-bold rounded-xl border border-sunshine/50 transition-all flex items-center gap-1.5 touch-target shadow-sm"
               title={isInstalled ? 'Launch installed application' : 'Install My Pocket Tracker on this device'}
             >
               {isInstalled ? (
                 <>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-aquatic" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-900" />
                   <span>Launch App</span>
                 </>
               ) : (
                 <>
-                  <Download className="w-3.5 h-3.5" />
+                  <Download className="w-3.5 h-3.5 text-amber-900" />
                   <span>Install App</span>
                 </>
               )}
@@ -95,7 +95,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
 
             <button
               onClick={onEnterApp}
-              className="px-4 py-2.5 bg-primary hover:bg-primary-hover text-white dark:text-slate-950 text-xs font-bold rounded-xl transition-all shadow-glow hover:-translate-y-0.5 touch-target"
+              className="px-4 py-2.5 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine hover:-translate-y-0.5 touch-target"
             >
               Sign In
             </button>
@@ -105,21 +105,21 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
 
       {/* Hero Section */}
       <section className="relative pt-20 pb-24 md:pt-32 md:pb-36 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(150,223,206,0.14),transparent_50%),radial-gradient(circle_at_bottom_left,rgba(250,222,133,0.1),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(250,222,133,0.3),transparent_50%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.4),transparent_50%)]"></div>
         <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sunshine/35 bg-sunshine/10 text-sunshine-700 dark:text-sunshine text-xs font-semibold mb-6 shadow-glow-sunshine">
-              <Sparkles className="w-3.5 h-3.5 text-sunshine" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sunshine/60 bg-sunshine text-[#072620] text-xs font-bold mb-6 shadow-glow-sunshine">
+              <Sparkles className="w-3.5 h-3.5 text-amber-900" />
               <span>100% Free & Open Platform — All Features Unlocked</span>
             </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6">
-              Manage personal wealth & <span className="bg-gradient-to-r from-aquatic via-aquatic-200 to-sunshine bg-clip-text text-transparent">multiple businesses</span> in one app
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6 text-[#072620]">
+              Manage personal wealth & <span className="bg-gradient-to-r from-amber-800 via-amber-600 to-[#3d2403] dark:from-sunshine dark:via-sunshine-300 dark:to-sunshine-600 bg-clip-text text-transparent">multiple businesses</span> in one app
             </h1>
-            <p className="text-base md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-base md:text-xl text-[#0d3b32] max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
               Track salaries, investments, grocery expense lists, invoices, tax calculations, and profit forecasts together under a single, unified workspace with zero fees and no ads.
             </p>
           </motion.div>
@@ -132,30 +132,30 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
           >
             <button
               onClick={onEnterApp}
-              className="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary-hover text-white dark:text-slate-950 font-bold rounded-xl flex items-center justify-center gap-2 shadow-glow hover:shadow-glow/20 hover:-translate-y-0.5 transition-all text-base touch-target"
+              className="w-full sm:w-auto px-8 py-4 bg-sunshine hover:bg-sunshine-hover text-[#072620] font-black rounded-xl flex items-center justify-center gap-2 shadow-glow-sunshine hover:shadow-glow-sunshine/40 hover:-translate-y-0.5 transition-all text-base touch-target"
             >
               <span>Launch My Pocket Tracker</span>
               <ArrowRight className="w-4 h-4" />
             </button>
             <button
               onClick={handleInstallClick}
-              className="w-full sm:w-auto px-8 py-4 bg-card border border-border text-foreground font-semibold rounded-xl flex items-center justify-center gap-2 hover:bg-accent transition-all text-base touch-target"
+              className="w-full sm:w-auto px-8 py-4 bg-card border border-sunshine/40 text-foreground font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-sunshine/15 transition-all text-base touch-target"
             >
               {isInstalled ? (
                 <>
-                  <CheckCircle2 className="w-5 h-5 text-aquatic" />
+                  <CheckCircle2 className="w-5 h-5 text-sunshine" />
                   <span>Open Installed App</span>
                 </>
               ) : (
                 <>
-                  <Download className="w-5 h-5 text-primary" />
+                  <Download className="w-5 h-5 text-sunshine" />
                   <span>Install App (Offline Ready)</span>
                 </>
               )}
             </button>
             <a
               href="#features"
-              className="w-full sm:w-auto px-6 py-4 text-slate-400 hover:text-foreground font-semibold rounded-xl flex items-center justify-center transition-all text-base"
+              className="w-full sm:w-auto px-6 py-4 text-[#072620] hover:text-black font-bold rounded-xl flex items-center justify-center transition-all text-base"
             >
               Explore Features
             </a>
@@ -166,11 +166,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-16 border border-border rounded-2xl overflow-hidden shadow-2xl bg-card max-w-5xl mx-auto relative group cursor-pointer"
+            className="mt-16 border border-sunshine/30 rounded-2xl overflow-hidden shadow-2xl bg-card max-w-5xl mx-auto relative group cursor-pointer"
             onClick={onEnterApp}
           >
             <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10">
-              <span className="px-6 py-3 bg-white text-zinc-950 rounded-xl font-bold shadow-lg flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform">
+              <span className="px-6 py-3 bg-sunshine text-[#072620] rounded-xl font-black shadow-lg flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform">
                 Open Sandbox Demo
                 <ArrowRight className="w-4 h-4" />
               </span>
@@ -185,20 +185,20 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       </section>
 
       {/* Features Grid */}
-      <section id="features" className="py-20 border-t border-border bg-slate-50 dark:bg-slate-900/20">
+      <section id="features" className="py-20 border-t border-border bg-black/[0.03] dark:bg-black/10 backdrop-blur-xs">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Core Ecosystem Modules</h2>
-            <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto text-sm md:text-base">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-[#072620]">Core Ecosystem Modules</h2>
+            <p className="text-[#0d3b32] max-w-2xl mx-auto text-sm md:text-base font-medium">
               Explore professional feature sets designed to simplify both personal budgeting and company-wide financial accounts.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* feature card 1 */}
-            <div className="p-8 rounded-2xl bg-card border border-border hover:shadow-premium transition-all hover-lift">
-              <div className="w-12 h-12 bg-aquatic/10 dark:bg-aquatic/15 rounded-xl flex items-center justify-center text-aquatic mb-6">
-                <Wallet className="w-6 h-6" />
+            <div className="p-8 rounded-2xl bg-card border border-sunshine/25 hover:border-sunshine/50 hover:shadow-glow-sunshine transition-all hover-lift">
+              <div className="w-12 h-12 bg-sunshine/20 rounded-xl flex items-center justify-center text-sunshine-700 dark:text-sunshine border border-sunshine/40 mb-6 shadow-glow-sunshine">
+                <Wallet className="w-6 h-6 text-sunshine" />
               </div>
               <h3 className="text-lg font-bold mb-3">Unified Finance Hub</h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
@@ -207,9 +207,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
             </div>
 
             {/* feature card 2 */}
-            <div className="p-8 rounded-2xl bg-card border border-border hover:shadow-premium transition-all hover-lift">
-              <div className="w-12 h-12 bg-sunshine/10 dark:bg-sunshine/15 rounded-xl flex items-center justify-center text-sunshine-600 dark:text-sunshine mb-6">
-                <Layers className="w-6 h-6" />
+            <div className="p-8 rounded-2xl bg-card border border-sunshine/25 hover:border-sunshine/50 hover:shadow-glow-sunshine transition-all hover-lift">
+              <div className="w-12 h-12 bg-sunshine/20 rounded-xl flex items-center justify-center text-sunshine-700 dark:text-sunshine border border-sunshine/40 mb-6 shadow-glow-sunshine">
+                <Layers className="w-6 h-6 text-sunshine" />
               </div>
               <h3 className="text-lg font-bold mb-3">Multi-Business Accounts</h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
@@ -218,9 +218,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
             </div>
 
             {/* feature card 3 */}
-            <div className="p-8 rounded-2xl bg-card border border-border hover:shadow-premium transition-all hover-lift">
-              <div className="w-12 h-12 bg-aquatic/10 dark:bg-aquatic/15 rounded-xl flex items-center justify-center text-aquatic mb-6">
-                <BarChart3 className="w-6 h-6" />
+            <div className="p-8 rounded-2xl bg-card border border-sunshine/25 hover:border-sunshine/50 hover:shadow-glow-sunshine transition-all hover-lift">
+              <div className="w-12 h-12 bg-sunshine/20 rounded-xl flex items-center justify-center text-sunshine-700 dark:text-sunshine border border-sunshine/40 mb-6 shadow-glow-sunshine">
+                <BarChart3 className="w-6 h-6 text-sunshine" />
               </div>
               <h3 className="text-lg font-bold mb-3">Forecasting & Invoices</h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
@@ -235,17 +235,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       <section id="features-unlocked" className="py-20 border-t border-border">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-aquatic/30 bg-aquatic/10 text-aquatic text-xs font-semibold mb-4 shadow-glow">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sunshine/50 bg-sunshine text-[#072620] text-xs font-bold mb-4 shadow-glow-sunshine">
+              <Sparkles className="w-3.5 h-3.5 text-amber-900" />
               <span>100% Free Platform — Zero Paywalls</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Every Feature Included. Completely Free.</h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-6 max-w-xl mx-auto text-sm">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-[#072620]">Every Feature Included. Completely Free.</h2>
+            <p className="text-[#0d3b32] mb-6 max-w-xl mx-auto text-sm font-medium">
               No subscription tiers, no hidden charges, and zero advertisements. Manage personal wealth and multiple company books without restrictions.
             </p>
           </div>
 
-          <div className="max-w-3xl mx-auto p-8 rounded-2xl bg-card border border-border shadow-premium text-center">
+          <div className="max-w-3xl mx-auto p-8 rounded-2xl bg-card border border-sunshine/35 shadow-premium text-center">
             <div className="grid sm:grid-cols-2 gap-4 text-left mb-8">
               {[
                 'Unlimited Business & Company Profiles',
@@ -258,7 +258,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
                 '100% Ad-Free Clean Interface'
               ].map((f, i) => (
                 <div key={i} className="flex items-center gap-2.5 text-sm">
-                  <Check className="w-4 h-4 text-aquatic shrink-0" />
+                  <Check className="w-4 h-4 text-sunshine shrink-0" />
                   <span>{f}</span>
                 </div>
               ))}
@@ -266,7 +266,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
 
             <button
               onClick={onEnterApp}
-              className="w-full sm:w-auto px-8 py-3.5 bg-primary hover:bg-primary-hover text-white dark:text-slate-950 text-sm font-bold rounded-xl transition-all shadow-glow hover:shadow-glow/20 inline-flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-3.5 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-sm font-black rounded-xl transition-all shadow-glow-sunshine hover:shadow-glow-sunshine/40 inline-flex items-center justify-center gap-2"
             >
               <span>Get Started Free — Open Tracker</span>
               <ArrowRight className="w-4 h-4" />
@@ -276,14 +276,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 border-t border-border bg-slate-50 dark:bg-slate-900/20">
+      <section id="about" className="py-20 border-t border-border bg-black/[0.03] dark:bg-black/10 backdrop-blur-xs">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">Our Mission to Simplify Finances</h2>
-            <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base leading-relaxed mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6 text-[#072620]">Our Mission to Simplify Finances</h2>
+            <p className="text-[#0d3b32] text-sm md:text-base leading-relaxed mb-6 font-medium">
               My Pocket Tracker was founded by team of engineers and accountants who were frustrated with using multiple web interfaces. Your payroll was on one service, personal coffee budgets on another, and side-hustle invoices on a third.
             </p>
-            <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base leading-relaxed">
+            <p className="text-[#0d3b32] text-sm md:text-base leading-relaxed font-medium">
               We combined everything into one seamless dashboard with automated limits, secure local-storage syncing, and immediate Supabase configuration access, ensuring your private financial indicators remain reliable and scalable.
             </p>
           </div>
@@ -301,23 +301,23 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       <section id="contact" className="py-20 border-t border-border">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight mb-4">Contact Our Support Team</h2>
-            <p className="text-slate-500 dark:text-slate-400 text-sm mb-8">
+            <h2 className="text-3xl font-bold tracking-tight mb-4 text-[#072620]">Contact Our Support Team</h2>
+            <p className="text-[#0d3b32] text-sm mb-8 font-medium">
               Got a question about subscription billing, enterprise solutions, or integrating custom banks? Reach out, and our team will get back to you within 24 hours.
             </p>
 
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <MapPin className="w-5 h-5 text-primary shrink-0" />
-                <span className="text-sm">100 Pine Street, San Francisco, CA 94111</span>
+                <MapPin className="w-5 h-5 text-sunshine shrink-0" />
+                <span className="text-sm font-medium">100 Pine Street, San Francisco, CA 94111</span>
               </div>
               <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-primary shrink-0" />
-                <span className="text-sm">+1 (415) 555-0189</span>
+                <Phone className="w-5 h-5 text-sunshine shrink-0" />
+                <span className="text-sm font-medium">+1 (415) 555-0189</span>
               </div>
               <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-primary shrink-0" />
-                <span className="text-sm">support@mypockettracker.io</span>
+                <Mail className="w-5 h-5 text-sunshine shrink-0" />
+                <span className="text-sm font-medium">support@mypockettracker.io</span>
               </div>
             </div>
           </div>
@@ -358,7 +358,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
             </div>
             <button
               type="submit"
-              className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white text-sm font-semibold rounded-xl transition-all shadow-glow hover:shadow-glow/15"
+              className="w-full py-3.5 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-sm font-black rounded-xl transition-all shadow-glow-sunshine hover:shadow-glow-sunshine/40"
             >
               Send Message
             </button>
@@ -367,11 +367,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-20 border-t border-border bg-slate-50 dark:bg-slate-900/20">
+      <section id="faq" className="py-20 border-t border-border bg-black/[0.03] dark:bg-black/10 backdrop-blur-xs">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight mb-4 flex items-center justify-center gap-2">
-              <HelpCircle className="w-8 h-8 text-primary" />
+            <h2 className="text-3xl font-bold tracking-tight mb-4 flex items-center justify-center gap-2 text-[#072620]">
+              <HelpCircle className="w-8 h-8 text-sunshine" />
               <span>Frequently Asked Questions</span>
             </h2>
           </div>
@@ -408,7 +408,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       <footer className="border-t border-border py-12 bg-card">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-lg">
+            <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-glow-sunshine">
               M
             </div>
             <span className="font-bold text-sm">My Pocket Tracker</span>

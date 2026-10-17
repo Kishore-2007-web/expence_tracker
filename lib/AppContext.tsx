@@ -92,7 +92,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [couponList, setCouponList] = useState<Coupon[]>([]);
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [theme, setThemeState] = useState('dark');
+  const [theme, setThemeState] = useState('light');
   const [exchangeRates, setExchangeRates] = useState<Record<string, number>>(EXCHANGE_RATES);
   const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
   const [isFirebaseBlocked, setIsFirebaseBlocked] = useState(false);
@@ -148,7 +148,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     refreshData();
     // Load local storage theme if exists
     if (typeof window !== 'undefined') {
-      const storedTheme = localStorage.getItem('theme') || 'dark';
+      const storedTheme = localStorage.getItem('theme') || 'light';
       setThemeState(storedTheme);
       document.documentElement.classList.toggle('dark', storedTheme === 'dark');
     }

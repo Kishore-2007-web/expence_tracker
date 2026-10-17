@@ -4,7 +4,7 @@ import { AppProvider } from '@/lib/AppContext';
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#0b0f17' },
+    { media: '(prefers-color-scheme: dark)', color: '#96DFCE' },
     { media: '(prefers-color-scheme: light)', color: '#96DFCE' }
   ],
   width: 'device-width',

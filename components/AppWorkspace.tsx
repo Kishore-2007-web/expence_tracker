@@ -401,17 +401,24 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
   };
 
   return (
-    <div className="flex min-h-screen bg-background text-foreground transition-colors duration-300">
+    <div className="flex min-h-screen bg-background text-foreground transition-colors duration-300 relative overflow-hidden">
+      {/* Luminous ambient background lighting pools beneath frosted glass panels */}
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none">
+        <div className="absolute -top-32 -left-32 w-[520px] h-[520px] bg-[#6de0ca] rounded-full blur-[120px] opacity-75" />
+        <div className="absolute top-1/4 -right-24 w-[620px] h-[620px] bg-[#a8ebd9] rounded-full blur-[140px] opacity-80" />
+        <div className="absolute -bottom-24 left-1/3 w-[680px] h-[680px] bg-[#49ccb2] rounded-full blur-[150px] opacity-70" />
+        <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-[#FADE85] rounded-full blur-[130px] opacity-35" />
+      </div>
       
       {/* Sidebar Navigation */}
       <aside className="w-64 border-r border-border bg-card p-6 flex flex-col justify-between shrink-0 hidden md:flex">
         <div>
           {/* Logo */}
           <div className="flex items-center gap-2 mb-8">
-            <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-lg shadow-glow">
+            <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-glow-sunshine">
               M
             </div>
-            <span className="font-bold text-sm tracking-tight">My Pocket <span className="text-primary font-black">Tracker</span></span>
+            <span className="font-bold text-sm tracking-tight">My Pocket <span className="text-sunshine font-black">Tracker</span></span>
           </div>
 
           {/* Account/Business Switcher */}
@@ -498,7 +505,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                   onClick={() => setActiveTab(item.id)}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                     activeTab === item.id
-                      ? 'bg-primary text-white shadow-glow'
+                      ? 'bg-sunshine text-[#072620] font-black shadow-glow-sunshine'
                       : 'text-slate-500 hover:bg-accent hover:text-foreground'
                   }`}
                 >
@@ -561,7 +568,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
             </button>
 
             <div className="flex items-center gap-2 overflow-hidden">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-base sm:text-lg shrink-0 shadow-glow">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-base sm:text-lg shrink-0 shadow-glow-sunshine">
                 M
               </div>
               <h1 className="text-xs sm:text-base font-bold tracking-tight truncate max-w-[130px] sm:max-w-none">
@@ -582,12 +589,12 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
             {/* Launch / Install App Button */}
             <button
               onClick={handleInstallClick}
-              className="px-2.5 py-1.5 sm:px-3 sm:py-2 bg-aquatic/10 hover:bg-aquatic/20 text-aquatic border border-aquatic/25 text-[11px] sm:text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shrink-0 touch-target"
+              className="px-2.5 py-1.5 sm:px-3 sm:py-2 bg-sunshine/20 hover:bg-sunshine/30 text-[#072620] dark:text-sunshine border border-sunshine/40 text-[11px] sm:text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shrink-0 touch-target"
               title={isInstalled ? 'My Pocket Tracker is running as an installed PWA' : 'Install My Pocket Tracker app for offline use'}
             >
               {isInstalled ? (
                 <>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-aquatic" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-sunshine" />
                   <span className="hidden sm:inline">Installed</span>
                 </>
               ) : (
@@ -601,7 +608,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
             <button
               onClick={() => setShowAddTxModal(true)}
-              className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-primary hover:bg-primary-hover text-white text-[11px] sm:text-xs font-semibold rounded-xl transition-all flex items-center gap-1 shrink-0 shadow-glow touch-target"
+              className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-[11px] sm:text-xs font-black rounded-xl transition-all flex items-center gap-1 shrink-0 shadow-glow-sunshine touch-target"
             >
               <Plus className="w-4 h-4" />
               <span className="hidden sm:inline">Add Transaction</span>
@@ -620,7 +627,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 md:hidden bg-slate-950/80 backdrop-blur-sm flex"
+              className="fixed inset-0 z-50 md:hidden bg-slate-950/45 backdrop-blur-md flex"
               onClick={() => setShowMobileMenu(false)}
             >
               <motion.div
@@ -635,10 +642,10 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                   {/* Drawer Header */}
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white font-black text-lg shadow-glow">
+                      <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-glow-sunshine">
                         M
                       </div>
-                      <span className="font-bold text-sm tracking-tight">My Pocket <span className="text-primary font-black">Tracker</span></span>
+                      <span className="font-bold text-sm tracking-tight">My Pocket <span className="text-sunshine font-black">Tracker</span></span>
                     </div>
                     <button
                       onClick={() => setShowMobileMenu(false)}
@@ -742,7 +749,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                           }}
                           className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                             isCurrent
-                              ? 'bg-primary text-white shadow-glow'
+                              ? 'bg-sunshine text-[#072620] font-black shadow-glow-sunshine'
                               : 'text-slate-500 hover:bg-accent hover:text-foreground'
                           }`}
                         >
@@ -826,12 +833,12 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     <div className="p-4 sm:p-5 md:p-6 bg-card border border-border rounded-2xl shadow-premium flex flex-col justify-between hover:border-border/80 transition-all min-h-[110px] sm:min-h-[130px]">
                       <div>
                         <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Workspace Incomes</div>
-                        <div className="text-base sm:text-xl md:text-2xl font-black text-aquatic tracking-tight">
+                        <div className="text-base sm:text-xl md:text-2xl font-black text-sunshine tracking-tight">
                           {formatCurrency(stats.income, profile.currency)}
                         </div>
                       </div>
                       <div className="text-[10px] sm:text-xs text-slate-400 mt-2 sm:mt-3 flex items-center gap-1.5">
-                        <ArrowUpRight className="w-3.5 h-3.5 text-aquatic shrink-0" />
+                        <ArrowUpRight className="w-3.5 h-3.5 text-sunshine shrink-0" />
                         <span className="truncate">Aggregated ledger transactions</span>
                       </div>
                     </div>
@@ -852,7 +859,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     <div className="p-4 sm:p-5 md:p-6 bg-card border border-border rounded-2xl shadow-premium flex flex-col justify-between hover:border-border/80 transition-all min-h-[110px] sm:min-h-[130px]">
                       <div>
                         <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Net Balance</div>
-                        <div className={`text-base sm:text-xl md:text-2xl font-black tracking-tight ${stats.balance >= 0 ? 'text-aquatic' : 'text-danger'}`}>
+                        <div className={`text-base sm:text-xl md:text-2xl font-black tracking-tight ${stats.balance >= 0 ? 'text-sunshine' : 'text-danger'}`}>
                           {formatCurrency(stats.balance, profile.currency)}
                         </div>
                       </div>
@@ -865,12 +872,12 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
                   {/* First Time Entry / Quick Start Guide */}
                   {transactions.length === 0 && (
-                    <div className="p-6 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 rounded-2xl shadow-premium relative overflow-hidden">
-                      <div className="absolute right-0 top-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+                    <div className="p-6 bg-card border border-border rounded-2xl shadow-premium relative overflow-hidden">
+                      <div className="absolute right-0 top-0 w-64 h-64 bg-aquatic/5 rounded-full blur-3xl -z-10"></div>
                       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <div className="space-y-2">
                           <div className="flex items-center gap-2">
-                            <Sparkles className="w-5 h-5 text-primary animate-pulse" />
+                            <Sparkles className="w-5 h-5 text-aquatic animate-pulse" />
                              <h3 className="text-base font-bold text-foreground">Welcome to My Pocket Tracker!</h3>
                           </div>
                           <p className="text-xs text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
@@ -880,7 +887,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                         <div className="flex flex-wrap gap-3">
                           <button
                             onClick={() => setShowAddTxModal(true)}
-                            className="px-4 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl transition-all shadow-glow flex items-center gap-1.5"
+                            className="px-4 py-2 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine flex items-center gap-1.5"
                           >
                             <Plus className="w-3.5 h-3.5" />
                             <span>1. Add First Transaction</span>
@@ -890,14 +897,14 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                               setCurrentBusiness(null);
                               setActiveTab('savings');
                             }}
-                            className="px-4 py-2 bg-success hover:bg-success/90 text-white text-xs font-bold rounded-xl transition-all shadow-glow flex items-center gap-1.5"
+                            className="px-4 py-2 bg-sunshine/20 hover:bg-sunshine/30 text-[#072620] dark:text-sunshine border border-sunshine/40 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5"
                           >
                             <PiggyBank className="w-3.5 h-3.5" />
                             <span>2. Create Savings Goal</span>
                           </button>
                           <button
                             onClick={() => setShowAddBizModal(true)}
-                            className="px-4 py-2 bg-accent hover:bg-accent-hover text-foreground border border-border text-xs font-bold rounded-xl transition-all flex items-center gap-1.5"
+                            className="px-4 py-2 bg-sunshine/10 hover:bg-sunshine/20 text-[#072620] dark:text-sunshine border border-sunshine/30 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5"
                           >
                             <Briefcase className="w-3.5 h-3.5" />
                             <span>3. Register a Business</span>
@@ -919,8 +926,8 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                           <AreaChart data={monthlyChartData}>
                             <defs>
                               <linearGradient id="colorInc" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#96DFCE" stopOpacity={0.3}/>
-                                <stop offset="95%" stopColor="#96DFCE" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#FADE85" stopOpacity={0.4}/>
+                                <stop offset="95%" stopColor="#FADE85" stopOpacity={0}/>
                               </linearGradient>
                               <linearGradient id="colorExp" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.2}/>
@@ -931,7 +938,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             <XAxis dataKey="name" stroke="var(--foreground)" fontSize={11} />
                             <YAxis stroke="var(--foreground)" fontSize={11} />
                             <Tooltip />
-                            <Area type="monotone" dataKey="Income" stroke="#96DFCE" strokeWidth={2} fillOpacity={1} fill="url(#colorInc)" />
+                            <Area type="monotone" dataKey="Income" stroke="#FADE85" strokeWidth={2.5} fillOpacity={1} fill="url(#colorInc)" />
                             <Area type="monotone" dataKey="Expense" stroke="#f43f5e" fillOpacity={1} fill="url(#colorExp)" />
                           </AreaChart>
                         </ResponsiveContainer>
@@ -981,7 +988,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
                     <div className="space-y-3.5">
                       {currentTransactions.slice(-5).reverse().map(tx => (
-                        <div key={tx.id} className="flex items-center justify-between p-3.5 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-border">
+                        <div key={tx.id} className="flex items-center justify-between p-3.5 bg-accent/40 rounded-xl border border-border">
                           <div className="flex items-center gap-3">
                             <div className={`p-2.5 rounded-lg font-bold text-xs shrink-0 ${
                               tx.type === 'income' ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger'
@@ -1069,7 +1076,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
                     <div className="divide-y divide-border">
                       {filteredTransactions.map(tx => (
-                        <div key={tx.id} className="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+                        <div key={tx.id} className="p-4 flex items-center justify-between hover:bg-accent/50 transition-colors">
                           <div className="flex items-center gap-3">
                             <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs ${
                               tx.type === 'income' ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger'
@@ -1221,14 +1228,14 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                           </div>
                           <button
                             type="submit"
-                            className="w-full py-2.5 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl transition-all"
+                            className="w-full py-2.5 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine"
                           >
                             Generate Invoice
                           </button>
                         </form>
 
                         {/* Invoice Preview */}
-                        <div className="border border-border rounded-xl p-5 bg-slate-50 dark:bg-slate-900/30 flex flex-col justify-between">
+                        <div className="border border-border rounded-xl p-5 bg-accent/40 flex flex-col justify-between">
                           {generatedInvoice ? (
                             <div className="space-y-4">
                               <div className="flex justify-between items-start border-b border-border pb-4">
@@ -1262,7 +1269,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
                               <div className="border-t border-border pt-4 flex justify-between items-baseline">
                                 <span className="text-xs font-medium text-slate-400">Total Charged:</span>
-                                <span className="text-lg font-black text-primary">
+                                <span className="text-lg font-black text-sunshine">
                                   {formatCurrency(parseFloat(generatedInvoice.amount) * 100, profile.currency)}
                                 </span>
                               </div>
@@ -1323,7 +1330,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     <h3 className="font-bold text-sm">Target Savings Goals</h3>
                     <button
                       onClick={() => setShowAddGoalModal(true)}
-                      className="px-3.5 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-all shadow-glow hover:shadow-glow/10"
+                      className="px-3.5 py-2 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl flex items-center gap-1.5 transition-all shadow-glow-sunshine"
                     >
                       <Plus className="w-4 h-4" />
                       <span>New Target Goal</span>
@@ -1391,7 +1398,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                                         setActiveGoalInput(null);
                                       }
                                     }}
-                                    className="px-3 py-1.5 bg-success hover:bg-success/90 text-white text-xs font-semibold rounded-lg transition-colors whitespace-nowrap shadow-glow"
+                                    className="px-3 py-1.5 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-lg transition-colors whitespace-nowrap shadow-glow-sunshine"
                                   >
                                     Add
                                   </button>
@@ -1406,7 +1413,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             ) : (
                               <button
                                 onClick={() => setActiveGoalInput(goal.id)}
-                                className="w-full py-2 bg-success hover:bg-success/90 text-white text-xs font-semibold rounded-lg transition-colors shadow-glow"
+                                className="w-full py-2 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-lg transition-colors shadow-glow-sunshine"
                               >
                                 Today's contribution
                               </button>
@@ -1523,7 +1530,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
                     <div className="space-y-3">
                       {aiInsights.map((insight, index) => (
-                        <div key={index} className="p-4 bg-white/50 dark:bg-slate-900/60 border border-border rounded-xl">
+                        <div key={index} className="p-4 bg-accent/40 border border-border rounded-xl">
                           <h4 className="font-bold text-xs mb-1">{insight.title}</h4>
                           <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">{insight.desc}</p>
                         </div>
@@ -1629,7 +1636,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
                       <button
                         type="submit"
-                        className="px-5 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl transition-all"
+                        className="px-5 py-2 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine"
                       >
                         Save Configurations
                       </button>
@@ -1718,7 +1725,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                       <button
                         type="button"
                         onClick={handleInstallClick}
-                        className="px-4 py-2 bg-aquatic/10 hover:bg-aquatic/20 text-aquatic text-xs font-bold rounded-xl border border-aquatic/25 transition-all flex items-center gap-1.5 touch-target"
+                        className="px-4 py-2 bg-sunshine/20 hover:bg-sunshine/30 text-[#072620] dark:text-sunshine text-xs font-bold rounded-xl border border-sunshine/40 transition-all flex items-center gap-1.5 touch-target"
                       >
                         <Download className="w-3.5 h-3.5" />
                         <span>{isInstalled ? 'App Already Installed' : 'Install My Pocket Tracker'}</span>
@@ -1748,7 +1755,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
         <button
           onClick={() => setActiveTab('dashboard')}
           className={`flex flex-col items-center gap-0.5 p-1.5 rounded-xl transition-colors ${
-            activeTab === 'dashboard' ? 'text-primary font-bold' : 'text-slate-400 hover:text-foreground'
+            activeTab === 'dashboard' ? 'text-sunshine font-black' : 'text-slate-400 hover:text-foreground'
           }`}
         >
           <LayoutDashboard className="w-5 h-5" />
@@ -1758,7 +1765,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
         <button
           onClick={() => setActiveTab('transactions')}
           className={`flex flex-col items-center gap-0.5 p-1.5 rounded-xl transition-colors ${
-            activeTab === 'transactions' ? 'text-primary font-bold' : 'text-slate-400 hover:text-foreground'
+            activeTab === 'transactions' ? 'text-sunshine font-black' : 'text-slate-400 hover:text-foreground'
           }`}
         >
           <Wallet className="w-5 h-5" />
@@ -1768,7 +1775,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
         {/* Center Floating Action Button */}
         <button
           onClick={() => setShowAddTxModal(true)}
-          className="w-10 h-10 -mt-5 bg-primary hover:bg-primary-hover text-white rounded-full flex items-center justify-center shadow-glow transition-transform active:scale-95 shrink-0"
+          className="w-10 h-10 -mt-5 bg-sunshine hover:bg-sunshine-hover text-[#072620] font-black rounded-full flex items-center justify-center shadow-glow-sunshine transition-transform active:scale-95 shrink-0"
           aria-label="Add Transaction"
         >
           <Plus className="w-5 h-5" />
@@ -1777,7 +1784,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
         <button
           onClick={() => setActiveTab('analytics')}
           className={`flex flex-col items-center gap-0.5 p-1.5 rounded-xl transition-colors ${
-            activeTab === 'analytics' ? 'text-primary font-bold' : 'text-slate-400 hover:text-foreground'
+            activeTab === 'analytics' ? 'text-sunshine font-black' : 'text-slate-400 hover:text-foreground'
           }`}
         >
           <BarChart3 className="w-5 h-5" />
@@ -1799,7 +1806,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
       {/* Add Business Modal */}
       {showAddBizModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-md">
           <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-6 max-h-[90vh] overflow-y-auto">
             <h3 className="font-bold text-base mb-4">Register Business</h3>
             
@@ -1845,7 +1852,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-lg transition-all"
+                  className="px-5 py-2 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-lg transition-all shadow-glow-sunshine"
                 >
                   Add Business
                 </button>
@@ -1857,7 +1864,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
       {/* Add Transaction Modal */}
       {showAddTxModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-md">
           <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-6 max-h-[90vh] overflow-y-auto">
             <h3 className="font-bold text-base mb-4">Add Transaction</h3>
             
@@ -1961,7 +1968,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-lg transition-all"
+                  className="px-5 py-2 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-lg transition-all shadow-glow-sunshine"
                 >
                   Submit
                 </button>
@@ -1973,7 +1980,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
       {/* Add Goal Modal */}
       {showAddGoalModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-md">
           <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-6 max-h-[90vh] overflow-y-auto">
             <h3 className="font-bold text-base mb-4">Set Savings Target Goal</h3>
             
@@ -2023,7 +2030,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-lg transition-all"
+                  className="px-5 py-2 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-lg transition-all shadow-glow-sunshine"
                 >
                   Save Goal
                 </button>
@@ -2035,7 +2042,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
       {/* Delete Current Business Confirmation Modal */}
       {showDeleteBizModal && currentBusiness && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-md animate-in fade-in duration-200">
           <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-2xl p-6 relative">
             <button
               onClick={() => setShowDeleteBizModal(false)}

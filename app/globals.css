@@ -4,89 +4,93 @@
 
 @layer base {
   :root {
-    --background: #ffffff;
-    --foreground: #0f172a;
+    --background: #96DFCE; /* PANTONE 13-5412 TCX Aquatic Green */
+    --foreground: #072620; /* High-contrast deep aquatic forest */
 
-    --card: rgba(255, 255, 255, 0.7);
-    --card-foreground: #0f172a;
+    --card: rgba(255, 255, 255, 0.88);
+    --card-foreground: #072620;
 
-    --border: rgba(150, 223, 206, 0.25);
+    --border: rgba(250, 222, 133, 0.35); /* Subtle Sunshine Yellow border */
 
-    --primary: #2ea38d;
-    --primary-hover: #248573;
-    --primary-foreground: #ffffff;
+    --primary: #FADE85; /* PANTONE 12-0727 TCX Sunshine Yellow */
+    --primary-hover: #f3d16b;
+    --primary-foreground: #072620;
+
+    --aquatic: #96DFCE;
+    --aquatic-glow: rgba(150, 223, 206, 0.45);
+
+    --sunshine: #FADE85;
+    --sunshine-hover: #f3d16b;
+    --sunshine-glow: rgba(250, 222, 133, 0.45);
+
+    --success: #FADE85;
+
+    --accent: rgba(250, 222, 133, 0.2);
+    --accent-hover: rgba(250, 222, 133, 0.35);
+
+    --radius: 12px;
+
+    /* Slate variables mapped to deep aquatic dark greens for high readability on aquatic background */
+    --slate-50: rgba(255, 255, 255, 0.6);
+    --slate-100: rgba(255, 255, 255, 0.85);
+    --slate-200: rgba(7, 38, 32, 0.1);
+    --slate-300: rgba(7, 38, 32, 0.2);
+    --slate-400: #2d5e53;
+    --slate-500: #1b493f;
+    --slate-600: #123d34;
+    --slate-700: #0c2f28;
+    --slate-800: #07241e;
+    --slate-900: #041713;
+    --slate-950: #020c0a;
+  }
+
+  .dark {
+    --background: #96DFCE; /* PANTONE 13-5412 TCX Aquatic Green */
+    --foreground: #f0faf7; /* Luminous mint-white text for dark glass card surfaces */
+
+    --card: rgba(6, 28, 23, 0.48); /* Translucent dark glass revealing blurred Aquatic Green */
+    --card-foreground: #f0faf7;
+
+    --border: rgba(255, 255, 255, 0.16); /* Frosted glass rim border */
+
+    --primary: #FADE85; /* PANTONE 12-0727 TCX Sunshine Yellow */
+    --primary-hover: #f3d16b;
+    --primary-foreground: #072620;
 
     --aquatic: #96DFCE;
     --aquatic-glow: rgba(150, 223, 206, 0.35);
 
     --sunshine: #FADE85;
     --sunshine-hover: #f3d16b;
-    --sunshine-glow: rgba(250, 222, 133, 0.35);
+    --sunshine-glow: rgba(250, 222, 133, 0.45);
 
-    --success: #2ea38d;
+    --success: #FADE85;
 
-    --accent: rgba(150, 223, 206, 0.08);
-    --accent-hover: rgba(150, 223, 206, 0.16);
-
-    --radius: 12px;
-
-    /* Slate variables mapped to neutral grey in light mode */
-    --slate-50: #fafafa;
-    --slate-100: #f4f4f5;
-    --slate-200: #e4e4e7;
-    --slate-300: #d4d4d8;
-    --slate-400: #71717a;
-    --slate-500: #52525b;
-    --slate-600: #3f3f46;
-    --slate-700: #27272a;
-    --slate-800: #18181b;
-    --slate-900: #f4f4f5;
-    --slate-950: #e4e4e7;
-  }
-
-  .dark {
-    --background: #060e0c;
-    --foreground: #f0faf7;
-
-    --card: rgba(10, 23, 20, 0.65);
-    --card-foreground: #f0faf7;
-
-    --border: rgba(150, 223, 206, 0.16);
-
-    --primary: #96DFCE;
-    --primary-hover: #b4ede1;
-    --primary-foreground: #072620;
-
-    --aquatic: #96DFCE;
-    --aquatic-glow: rgba(150, 223, 206, 0.3);
-
-    --sunshine: #FADE85;
-    --sunshine-hover: #f3d16b;
-    --sunshine-glow: rgba(250, 222, 133, 0.3);
-
-    --success: #96DFCE;
-
-    --accent: rgba(150, 223, 206, 0.1);
-    --accent-hover: rgba(150, 223, 206, 0.18);
+    --accent: rgba(255, 255, 255, 0.08); /* Inset glass tray layers */
+    --accent-hover: rgba(255, 255, 255, 0.16);
 
     --radius: 12px;
 
-    /* Slate variables mapped to obsidian-aquatic in dark mode */
+    /* Slate variables in dark card context */
     --slate-50: #07100e;
     --slate-100: #0d1a17;
     --slate-200: #142723;
     --slate-300: #1d3631;
-    --slate-400: #88a7a0;
-    --slate-500: #b5cdc7;
-    --slate-600: #d3e5e0;
-    --slate-700: #e5f2ee;
-    --slate-800: #f0faf7;
+    --slate-400: #b4d8cf;
+    --slate-500: #cee6e0;
+    --slate-600: #e2f1ec;
+    --slate-700: #ecf6f3;
+    --slate-800: #f5faf8;
     --slate-900: #0a1714;
     --slate-950: #060e0c;
   }
 }
 
 @layer base {
+  html, body {
+    background-color: #96DFCE !important;
+  }
+
   body {
     @apply bg-background text-foreground transition-colors duration-300;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
@@ -95,23 +99,20 @@
 
 /* Glassmorphism Components */
 @layer components {
-  .bg-card {
-    background-color: var(--card) !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
+  .bg-card, .glass {
+    background: linear-gradient(135deg, rgba(7, 34, 28, 0.52) 0%, rgba(4, 22, 18, 0.38) 100%) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
     border-color: var(--border) !important;
+    box-shadow: 0 8px 32px 0 rgba(2, 18, 14, 0.22), inset 0 1px 1px 0 rgba(255, 255, 255, 0.18) !important;
   }
   
-  .glass {
-    background: var(--card) !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    border: 1px solid var(--border) !important;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08) !important;
-  }
-  
-  .dark .glass {
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+  :root:not(.dark) .bg-card, :root:not(.dark) .glass {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.42) 100%) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border-color: rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 8px 32px 0 rgba(7, 38, 32, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.6) !important;
   }
 }
 
