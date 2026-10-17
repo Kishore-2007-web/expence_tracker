@@ -84,6 +84,35 @@ export function runValidationSuite() {
     assert(!MockDB.getBusinesses().some(b => b.id === testBiz.id), `Deleted business is removed from businesses list`);
     assert(!MockDB.getTransactions().some(t => t.business_id === testBiz.id), `Transactions belonging to deleted business are removed`);
 
+    // Test 8: PWA Manifest Configuration Validation
+    const fs = require('fs');
+    const path = require('path');
+    const manifestPath = path.join(process.cwd(), 'public', 'manifest.webmanifest');
+    assert(fs.existsSync(manifestPath), `manifest.webmanifest exists in public folder`);
+    if (fs.existsSync(manifestPath)) {
+      const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+      assert(manifest.display === 'standalone', `Manifest display is standalone`);
+      assert(manifest.short_name === 'PocketTracker', `Manifest short_name is PocketTracker`);
+      assert(manifest.icons && manifest.icons.length >= 4, `Manifest includes required icons (192, 512, maskable)`);
+      assert(manifest.theme_color === '#0b0f17', `Manifest theme_color is #0b0f17`);
+    }
+
+    // Test 9: Service Worker & Offline Fallback Architecture
+    const swPath = path.join(process.cwd(), 'public', 'sw.js');
+    assert(fs.existsSync(swPath), `Service worker file public/sw.js exists`);
+    if (fs.existsSync(swPath)) {
+      const swContent = fs.readFileSync(swPath, 'utf8');
+      assert(swContent.includes('CACHE_NAME'), `Service worker defines cache versioning`);
+      assert(swContent.includes('/offline'), `Service worker includes /offline fallback`);
+      assert(swContent.includes('SKIP_WAITING'), `Service worker supports reliable skipWaiting update mechanism`);
+    }
+
+    // Test 10: App Icons Availability
+    const icon192 = path.join(process.cwd(), 'public', 'icons', 'icon-192x192.png');
+    const icon512 = path.join(process.cwd(), 'public', 'icons', 'icon-512x512.png');
+    assert(fs.existsSync(icon192), `192x192 PNG icon exists for mobile installation`);
+    assert(fs.existsSync(icon512), `512x512 PNG icon exists for splash screen & app stores`);
+
     console.log(`Validation results: ${results.passed} passed, ${results.failed} failed.`);
     results.logs.forEach(log => console.log(log));
   } catch (error: any) {

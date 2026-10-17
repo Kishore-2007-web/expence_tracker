@@ -30,8 +30,12 @@ import {
   User,
   Ticket,
   Menu,
-  X
+  X,
+  HardDrive,
+  CheckCircle2
 } from 'lucide-react';
+import { PWAStatusIndicator, PWAOfflineBanner } from './PWAStatusBanner';
+import PWAInstallModal from './PWAInstallModal';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -79,7 +83,17 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
     upgradeToPremium,
     downgradeToFree,
     markNotificationsRead,
-    updateProfileDetails
+    updateProfileDetails,
+    // PWA & Offline
+    isOnline,
+    syncStatus,
+    isInstallable,
+    isInstalled,
+    isUpdateAvailable,
+    installApp,
+    applyUpdate,
+    showInstallModal,
+    setShowInstallModal
   } = useApp();
 
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -109,6 +123,14 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
   // Invoice Simulator
   const [invoiceForm, setInvoiceForm] = useState({ clientName: '', email: '', itemDescription: '', amount: '', invoiceNumber: 'INV-1002' });
   const [generatedInvoice, setGeneratedInvoice] = useState<any>(null);
+
+  const handleInstallClick = async () => {
+    if (isInstalled) {
+      alert('My Pocket Tracker is already installed and running on this device.');
+      return;
+    }
+    await installApp();
+  };
 
   // Settings
   const [profileForm, setProfileForm] = useState({ name: profile.name, phone: profile.phone, country: profile.country, currency: profile.currency, language: profile.language });
@@ -547,9 +569,37 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* PWA Network & Offline Status Indicator */}
+            <PWAStatusIndicator 
+              isOnline={isOnline} 
+              syncStatus={syncStatus} 
+              isUpdateAvailable={isUpdateAvailable}
+              onApplyUpdate={applyUpdate}
+            />
+
+            {/* Launch / Install App Button */}
+            <button
+              onClick={handleInstallClick}
+              className="px-2.5 py-1.5 sm:px-3 sm:py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/25 text-[11px] sm:text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shrink-0 touch-target"
+              title={isInstalled ? 'My Pocket Tracker is running as an installed PWA' : 'Install My Pocket Tracker app for offline use'}
+            >
+              {isInstalled ? (
+                <>
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="hidden sm:inline">Installed</span>
+                </>
+              ) : (
+                <>
+                  <Download className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Install App</span>
+                  <span className="sm:hidden">Install</span>
+                </>
+              )}
+            </button>
+
             <button
               onClick={() => setShowAddTxModal(true)}
-              className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-accent hover:bg-accent-hover text-foreground border border-border text-[11px] sm:text-xs font-semibold rounded-xl transition-all flex items-center gap-1 shrink-0"
+              className="px-2.5 py-1.5 sm:px-4 sm:py-2 bg-primary hover:bg-primary-hover text-white text-[11px] sm:text-xs font-semibold rounded-xl transition-all flex items-center gap-1 shrink-0 shadow-glow touch-target"
             >
               <Plus className="w-4 h-4" />
               <span className="hidden sm:inline">Add Transaction</span>
@@ -557,6 +607,9 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
             </button>
           </div>
         </header>
+
+        {/* Global Offline Banner (Discreetly notifies user when offline) */}
+        <PWAOfflineBanner isOnline={isOnline} />
 
         {/* Mobile Slide-Over Navigation Drawer */}
         <AnimatePresence>
@@ -1607,6 +1660,68 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                       </p>
                     </div>
                   </div>
+
+                  {/* PWA & Offline Storage Diagnostics */}
+                  <div className="p-6 bg-card border border-border rounded-2xl shadow-premium">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-3 border-b border-border">
+                      <div>
+                        <h3 className="font-bold text-sm flex items-center gap-2">
+                          <HardDrive className="w-4 h-4 text-primary" />
+                          <span>Offline Storage & PWA Architecture</span>
+                        </h3>
+                        <p className="text-xs text-slate-400 mt-0.5">Device persistence, sync health, and local database engine</p>
+                      </div>
+                      <PWAStatusIndicator 
+                        isOnline={isOnline} 
+                        syncStatus={syncStatus} 
+                        isUpdateAvailable={isUpdateAvailable}
+                        onApplyUpdate={applyUpdate}
+                      />
+                    </div>
+
+                    <div className="grid sm:grid-cols-3 gap-3 mb-4">
+                      <div className="p-3.5 rounded-xl bg-accent border border-border">
+                        <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Storage Engine</span>
+                        <span className="text-xs font-bold text-foreground">IndexedDB + LocalStorage</span>
+                        <span className="text-[10px] text-emerald-400 block mt-0.5">Dual-Layer Local Persistence</span>
+                      </div>
+
+                      <div className="p-3.5 rounded-xl bg-accent border border-border">
+                        <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Local Ledger Records</span>
+                        <span className="text-xs font-bold text-foreground">{transactions.length} Transactions</span>
+                        <span className="text-[10px] text-slate-400 block mt-0.5">{businesses.length} Business Workspaces</span>
+                      </div>
+
+                      <div className="p-3.5 rounded-xl bg-accent border border-border">
+                        <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">PWA Mode</span>
+                        <span className="text-xs font-bold text-foreground">{isInstalled ? 'Installed App (Standalone)' : 'Browser Window'}</span>
+                        <span className="text-[10px] text-slate-400 block mt-0.5">{isOnline ? 'Online Synced' : 'Operating Offline'}</span>
+                      </div>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-amber-500/5 border border-amber-500/20 text-[11px] text-slate-400 leading-relaxed mb-4">
+                      🔒 <strong>Privacy & Security Notice:</strong> Financial data is stored in your device browser's private sandbox storage. Offline records remain accessible without internet. Clearing your browser site data will reset unbacked-up records. Offline storage does not substitute for cloud backups.
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={handleInstallClick}
+                        className="px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-xl border border-emerald-500/25 transition-all flex items-center gap-1.5 touch-target"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                        <span>{isInstalled ? 'App Already Installed' : 'Install My Pocket Tracker'}</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => alert(`Offline Storage Status: ${transactions.length} transactions, ${businesses.length} businesses, and ${savingsGoals.length} savings targets stored locally in IndexedDB & LocalStorage.`)}
+                        className="px-4 py-2 bg-accent hover:bg-accent-hover text-foreground text-xs font-semibold rounded-xl border border-border transition-all flex items-center gap-1.5 touch-target"
+                      >
+                        <span>Check Local Storage Health</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -1974,6 +2089,15 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
           </div>
         </div>
       )}
+
+      {/* PWA Install Guide Modal */}
+      <PWAInstallModal
+        isOpen={showInstallModal}
+        onClose={() => setShowInstallModal(false)}
+        onInstallNative={installApp}
+        isInstallable={isInstallable}
+        isInstalled={isInstalled}
+      />
 
     </div>
   );

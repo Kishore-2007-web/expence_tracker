@@ -2,16 +2,37 @@
 
 import React, { useState } from 'react';
 import { useApp } from '@/lib/AppContext';
-import { ArrowRight, Check, Shield, Layers, Wallet, BarChart3, HelpCircle, Mail, MapPin, Phone, Sparkles } from 'lucide-react';
+import { ArrowRight, Check, Shield, Layers, Wallet, BarChart3, HelpCircle, Mail, MapPin, Phone, Sparkles, Download, CheckCircle2, Smartphone } from 'lucide-react';
 import { motion } from 'framer-motion';
+import PWAInstallModal from './PWAInstallModal';
+import { PWAStatusIndicator } from './PWAStatusBanner';
 
 interface LandingPageProps {
   onEnterApp: () => void;
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
+  const { 
+    isOnline, 
+    syncStatus, 
+    isInstallable, 
+    isInstalled, 
+    installApp, 
+    showInstallModal, 
+    setShowInstallModal,
+    isUpdateAvailable,
+    applyUpdate
+  } = useApp();
   const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+
+  const handleInstallClick = async () => {
+    if (isInstalled) {
+      onEnterApp();
+      return;
+    }
+    await installApp();
+  };
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,18 +65,39 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
             <a href="#faq" className="hover:text-foreground transition-colors">FAQ</a>
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <PWAStatusIndicator 
+              isOnline={isOnline} 
+              syncStatus={syncStatus} 
+              isUpdateAvailable={isUpdateAvailable}
+              onApplyUpdate={applyUpdate}
+              compact
+            />
+
+            {/* Launch / Install App Button */}
+            <button
+              onClick={handleInstallClick}
+              className="px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-xl border border-emerald-500/25 transition-all flex items-center gap-1.5 touch-target"
+              title={isInstalled ? 'Launch installed application' : 'Install My Pocket Tracker on this device'}
+            >
+              {isInstalled ? (
+                <>
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Launch App</span>
+                </>
+              ) : (
+                <>
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Install App</span>
+                </>
+              )}
+            </button>
+
             <button
               onClick={onEnterApp}
-              className="px-4 py-2 text-sm font-semibold hover:text-primary transition-all"
+              className="px-4 py-2.5 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl transition-all shadow-glow hover:-translate-y-0.5 touch-target"
             >
               Sign In
-            </button>
-            <button
-              onClick={onEnterApp}
-              className="px-5 py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-semibold rounded-xl transition-all shadow-glow hover:-translate-y-0.5 hover:shadow-glow/15"
-            >
-              Get Started Free
             </button>
           </div>
         </div>
@@ -90,14 +132,30 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
           >
             <button
               onClick={onEnterApp}
-              className="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-xl flex items-center justify-center gap-2 shadow-glow hover:shadow-glow/15 hover:-translate-y-0.5 transition-all text-base"
+              className="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-xl flex items-center justify-center gap-2 shadow-glow hover:shadow-glow/15 hover:-translate-y-0.5 transition-all text-base touch-target"
             >
               <span>Launch My Pocket Tracker</span>
               <ArrowRight className="w-4 h-4" />
             </button>
+            <button
+              onClick={handleInstallClick}
+              className="w-full sm:w-auto px-8 py-4 bg-card border border-border text-foreground font-semibold rounded-xl flex items-center justify-center gap-2 hover:bg-accent transition-all text-base touch-target"
+            >
+              {isInstalled ? (
+                <>
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                  <span>Open Installed App</span>
+                </>
+              ) : (
+                <>
+                  <Download className="w-5 h-5 text-primary" />
+                  <span>Install App (Offline Ready)</span>
+                </>
+              )}
+            </button>
             <a
               href="#features"
-              className="w-full sm:w-auto px-8 py-4 bg-card border border-border text-foreground font-semibold rounded-xl flex items-center justify-center hover:bg-accent transition-all text-base"
+              className="w-full sm:w-auto px-6 py-4 text-slate-400 hover:text-foreground font-semibold rounded-xl flex items-center justify-center transition-all text-base"
             >
               Explore Features
             </a>
@@ -363,6 +421,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
           </div>
         </div>
       </footer>
+
+      {/* PWA Install Guide Modal */}
+      <PWAInstallModal
+        isOpen={showInstallModal}
+        onClose={() => setShowInstallModal(false)}
+        onInstallNative={installApp}
+        isInstallable={isInstallable}
+        isInstalled={isInstalled}
+      />
     </div>
   );
 };
