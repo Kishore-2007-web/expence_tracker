@@ -190,7 +190,6 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
       setDuplicateWarning(null);
     }
   };
-  };
 
   // Calculations for current workspace selection (Home vs Selected Business)
   const currentTransactions = useMemo(() => {
