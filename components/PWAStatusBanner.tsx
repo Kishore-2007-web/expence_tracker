@@ -36,11 +36,11 @@ export function PWAStatusIndicator({
   if (!isOnline || syncStatus === 'offline') {
     return (
       <div 
-        className="px-2.5 py-1 bg-sunshine/15 border border-sunshine/30 rounded-lg text-[11px] font-semibold text-sunshine-700 dark:text-sunshine flex items-center gap-1.5 shrink-0"
+        className="px-2.5 py-1 bg-sunshine/30 border border-sunshine/50 rounded-lg text-[11px] font-bold text-black flex items-center gap-1.5 shrink-0"
         title="Offline mode: Records saved to device IndexedDB"
       >
-        <span className="w-2 h-2 rounded-full bg-sunshine animate-pulse" />
-        <span className="tracking-tight">{compact ? 'Offline' : 'Offline • Local Mode'}</span>
+        <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
+        <span className="tracking-tight text-black">{compact ? 'Offline' : 'Offline • Local Mode'}</span>
       </div>
     );
   }

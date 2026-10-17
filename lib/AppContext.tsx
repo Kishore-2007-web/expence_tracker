@@ -146,11 +146,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   useEffect(() => {
     refreshData();
-    // Load local storage theme if exists
+    // Ensure dark mode is completely removed and light mode is enforced
     if (typeof window !== 'undefined') {
-      const storedTheme = localStorage.getItem('theme') || 'light';
-      setThemeState(storedTheme);
-      document.documentElement.classList.toggle('dark', storedTheme === 'dark');
+      localStorage.removeItem('theme');
+      setThemeState('light');
+      document.documentElement.classList.remove('dark');
     }
 
     // Fetch real-time exchange rates
@@ -490,13 +490,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     await sendPasswordResetEmail(auth, email);
   };
 
-  const setTheme = (newTheme: string) => {
-    setThemeState(newTheme);
+  const setTheme = (_newTheme: string) => {
+    setThemeState('light');
     if (typeof window !== 'undefined') {
-      localStorage.setItem('theme', newTheme);
-      document.documentElement.classList.toggle('dark', newTheme === 'dark');
-      MockDB.updateProfile({ theme: newTheme });
+      localStorage.removeItem('theme');
+      document.documentElement.classList.remove('dark');
     }
+    MockDB.updateProfile({ theme: 'light' });
   };
 
   const setCurrentBusiness = (biz: Business | null) => {

@@ -24,8 +24,6 @@ import {
   AlertCircle,
   FileText,
   DollarSign,
-  Sun,
-  Moon,
   Upload,
   User,
   Ticket,
@@ -71,8 +69,6 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
     notifications,
     unreadNotificationCount,
     couponList,
-    theme,
-    setTheme,
     openUpgradeModal,
     addBusiness,
     deleteBusiness,
@@ -527,14 +523,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 hover:bg-accent rounded-xl text-black/60 hover:text-black transition-colors"
-            >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
-
+          <div className="flex items-center justify-end">
             <button
               onClick={onLogout}
               className="flex items-center gap-1.5 text-xs text-danger font-medium hover:underline p-2 hover:bg-danger/5 rounded-xl"
@@ -760,15 +749,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-1">
-                    <button
-                      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                      className="flex items-center gap-2 px-3 py-1.5 hover:bg-accent rounded-xl text-xs font-medium text-slate-400 hover:text-foreground transition-colors"
-                    >
-                      {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
-                      <span>{theme === 'dark' ? 'Light' : 'Dark'} Mode</span>
-                    </button>
-
+                  <div className="flex items-center justify-end pt-1">
                     <button
                       onClick={() => {
                         setShowMobileMenu(false);
@@ -1150,8 +1131,8 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
                   {/* Invoice Generator */}
                   <div className="p-6 bg-card border border-border rounded-2xl shadow-premium">
-                    <h3 className="font-bold text-sm mb-4 flex items-center gap-1.5">
-                      <FileText className="w-4 h-4 text-primary" />
+                    <h3 className="font-bold text-sm mb-4 flex items-center gap-1.5 text-black">
+                      <FileText className="w-4 h-4 text-black" />
                       <span>Invoice PDF Generator</span>
                     </h3>
 
@@ -1508,7 +1489,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                   {/* AI Financial insights summary */}
                   <div className="p-6 bg-gradient-to-br from-aquatic/15 via-sunshine/5 to-transparent border border-aquatic/25 dark:border-aquatic/20 rounded-2xl shadow-premium">
                     <div className="flex items-center gap-2 mb-4">
-                      <Sparkles className="w-5 h-5 text-sunshine animate-pulse" />
+                      <Sparkles className="w-5 h-5 text-black" />
                       <h3 className="font-bold text-sm text-foreground">AI-Powered Financial Insights</h3>
                     </div>
 
@@ -1571,8 +1552,8 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                 <div className="space-y-6">
                   {/* Profile form card */}
                   <div className="p-6 bg-card border border-border rounded-2xl shadow-premium">
-                    <h3 className="font-bold text-sm mb-6 flex items-center gap-1.5">
-                      <User className="w-4 h-4 text-primary" />
+                    <h3 className="font-bold text-sm mb-6 flex items-center gap-1.5 text-black">
+                      <User className="w-4 h-4 text-black" />
                       <span>Profile Configurations</span>
                     </h3>
 
@@ -1605,22 +1586,11 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             ))}
                           </select>
                         </div>
-                        <div>
-                          <label className="block text-xs font-medium text-slate-400 mb-2">Theme Mode</label>
-                          <select
-                            value={theme}
-                            onChange={e => setTheme(e.target.value)}
-                            className="w-full bg-accent border border-border rounded-xl px-3 py-2.5 text-xs focus:outline-none"
-                          >
-                            <option value="light">Light Mode ☀️</option>
-                            <option value="dark">Dark Mode 🌙</option>
-                          </select>
-                        </div>
                       </div>
 
                       <button
                         type="submit"
-                        className="px-5 py-2 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all"
+                        className="px-5 py-2 bg-sunshine hover:bg-sunshine-hover text-black text-xs font-black rounded-xl transition-all"
                       >
                         Save Configurations
                       </button>

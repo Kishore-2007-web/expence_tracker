@@ -59,7 +59,7 @@ export default function Home() {
             <div className="absolute inset-0 rounded-2xl border-2 border-t-primary border-r-sunshine-600 animate-spin" />
             
             {/* logo mark in center */}
-            <div className="w-10 h-10 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-xl shadow-sm">
+            <div className="w-10 h-10 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-xl shadow-sm">
               M
             </div>
           </div>
@@ -152,8 +152,8 @@ export default function Home() {
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8 relative">
               <div className="flex items-center gap-2 justify-center mb-8">
-                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-sm">M</div>
-                <span className="font-bold text-sm tracking-tight">My Pocket Tracker</span>
+                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-lg shadow-sm">M</div>
+                <span className="font-bold text-sm tracking-tight text-black">My Pocket Tracker</span>
               </div>
 
               <h2 className="text-xl font-bold text-center mb-1">Welcome back</h2>
@@ -187,7 +187,7 @@ export default function Home() {
                     <button
                       type="button"
                       onClick={() => setAuthView('forgot')}
-                      className="text-xs text-primary hover:underline"
+                      className="text-xs text-black font-bold hover:underline"
                     >
                       Forgot password?
                     </button>
@@ -214,7 +214,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5"
+                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-black text-xs font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
                   <span>Sign In</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -244,17 +244,17 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => loginOffline()}
-                className="w-full mt-2.5 py-2.5 bg-aquatic/10 hover:bg-aquatic/20 text-aquatic text-xs font-bold rounded-xl border border-aquatic/25 transition-colors flex items-center justify-center gap-2"
+                className="w-full mt-2.5 py-2.5 bg-black/5 hover:bg-black/10 text-black text-xs font-bold rounded-xl border border-black/20 transition-colors flex items-center justify-center gap-2"
               >
-                <Sparkles className="w-3.5 h-3.5 text-sunshine" />
+                <Sparkles className="w-3.5 h-3.5 text-black" />
                 <span>Instant Access (No Login Required)</span>
               </button>
 
 
 
-              <p className="text-xs text-slate-500 text-center mt-6">
+              <p className="text-xs text-slate-700 text-center mt-6">
                 Don't have an account?{' '}
-                <button onClick={() => setAuthView('signup')} className="text-primary font-bold hover:underline">
+                <button onClick={() => setAuthView('signup')} className="text-black font-black hover:underline">
                   Sign up
                 </button>
               </p>
@@ -273,8 +273,8 @@ export default function Home() {
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8">
               <div className="flex items-center gap-2 justify-center mb-8">
-                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-sm">M</div>
-                <span className="font-bold text-sm tracking-tight">My Pocket Tracker</span>
+                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-lg shadow-sm">M</div>
+                <span className="font-bold text-sm tracking-tight text-black">My Pocket Tracker</span>
               </div>
 
               <h2 className="text-xl font-bold text-center mb-1">Create Account</h2>
@@ -325,7 +325,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5"
+                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-black text-xs font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
                   <span>Sign Up</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -355,17 +355,17 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => loginOffline()}
-                className="w-full mt-2.5 py-2.5 bg-aquatic/10 hover:bg-aquatic/20 text-aquatic text-xs font-bold rounded-xl border border-aquatic/25 transition-colors flex items-center justify-center gap-2"
+                className="w-full mt-2.5 py-2.5 bg-black/5 hover:bg-black/10 text-black text-xs font-bold rounded-xl border border-black/20 transition-colors flex items-center justify-center gap-2"
               >
-                <Sparkles className="w-3.5 h-3.5 text-sunshine" />
+                <Sparkles className="w-3.5 h-3.5 text-black" />
                 <span>Instant Access (No Login Required)</span>
               </button>
 
 
 
-              <p className="text-xs text-slate-500 text-center mt-6">
+              <p className="text-xs text-slate-700 text-center mt-6">
                 Already have an account?{' '}
-                <button onClick={() => setAuthView('login')} className="text-primary font-bold hover:underline">
+                <button onClick={() => setAuthView('login')} className="text-black font-black hover:underline">
                   Log in
                 </button>
               </p>
@@ -401,7 +401,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-2.5 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl shadow-sm"
+                  className="w-full py-2.5 bg-sunshine hover:bg-sunshine-hover text-black text-xs font-black rounded-xl shadow-sm"
                 >
                   Send Reset Link
                 </button>
@@ -428,7 +428,7 @@ export default function Home() {
             className="min-h-screen flex items-center justify-center p-6 bg-background"
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8 text-center space-y-6">
-              <ShieldCheck className="w-12 h-12 text-primary mx-auto" />
+              <ShieldCheck className="w-12 h-12 text-black mx-auto" />
               <div>
                 <h2 className="text-lg font-bold mb-1">Verify Your Email</h2>
                 <p className="text-xs text-slate-400">We have sent a verification code to your email.</p>
@@ -449,7 +449,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={handleVerificationConfirm}
-                className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-sm"
+                className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-black text-xs font-black rounded-xl transition-all shadow-sm"
               >
                 Confirm Verification
               </button>
@@ -468,8 +468,8 @@ export default function Home() {
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8 relative">
               <div className="flex items-center gap-2 justify-center mb-6">
-                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-sm">M</div>
-                <span className="font-bold text-sm tracking-tight">My Pocket Tracker</span>
+                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-lg shadow-sm">M</div>
+                <span className="font-bold text-sm tracking-tight text-black">My Pocket Tracker</span>
               </div>
 
               <h2 className="text-xl font-bold text-center mb-1">Set Up Your Account</h2>
@@ -505,7 +505,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5"
+                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-black text-xs font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
                   <span>Complete Onboarding</span>
                   <ArrowRight className="w-3.5 h-3.5" />

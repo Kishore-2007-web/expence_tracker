@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   accentText: {
-    color: '#FADE85',
+    color: '#000000',
   },
   upgradeBtn: {
     backgroundColor: '#FADE85',
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   btnText: {
-    color: '#072620',
+    color: '#000000',
     fontSize: 11,
     fontWeight: '900',
   },
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   activeSwitchText: {
-    color: '#072620',
+    color: '#000000',
     fontWeight: 'bold',
   },
   metricCard: {
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   flowIncome: {
-    color: '#FADE85',
+    color: '#000000',
     fontWeight: 'bold',
   },
   flowExpense: {

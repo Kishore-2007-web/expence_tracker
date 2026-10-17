@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,10 +9,10 @@
     --background: #96DFCE; /* PANTONE 13-5412 TCX Aquatic Green */
     --foreground: #000000; /* Pure black text */
 
-    --card: rgba(255, 255, 255, 0.88);
+    --card: rgba(255, 255, 255, 0.75);
     --card-foreground: #000000;
 
-    --border: rgba(0, 0, 0, 0.15); /* Clean border */
+    --border: rgba(0, 0, 0, 0.12); /* Clean border */
 
     --primary: #FADE85; /* PANTONE 12-0727 TCX Sunshine Yellow */
     --primary-hover: #f3d16b;
@@ -22,52 +24,15 @@
     --success: #000000;
 
     --accent: rgba(0, 0, 0, 0.05);
-    --accent-hover: rgba(0, 0, 0, 0.1);
+    --accent-hover: rgba(0, 0, 0, 0.09);
 
-    --radius: 12px;
+    --radius: 14px;
 
     /* Slate variables mapped to solid dark blacks for high readability */
-    --slate-50: rgba(255, 255, 255, 0.6);
-    --slate-100: rgba(255, 255, 255, 0.85);
+    --slate-50: rgba(255, 255, 255, 0.75);
+    --slate-100: rgba(255, 255, 255, 0.9);
     --slate-200: rgba(0, 0, 0, 0.08);
     --slate-300: rgba(0, 0, 0, 0.16);
-    --slate-400: #334155;
-    --slate-500: #1e293b;
-    --slate-600: #0f172a;
-    --slate-700: #020617;
-    --slate-800: #000000;
-    --slate-900: #000000;
-    --slate-950: #000000;
-  }
-
-  .dark {
-    --background: #96DFCE; /* PANTONE 13-5412 TCX Aquatic Green */
-    --foreground: #000000; /* Pure black text */
-
-    --card: rgba(6, 28, 23, 0.48); /* Translucent dark glass revealing blurred Aquatic Green */
-    --card-foreground: #000000;
-
-    --border: rgba(0, 0, 0, 0.2); /* Frosted rim border */
-
-    --primary: #FADE85; /* PANTONE 12-0727 TCX Sunshine Yellow */
-    --primary-hover: #f3d16b;
-    --primary-foreground: #000000;
-
-    --aquatic: #96DFCE;
-    --sunshine: #FADE85;
-    --sunshine-hover: #f3d16b;
-    --success: #000000;
-
-    --accent: rgba(0, 0, 0, 0.08);
-    --accent-hover: rgba(0, 0, 0, 0.16);
-
-    --radius: 12px;
-
-    /* Slate variables in dark context - crisp black shades */
-    --slate-50: #07100e;
-    --slate-100: #0d1a17;
-    --slate-200: #142723;
-    --slate-300: #1d3631;
     --slate-400: #334155;
     --slate-500: #1e293b;
     --slate-600: #0f172a;
@@ -84,27 +49,30 @@
   }
 
   body {
-    @apply bg-background text-foreground transition-colors duration-300;
+    font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    @apply bg-background text-foreground transition-colors duration-200;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .font-heading,
+  .font-display,
+  button,
+  nav,
+  .metric-value {
+    font-family: var(--font-plus-jakarta), 'Plus Jakarta Sans', var(--font-inter), 'Inter', sans-serif;
+    letter-spacing: -0.02em;
   }
 }
 
 /* Glassmorphism Components */
 @layer components {
   .bg-card, .glass {
-    background: linear-gradient(135deg, rgba(7, 34, 28, 0.52) 0%, rgba(4, 22, 18, 0.38) 100%) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.68) 0%, rgba(255, 255, 255, 0.48) 100%) !important;
     backdrop-filter: blur(24px) saturate(190%) !important;
     -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
-    border-color: var(--border) !important;
-    box-shadow: 0 8px 32px 0 rgba(2, 18, 14, 0.22), inset 0 1px 1px 0 rgba(255, 255, 255, 0.18) !important;
-  }
-  
-  :root:not(.dark) .bg-card, :root:not(.dark) .glass {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.42) 100%) !important;
-    backdrop-filter: blur(24px) saturate(190%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
-    border-color: rgba(255, 255, 255, 0.45) !important;
-    box-shadow: 0 8px 32px 0 rgba(7, 38, 32, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.55) !important;
+    box-shadow: 0 8px 32px 0 rgba(7, 38, 32, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.7) !important;
   }
 }
 
@@ -126,22 +94,18 @@
   background: #cbd5e1;
 }
 
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #4b5563;
-}
-
 .hover-lift {
   @apply transition-transform duration-300 ease-out hover:-translate-y-0.5;
 }
 
-/* Select option overrides to fix white-on-white and browser-blue highlights */
+/* Select option overrides for light theme */
 select {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 select option {
-  background-color: #0c0c0c !important;
-  color: #f8fafc !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
 }
 
 /* PWA Mobile Optimization & Safe Areas */

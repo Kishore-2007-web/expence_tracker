@@ -151,7 +151,7 @@ const DEFAULT_PROFILE: Profile = {
   country: 'United States',
   currency: 'USD',
   language: 'en',
-  theme: 'dark',
+  theme: 'light',
   avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&h=256&fit=crop',
   is_admin: true,
   notification_email: true,
