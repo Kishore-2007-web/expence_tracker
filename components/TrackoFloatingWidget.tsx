@@ -22,16 +22,15 @@ export const TrackoFloatingWidget: React.FC<TrackoFloatingWidgetProps> = ({
   if (isOpen) return null;
 
   return (
-    <div className="fixed bottom-16 md:bottom-6 right-3 sm:right-6 z-40 flex items-center gap-2 max-w-[calc(100vw-1rem)]">
+    <div className="fixed bottom-14 md:bottom-6 right-3 sm:right-6 z-40 flex items-center gap-2">
       {/* Friendly Speech Bubble Tooltip */}
       {!dismissedBubble && (
         <div 
           onClick={onOpen}
-          className="cursor-pointer bg-white/95 border border-black/15 shadow-premium px-2.5 py-1.5 rounded-2xl text-[11px] font-bold text-black flex items-center gap-1.5 animate-in fade-in slide-in-from-right duration-300 hover:scale-105 transition-transform shrink-0"
+          className="hidden sm:flex cursor-pointer bg-white/95 border border-black/15 shadow-premium px-3 py-1.5 rounded-2xl text-[11px] font-bold text-black items-center gap-2 animate-in fade-in slide-in-from-right duration-300 hover:scale-105 transition-transform shrink-0"
         >
           <Sparkles className="w-3.5 h-3.5 text-black animate-pulse" />
-          <span className="hidden sm:inline">Ask TRACKO AI</span>
-          <span className="sm:hidden">Ask AI</span>
+          <span>Ask TRACKO AI</span>
           <button
             onClick={e => {
               e.stopPropagation();
@@ -56,7 +55,7 @@ export const TrackoFloatingWidget: React.FC<TrackoFloatingWidgetProps> = ({
       >
         <TrackoMascot
           state={isHovered ? 'listening' : 'idle'}
-          size={54}
+          size={50}
           interactive={false}
         />
       </button>
