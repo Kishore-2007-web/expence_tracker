@@ -123,10 +123,10 @@ self.addEventListener('fetch', (event) => {
                 <style>
                   body { margin: 0; background: #0b0f17; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 20px; }
                   .card { background: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 32px; max-width: 440px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-                  .icon { width: 56px; height: 56px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; color: #10b981; font-weight: bold; font-size: 24px; margin-bottom: 16px; }
+                  .icon { width: 56px; height: 56px; background: rgba(150, 223, 206, 0.15); border: 1px solid rgba(150, 223, 206, 0.35); border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; color: #96DFCE; font-weight: bold; font-size: 24px; margin-bottom: 16px; }
                   h1 { font-size: 20px; margin: 0 0 8px; }
                   p { font-size: 13px; color: #94a3b8; line-height: 1.5; margin: 0 0 24px; }
-                  button { background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; transition: opacity 0.2s; }
+                  button { background: #96DFCE; color: #060e0c; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer; transition: opacity 0.2s; }
                   button:hover { opacity: 0.9; }
                 </style>
               </head>

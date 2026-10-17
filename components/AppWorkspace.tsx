@@ -299,12 +299,13 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
     Travel: '#0d9488',    // Teal
     Shopping: '#ec4899',  // Pink
     Bills: '#ef4444',     // Red
-    Salary: '#10b981',    // Emerald
+    Salary: '#96DFCE',    // Pantone 13-5412 TCX Aquatic Green
+    Freelance: '#FADE85', // Pantone 12-0727 TCX Sunshine Yellow
     Rent: '#a855f7',      // Purple
     Marketing: '#d97706', // Amber/Orange
-    Utilities: '#eab308', // Yellow
+    Utilities: '#FADE85', // Pantone Sunshine Yellow
     Inventory: '#f59e0b', // Amber
-    'Savings Contribution': '#c084fc', // Fuchsia/Purple
+    'Savings Contribution': '#96DFCE', // Pantone Aquatic Green
   };
 
   const filteredTransactions = useMemo(() => {
@@ -420,7 +421,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
               className="w-full flex items-center justify-between p-3 rounded-xl border border-border bg-accent hover:bg-accent-hover transition-all text-left text-xs font-semibold"
             >
               <div className="flex items-center gap-2">
-                <div className="w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center text-white text-[10px] font-black shrink-0">
+                <div className="w-5 h-5 bg-gradient-to-br from-aquatic to-aquatic-700 rounded-full flex items-center justify-center text-slate-950 text-[10px] font-black shrink-0">
                   {currentBusiness ? currentBusiness.name[0] : 'P'}
                 </div>
                 <div className="truncate max-w-[120px]">
@@ -521,7 +522,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
             <div className="truncate max-w-[120px]">
               <div className="text-xs font-bold">{profile.name}</div>
               <div className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                  <span className="text-emerald-500 font-medium">Free & Unlimited</span>
+                  <span className="text-sunshine-600 dark:text-sunshine font-medium">Free & Unlimited</span>
               </div>
             </div>
           </div>
@@ -581,12 +582,12 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
             {/* Launch / Install App Button */}
             <button
               onClick={handleInstallClick}
-              className="px-2.5 py-1.5 sm:px-3 sm:py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/25 text-[11px] sm:text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shrink-0 touch-target"
+              className="px-2.5 py-1.5 sm:px-3 sm:py-2 bg-aquatic/10 hover:bg-aquatic/20 text-aquatic border border-aquatic/25 text-[11px] sm:text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shrink-0 touch-target"
               title={isInstalled ? 'My Pocket Tracker is running as an installed PWA' : 'Install My Pocket Tracker app for offline use'}
             >
               {isInstalled ? (
                 <>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-aquatic" />
                   <span className="hidden sm:inline">Installed</span>
                 </>
               ) : (
@@ -655,7 +656,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                       className="w-full flex items-center justify-between p-3 rounded-xl border border-border bg-accent hover:bg-accent-hover transition-all text-left text-xs font-semibold"
                     >
                       <div className="flex items-center gap-2 truncate">
-                        <div className="w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center text-white text-[10px] font-black shrink-0">
+                        <div className="w-5 h-5 bg-gradient-to-br from-aquatic to-aquatic-700 rounded-full flex items-center justify-center text-slate-950 text-[10px] font-black shrink-0">
                           {currentBusiness ? currentBusiness.name[0] : 'P'}
                         </div>
                         <div className="truncate">
@@ -762,7 +763,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     <div className="truncate flex-1">
                       <div className="text-xs font-bold truncate">{profile.name}</div>
                       <div className="text-[10px] text-slate-400">
-                        <span className="text-emerald-500 font-bold uppercase">Free Unlimited</span>
+                        <span className="text-sunshine-600 dark:text-sunshine font-bold uppercase">Free Unlimited</span>
                       </div>
                     </div>
                   </div>
@@ -825,12 +826,12 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     <div className="p-4 sm:p-5 md:p-6 bg-card border border-border rounded-2xl shadow-premium flex flex-col justify-between hover:border-border/80 transition-all min-h-[110px] sm:min-h-[130px]">
                       <div>
                         <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Workspace Incomes</div>
-                        <div className="text-base sm:text-xl md:text-2xl font-black text-success tracking-tight">
+                        <div className="text-base sm:text-xl md:text-2xl font-black text-aquatic tracking-tight">
                           {formatCurrency(stats.income, profile.currency)}
                         </div>
                       </div>
                       <div className="text-[10px] sm:text-xs text-slate-400 mt-2 sm:mt-3 flex items-center gap-1.5">
-                        <ArrowUpRight className="w-3.5 h-3.5 text-success shrink-0" />
+                        <ArrowUpRight className="w-3.5 h-3.5 text-aquatic shrink-0" />
                         <span className="truncate">Aggregated ledger transactions</span>
                       </div>
                     </div>
@@ -851,12 +852,12 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                     <div className="p-4 sm:p-5 md:p-6 bg-card border border-border rounded-2xl shadow-premium flex flex-col justify-between hover:border-border/80 transition-all min-h-[110px] sm:min-h-[130px]">
                       <div>
                         <div className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 mb-1 sm:mb-2">Net Balance</div>
-                        <div className={`text-base sm:text-xl md:text-2xl font-black tracking-tight ${stats.balance >= 0 ? 'text-emerald-500 dark:text-emerald-400' : 'text-danger'}`}>
+                        <div className={`text-base sm:text-xl md:text-2xl font-black tracking-tight ${stats.balance >= 0 ? 'text-aquatic' : 'text-danger'}`}>
                           {formatCurrency(stats.balance, profile.currency)}
                         </div>
                       </div>
                       <div className="text-[10px] sm:text-xs text-slate-400 mt-2 sm:mt-3 flex items-center gap-1.5">
-                        <Activity className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                        <Activity className="w-3.5 h-3.5 text-sunshine shrink-0" />
                         <span className="truncate">Profit margin: {stats.income > 0 ? Math.round((stats.balance / stats.income) * 100) : 0}%</span>
                       </div>
                     </div>
@@ -918,8 +919,8 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                           <AreaChart data={monthlyChartData}>
                             <defs>
                               <linearGradient id="colorInc" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#10b981" stopOpacity={0.2}/>
-                                <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#96DFCE" stopOpacity={0.3}/>
+                                <stop offset="95%" stopColor="#96DFCE" stopOpacity={0}/>
                               </linearGradient>
                               <linearGradient id="colorExp" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.2}/>
@@ -930,7 +931,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             <XAxis dataKey="name" stroke="var(--foreground)" fontSize={11} />
                             <YAxis stroke="var(--foreground)" fontSize={11} />
                             <Tooltip />
-                            <Area type="monotone" dataKey="Income" stroke="#10b981" fillOpacity={1} fill="url(#colorInc)" />
+                            <Area type="monotone" dataKey="Income" stroke="#96DFCE" strokeWidth={2} fillOpacity={1} fill="url(#colorInc)" />
                             <Area type="monotone" dataKey="Expense" stroke="#f43f5e" fillOpacity={1} fill="url(#colorExp)" />
                           </AreaChart>
                         </ResponsiveContainer>
@@ -1084,7 +1085,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                                 {currentBusiness === null && (
                                   <>
                                     <span>&bull;</span>
-                                    <span className="text-emerald-500 font-semibold uppercase tracking-wider text-[9px] bg-emerald-500/10 px-1.5 py-0.5 rounded">
+                                    <span className="text-aquatic font-semibold uppercase tracking-wider text-[9px] bg-aquatic/10 px-1.5 py-0.5 rounded">
                                       {tx.business_id ? (businesses.find(b => b.id === tx.business_id)?.name || 'Business') : 'Home'}
                                     </span>
                                   </>
@@ -1342,7 +1343,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                                 <span className="text-[10px] text-slate-400 uppercase font-medium">Deadline: {goal.deadline.substring(0, 10)}</span>
                               </div>
                               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                                goal.status === 'achieved' ? 'bg-success/10 text-success' : 'bg-primary/10 text-primary'
+                                goal.status === 'achieved' ? 'bg-sunshine/15 text-sunshine-700 dark:text-sunshine' : 'bg-aquatic/10 text-aquatic'
                               }`}>
                                 {goal.status === 'achieved' ? 'Achieved 🏆' : `${progress}%`}
                               </span>
@@ -1351,7 +1352,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             {/* Progress bar */}
                             <div className="w-full h-2 bg-accent rounded-full mb-4 overflow-hidden">
                               <div
-                                className="h-full bg-primary transition-all duration-500"
+                                className="h-full bg-gradient-to-r from-aquatic to-sunshine transition-all duration-500 rounded-full"
                                 style={{ width: `${progress}%` }}
                               ></div>
                             </div>
@@ -1514,10 +1515,10 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
               {activeTab === 'analytics' && (
                 <div className="space-y-6">
                   {/* AI Financial insights summary */}
-                  <div className="p-6 bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-200 dark:border-emerald-950/60 rounded-2xl shadow-premium">
+                  <div className="p-6 bg-gradient-to-br from-aquatic/15 via-sunshine/5 to-transparent border border-aquatic/25 dark:border-aquatic/20 rounded-2xl shadow-premium">
                     <div className="flex items-center gap-2 mb-4">
-                      <Sparkles className="w-5 h-5 text-emerald-500 animate-pulse" />
-                      <h3 className="font-bold text-sm text-emerald-900 dark:text-emerald-400">AI-Powered Financial Insights</h3>
+                      <Sparkles className="w-5 h-5 text-sunshine animate-pulse" />
+                      <h3 className="font-bold text-sm text-foreground">AI-Powered Financial Insights</h3>
                     </div>
 
                     <div className="space-y-3">
@@ -1542,7 +1543,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             <YAxis stroke="var(--foreground)" fontSize={11} />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="Income" fill="#10b981" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="Income" fill="#96DFCE" radius={[4, 4, 0, 0]} />
                             <Bar dataKey="Expense" fill="#f43f5e" radius={[4, 4, 0, 0]} />
                           </BarChart>
                         </ResponsiveContainer>
@@ -1556,8 +1557,8 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                           <AreaChart data={monthlyChartData}>
                             <defs>
                               <linearGradient id="colorAccum" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#10b981" stopOpacity={0.2}/>
-                                <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#FADE85" stopOpacity={0.3}/>
+                                <stop offset="95%" stopColor="#FADE85" stopOpacity={0}/>
                               </linearGradient>
                             </defs>
                             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
@@ -1565,7 +1566,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             <YAxis stroke="var(--foreground)" fontSize={11} />
                             <Tooltip />
                             <Legend />
-                            <Area type="monotone" name="Accumulated Balance" dataKey="Accumulated" stroke="#10b981" fillOpacity={1} fill="url(#colorAccum)" />
+                            <Area type="monotone" name="Accumulated Balance" dataKey="Accumulated" stroke="#FADE85" strokeWidth={2} fillOpacity={1} fill="url(#colorAccum)" />
                           </AreaChart>
                         </ResponsiveContainer>
                       </div>
@@ -1660,10 +1661,10 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                   <div className="p-6 bg-card border border-border rounded-2xl shadow-premium">
                     <h3 className="font-bold text-sm mb-4">Plan & Access</h3>
 
-                    <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+                    <div className="p-4 bg-sunshine/10 border border-sunshine/25 rounded-xl">
                       <div className="flex items-center gap-2 mb-1.5">
-                        <Sparkles className="w-4 h-4 text-emerald-500" />
-                        <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">100% Free Forever</span>
+                        <Sparkles className="w-4 h-4 text-sunshine" />
+                        <span className="text-xs font-bold text-sunshine-700 dark:text-sunshine">100% Free Forever</span>
                       </div>
                       <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
                         All features, unlimited businesses, analytics, and invoice generation are unlocked with no charges or subscriptions.
@@ -1693,7 +1694,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                       <div className="p-3.5 rounded-xl bg-accent border border-border">
                         <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Storage Engine</span>
                         <span className="text-xs font-bold text-foreground">IndexedDB + LocalStorage</span>
-                        <span className="text-[10px] text-emerald-400 block mt-0.5">Dual-Layer Local Persistence</span>
+                        <span className="text-[10px] text-aquatic block mt-0.5">Dual-Layer Local Persistence</span>
                       </div>
 
                       <div className="p-3.5 rounded-xl bg-accent border border-border">
@@ -1709,7 +1710,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                       </div>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-amber-500/5 border border-amber-500/20 text-[11px] text-slate-400 leading-relaxed mb-4">
+                    <div className="p-3.5 rounded-xl bg-sunshine/10 border border-sunshine/25 text-[11px] text-slate-300 leading-relaxed mb-4">
                       🔒 <strong>Privacy & Security Notice:</strong> Financial data is stored in your device browser's private sandbox storage. Offline records remain accessible without internet. Clearing your browser site data will reset unbacked-up records. Offline storage does not substitute for cloud backups.
                     </div>
 
@@ -1717,7 +1718,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                       <button
                         type="button"
                         onClick={handleInstallClick}
-                        className="px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-xl border border-emerald-500/25 transition-all flex items-center gap-1.5 touch-target"
+                        className="px-4 py-2 bg-aquatic/10 hover:bg-aquatic/20 text-aquatic text-xs font-bold rounded-xl border border-aquatic/25 transition-all flex items-center gap-1.5 touch-target"
                       >
                         <Download className="w-3.5 h-3.5" />
                         <span>{isInstalled ? 'App Already Installed' : 'Install My Pocket Tracker'}</span>

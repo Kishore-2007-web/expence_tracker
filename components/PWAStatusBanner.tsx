@@ -36,10 +36,10 @@ export function PWAStatusIndicator({
   if (!isOnline || syncStatus === 'offline') {
     return (
       <div 
-        className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 rounded-lg text-[11px] font-semibold text-amber-500 flex items-center gap-1.5 shrink-0"
+        className="px-2.5 py-1 bg-sunshine/15 border border-sunshine/30 rounded-lg text-[11px] font-semibold text-sunshine-700 dark:text-sunshine flex items-center gap-1.5 shrink-0"
         title="Offline mode: Records saved to device IndexedDB"
       >
-        <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+        <span className="w-2 h-2 rounded-full bg-sunshine animate-pulse shadow-glow-sunshine" />
         <span className="tracking-tight">{compact ? 'Offline' : 'Offline • Local Mode'}</span>
       </div>
     );
@@ -48,8 +48,8 @@ export function PWAStatusIndicator({
   // Syncing status
   if (syncStatus === 'syncing') {
     return (
-      <div className="px-2.5 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[11px] font-semibold text-blue-400 flex items-center gap-1.5 shrink-0">
-        <RefreshCw className="w-3 h-3 animate-spin text-blue-400" />
+      <div className="px-2.5 py-1 bg-aquatic/10 border border-aquatic/25 rounded-lg text-[11px] font-semibold text-aquatic flex items-center gap-1.5 shrink-0">
+        <RefreshCw className="w-3 h-3 animate-spin text-aquatic" />
         <span className="tracking-tight">Syncing...</span>
       </div>
     );
@@ -58,10 +58,10 @@ export function PWAStatusIndicator({
   // Saved Locally / Synced status
   return (
     <div 
-      className="px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-[11px] font-semibold text-emerald-400 flex items-center gap-1.5 shrink-0"
+      className="px-2.5 py-1 bg-aquatic/10 border border-aquatic/25 rounded-lg text-[11px] font-semibold text-aquatic flex items-center gap-1.5 shrink-0"
       title="Financial records saved locally and ready offline"
     >
-      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+      <span className="w-1.5 h-1.5 rounded-full bg-aquatic shadow-glow" />
       <span className="tracking-tight">{compact ? 'Local Safe' : 'Saved Locally'}</span>
     </div>
   );

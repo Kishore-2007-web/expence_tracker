@@ -197,14 +197,14 @@ const styles = StyleSheet.create({
   logoBadge: {
     width: 32,
     height: 32,
-    backgroundColor: '#10b981',
+    backgroundColor: '#96DFCE',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 8,
   },
   logoText: {
-    color: '#fff',
+    color: '#060e0c',
     fontWeight: '900',
     fontSize: 16,
   },
@@ -214,16 +214,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   accentText: {
-    color: '#10b981',
+    color: '#96DFCE',
   },
   upgradeBtn: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#FADE85',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 6,
   },
   premiumLabel: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#FADE85',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 6,
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   flowIncome: {
-    color: '#10b981',
+    color: '#96DFCE',
     fontWeight: 'bold',
   },
   flowExpense: {
@@ -321,13 +321,13 @@ const styles = StyleSheet.create({
     borderColor: '#222222',
   },
   submitBtn: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#96DFCE',
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
   },
   submitBtnText: {
-    color: '#fff',
+    color: '#060e0c',
     fontSize: 13,
     fontWeight: 'bold',
   },
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: '100%',
-    backgroundColor: '#10b981',
+    backgroundColor: '#96DFCE',
   },
   bizSettingsCard: {
     backgroundColor: '#0a0a0a',

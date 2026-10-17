@@ -14,12 +14,12 @@ export default function OfflinePage() {
   return (
     <div className="min-h-screen bg-black text-foreground flex flex-col items-center justify-center p-6 relative overflow-hidden">
       {/* Ambient background glows */}
-      <div className="absolute w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px] -top-20 -left-20 pointer-events-none" />
-      <div className="absolute w-[400px] h-[400px] bg-amber-500/5 rounded-full blur-[100px] -bottom-20 -right-20 pointer-events-none" />
+      <div className="absolute w-[400px] h-[400px] bg-aquatic/15 rounded-full blur-[100px] -top-20 -left-20 pointer-events-none" />
+      <div className="absolute w-[400px] h-[400px] bg-sunshine/15 rounded-full blur-[100px] -bottom-20 -right-20 pointer-events-none" />
 
       <div className="w-full max-w-md bg-card border border-border rounded-3xl p-8 text-center relative z-10 shadow-2xl">
         {/* Offline Badge */}
-        <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500 shadow-lg">
+        <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-sunshine/15 border border-sunshine/30 flex items-center justify-center text-sunshine-700 dark:text-sunshine shadow-glow-sunshine">
           <WifiOff className="w-8 h-8 animate-pulse" />
         </div>
 
@@ -32,7 +32,7 @@ export default function OfflinePage() {
 
         {/* Local Storage reassurance */}
         <div className="p-4 rounded-2xl bg-accent border border-border text-left mb-6 flex items-start gap-3">
-          <ShieldCheck className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+          <ShieldCheck className="w-5 h-5 text-aquatic shrink-0 mt-0.5" />
           <div>
             <div className="text-xs font-bold text-foreground">Local Persistence Active</div>
             <div className="text-[11px] text-slate-400 leading-normal mt-0.5">
@@ -45,7 +45,7 @@ export default function OfflinePage() {
         <div className="space-y-3">
           <Link
             href="/"
-            className="w-full py-3 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl transition-all shadow-glow flex items-center justify-center gap-2"
+            className="w-full py-3 bg-primary hover:bg-primary-hover text-white dark:text-slate-950 text-xs font-bold rounded-xl transition-all shadow-glow flex items-center justify-center gap-2"
           >
             <span>Open Cached Dashboard</span>
             <ArrowRight className="w-4 h-4" />

@@ -7,17 +7,26 @@
     --background: #ffffff;
     --foreground: #0f172a;
 
-    --card: rgba(255, 255, 255, 0.45);
+    --card: rgba(255, 255, 255, 0.7);
     --card-foreground: #0f172a;
 
-    --border: rgba(0, 0, 0, 0.08);
+    --border: rgba(150, 223, 206, 0.25);
 
-    --primary: #10b981;
-    --primary-hover: #059669;
+    --primary: #2ea38d;
+    --primary-hover: #248573;
     --primary-foreground: #ffffff;
 
-    --accent: rgba(0, 0, 0, 0.03);
-    --accent-hover: rgba(0, 0, 0, 0.06);
+    --aquatic: #96DFCE;
+    --aquatic-glow: rgba(150, 223, 206, 0.35);
+
+    --sunshine: #FADE85;
+    --sunshine-hover: #f3d16b;
+    --sunshine-glow: rgba(250, 222, 133, 0.35);
+
+    --success: #2ea38d;
+
+    --accent: rgba(150, 223, 206, 0.08);
+    --accent-hover: rgba(150, 223, 206, 0.16);
 
     --radius: 12px;
 
@@ -36,35 +45,44 @@
   }
 
   .dark {
-    --background: #000000;
-    --foreground: #f8fafc;
+    --background: #060e0c;
+    --foreground: #f0faf7;
 
-    --card: rgba(15, 15, 15, 0.5);
-    --card-foreground: #f8fafc;
+    --card: rgba(10, 23, 20, 0.65);
+    --card-foreground: #f0faf7;
 
-    --border: rgba(255, 255, 255, 0.08);
+    --border: rgba(150, 223, 206, 0.16);
 
-    --primary: #10b981;
-    --primary-hover: #059669;
-    --primary-foreground: #ffffff;
+    --primary: #96DFCE;
+    --primary-hover: #b4ede1;
+    --primary-foreground: #072620;
 
-    --accent: rgba(255, 255, 255, 0.05);
-    --accent-hover: rgba(255, 255, 255, 0.1);
+    --aquatic: #96DFCE;
+    --aquatic-glow: rgba(150, 223, 206, 0.3);
+
+    --sunshine: #FADE85;
+    --sunshine-hover: #f3d16b;
+    --sunshine-glow: rgba(250, 222, 133, 0.3);
+
+    --success: #96DFCE;
+
+    --accent: rgba(150, 223, 206, 0.1);
+    --accent-hover: rgba(150, 223, 206, 0.18);
 
     --radius: 12px;
 
-    /* Slate variables mapped to neutral grey in dark mode */
-    --slate-50: #0a0a0a;
-    --slate-100: #121212;
-    --slate-200: #1a1a1a;
-    --slate-300: #262626;
-    --slate-400: #a3a3a3;
-    --slate-500: #d4d4d8;
-    --slate-600: #e5e5e5;
-    --slate-700: #f5f5f5;
-    --slate-800: #fafafa;
-    --slate-900: #171717;
-    --slate-950: #0a0a0a;
+    /* Slate variables mapped to obsidian-aquatic in dark mode */
+    --slate-50: #07100e;
+    --slate-100: #0d1a17;
+    --slate-200: #142723;
+    --slate-300: #1d3631;
+    --slate-400: #88a7a0;
+    --slate-500: #b5cdc7;
+    --slate-600: #d3e5e0;
+    --slate-700: #e5f2ee;
+    --slate-800: #f0faf7;
+    --slate-900: #0a1714;
+    --slate-950: #060e0c;
   }
 }
 

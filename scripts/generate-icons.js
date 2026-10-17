@@ -80,7 +80,7 @@ function generateIconPNG(size, isMaskable = false) {
         continue;
       }
 
-      // Background gradient: dark sleek theme #06090e to #0f172a with emerald accent #10b981
+      // Background gradient: dark sleek theme with Pantone Aquatic Green (#96DFCE) and Sunshine Yellow (#FADE85)
       const gradT = (x + y) / (width + height);
       let r = Math.round(11 + gradT * (15 - 11));
       let g = Math.round(15 + gradT * (23 - 15));
@@ -132,16 +132,16 @@ function generateIconPNG(size, isMaskable = false) {
       }
 
       if (isLogoPixel) {
-        // Emerald gradient: #34d399 to #10b981 to #059669
+        // Gradient from Pantone Aquatic Green (#96DFCE) to Pantone Sunshine Yellow (#FADE85)
         const logoGrad = (ny + 0.7) / 1.4;
-        r = Math.round(52 - logoGrad * 40);
-        g = Math.round(211 - logoGrad * 50);
-        b = Math.round(153 - logoGrad * 40);
+        r = Math.round(150 + logoGrad * (250 - 150));
+        g = Math.round(223 - logoGrad * (223 - 222));
+        b = Math.round(206 - logoGrad * (206 - 133));
       } else if (logoGlow) {
-        // Emerald ambient glow behind logo
-        r = Math.min(255, r + 15);
-        g = Math.min(255, g + 40);
-        b = Math.min(255, b + 30);
+        // Aquatic Green ambient glow behind logo
+        r = Math.min(255, r + 25);
+        g = Math.min(255, g + 50);
+        b = Math.min(255, b + 45);
       }
 
       rawData[pxOffset] = r;
@@ -193,25 +193,25 @@ fs.writeFileSync(path.join(publicDir, 'favicon.ico'), generateIconPNG(48, false)
 const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0b0f17"/>
-      <stop offset="100%" stop-color="#1e293b"/>
+      <stop offset="0%" stop-color="#060e0c"/>
+      <stop offset="100%" stop-color="#0e1f1b"/>
     </linearGradient>
     <linearGradient id="mGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#34d399"/>
-      <stop offset="50%" stop-color="#10b981"/>
-      <stop offset="100%" stop-color="#059669"/>
+      <stop offset="0%" stop-color="#96DFCE"/>
+      <stop offset="70%" stop-color="#96DFCE"/>
+      <stop offset="100%" stop-color="#FADE85"/>
     </linearGradient>
-    <filter id="emeraldGlow" x="-20%" y="-20%" width="140%" height="140%">
+    <filter id="aquaticGlow" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur stdDeviation="16" result="blur"/>
       <feComposite in="SourceGraphic" in2="blur" operator="over"/>
     </filter>
   </defs>
   <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
-  <rect x="24" y="24" width="464" height="464" rx="96" fill="none" stroke="#10b981" stroke-width="3" stroke-opacity="0.3"/>
-  <!-- Stylized M Emblem -->
+  <rect x="24" y="24" width="464" height="464" rx="96" fill="none" stroke="#96DFCE" stroke-width="3" stroke-opacity="0.35"/>
+  <!-- Stylized M Emblem with Pantone Aquatic Green + Sunshine Yellow -->
   <path d="M128 384 V160 H180 L256 276 L332 160 H384 V384 H328 V240 L268 332 H244 L184 240 V384 Z" 
         fill="url(#mGrad)" 
-        filter="url(#emeraldGlow)"/>
+        filter="url(#aquaticGlow)"/>
 </svg>`;
 
 fs.writeFileSync(path.join(iconsDir, 'icon.svg'), svgContent);

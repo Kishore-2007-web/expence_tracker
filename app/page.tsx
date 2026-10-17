@@ -51,8 +51,8 @@ export default function Home() {
     return (
       <div className="relative min-h-screen bg-black flex flex-col items-center justify-center overflow-hidden">
         {/* Ambient background glow */}
-        <div className="absolute w-[300px] h-[300px] bg-primary/10 rounded-full blur-[80px] -top-10 -left-10 animate-pulse duration-[4000ms]" />
-        <div className="absolute w-[300px] h-[300px] bg-emerald-500/5 rounded-full blur-[80px] -bottom-10 -right-10 animate-pulse duration-[3000ms]" />
+        <div className="absolute w-[300px] h-[300px] bg-aquatic/15 rounded-full blur-[80px] -top-10 -left-10 animate-pulse duration-[4000ms]" />
+        <div className="absolute w-[300px] h-[300px] bg-sunshine/15 rounded-full blur-[80px] -bottom-10 -right-10 animate-pulse duration-[3000ms]" />
 
         <div className="flex flex-col items-center gap-4 relative z-10">
           {/* Logo container with custom ring spinner */}
@@ -60,10 +60,10 @@ export default function Home() {
             {/* outer spinning track */}
             <div className="absolute inset-0 rounded-2xl border-2 border-slate-800" />
             {/* outer spinning active border */}
-            <div className="absolute inset-0 rounded-2xl border-2 border-t-primary border-r-primary animate-spin" />
+            <div className="absolute inset-0 rounded-2xl border-2 border-t-aquatic border-r-sunshine animate-spin" />
             
             {/* logo mark in center */}
-            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-black text-xl shadow-glow">
+            <div className="w-10 h-10 bg-gradient-to-br from-aquatic to-aquatic-700 rounded-xl flex items-center justify-center text-slate-950 font-black text-xl shadow-glow">
               M
             </div>
           </div>
@@ -248,9 +248,9 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => loginOffline()}
-                className="w-full mt-2.5 py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-500 text-xs font-bold rounded-xl border border-emerald-500/20 transition-colors flex items-center justify-center gap-2"
+                className="w-full mt-2.5 py-2.5 bg-aquatic/10 hover:bg-aquatic/20 text-aquatic text-xs font-bold rounded-xl border border-aquatic/25 transition-colors flex items-center justify-center gap-2"
               >
-                <Sparkles className="w-3.5 h-3.5" />
+                <Sparkles className="w-3.5 h-3.5 text-sunshine" />
                 <span>Instant Access (No Login Required)</span>
               </button>
 
@@ -359,9 +359,9 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => loginOffline()}
-                className="w-full mt-2.5 py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-500 text-xs font-bold rounded-xl border border-emerald-500/20 transition-colors flex items-center justify-center gap-2"
+                className="w-full mt-2.5 py-2.5 bg-aquatic/10 hover:bg-aquatic/20 text-aquatic text-xs font-bold rounded-xl border border-aquatic/25 transition-colors flex items-center justify-center gap-2"
               >
-                <Sparkles className="w-3.5 h-3.5" />
+                <Sparkles className="w-3.5 h-3.5 text-sunshine" />
                 <span>Instant Access (No Login Required)</span>
               </button>
 

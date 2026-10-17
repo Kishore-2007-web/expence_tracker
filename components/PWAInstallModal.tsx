@@ -112,7 +112,7 @@ export default function PWAInstallModal({
 
         {/* Success Notice */}
         {installSuccess && (
-          <div className="mb-6 p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center gap-3 text-emerald-400 text-xs font-semibold">
+          <div className="mb-6 p-4 rounded-2xl bg-aquatic/15 border border-aquatic/30 flex items-center gap-3 text-aquatic text-xs font-semibold">
             <CheckCircle2 className="w-5 h-5 shrink-0" />
             <span>Installation accepted! Launching app icon...</span>
           </div>
@@ -121,8 +121,8 @@ export default function PWAInstallModal({
         {/* Already Installed View */}
         {isInstalled ? (
           <div className="space-y-4">
-            <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center">
-              <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
+            <div className="p-4 rounded-2xl bg-aquatic/10 border border-aquatic/20 text-center">
+              <CheckCircle2 className="w-8 h-8 text-aquatic mx-auto mb-2" />
               <div className="text-sm font-bold text-foreground">App Already Active</div>
               <div className="text-xs text-slate-400 mt-1">
                 My Pocket Tracker is already installed on your device with full offline financial capabilities.
@@ -239,8 +239,8 @@ export default function PWAInstallModal({
             </div>
 
             {/* Offline Capability Reassurance */}
-            <div className="mt-5 p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/15 flex items-center gap-2.5 text-[11px] text-slate-400">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+            <div className="mt-5 p-3 rounded-xl bg-aquatic/10 border border-aquatic/20 flex items-center gap-2.5 text-[11px] text-slate-400">
+              <CheckCircle2 className="w-4 h-4 text-aquatic shrink-0" />
               <span>Full standalone window, faster startup, and seamless offline data tracking.</span>
             </div>
           </div>

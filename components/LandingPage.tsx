@@ -51,10 +51,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       <header className="border-b border-border sticky top-0 bg-background/80 backdrop-blur-md z-40">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center text-white font-black text-xl shadow-glow">
+            <div className="w-9 h-9 bg-gradient-to-br from-aquatic to-aquatic-700 rounded-xl flex items-center justify-center text-slate-950 font-black text-xl shadow-glow">
               M
             </div>
-            <span className="font-bold text-lg tracking-tight">My Pocket <span className="text-primary font-black">Tracker</span></span>
+            <span className="font-bold text-lg tracking-tight">My Pocket <span className="text-aquatic font-black">Tracker</span></span>
           </div>
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -77,12 +77,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
             {/* Launch / Install App Button */}
             <button
               onClick={handleInstallClick}
-              className="px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-xl border border-emerald-500/25 transition-all flex items-center gap-1.5 touch-target"
+              className="px-4 py-2 bg-aquatic/10 hover:bg-aquatic/20 text-aquatic text-xs font-bold rounded-xl border border-aquatic/30 transition-all flex items-center gap-1.5 touch-target shadow-sm"
               title={isInstalled ? 'Launch installed application' : 'Install My Pocket Tracker on this device'}
             >
               {isInstalled ? (
                 <>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-aquatic" />
                   <span>Launch App</span>
                 </>
               ) : (
@@ -95,7 +95,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
 
             <button
               onClick={onEnterApp}
-              className="px-4 py-2.5 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl transition-all shadow-glow hover:-translate-y-0.5 touch-target"
+              className="px-4 py-2.5 bg-primary hover:bg-primary-hover text-white dark:text-slate-950 text-xs font-bold rounded-xl transition-all shadow-glow hover:-translate-y-0.5 touch-target"
             >
               Sign In
             </button>
@@ -105,19 +105,19 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
 
       {/* Hero Section */}
       <section className="relative pt-20 pb-24 md:pt-32 md:pb-36 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.06),transparent_45%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(150,223,206,0.14),transparent_50%),radial-gradient(circle_at_bottom_left,rgba(250,222,133,0.1),transparent_50%)]"></div>
         <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold mb-6">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sunshine/35 bg-sunshine/10 text-sunshine-700 dark:text-sunshine text-xs font-semibold mb-6 shadow-glow-sunshine">
+              <Sparkles className="w-3.5 h-3.5 text-sunshine" />
               <span>100% Free & Open Platform — All Features Unlocked</span>
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6">
-              Manage personal wealth & <span className="bg-gradient-to-r from-primary to-emerald-400 bg-clip-text text-transparent">multiple businesses</span> in one app
+              Manage personal wealth & <span className="bg-gradient-to-r from-aquatic via-aquatic-200 to-sunshine bg-clip-text text-transparent">multiple businesses</span> in one app
             </h1>
             <p className="text-base md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
               Track salaries, investments, grocery expense lists, invoices, tax calculations, and profit forecasts together under a single, unified workspace with zero fees and no ads.
@@ -132,7 +132,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
           >
             <button
               onClick={onEnterApp}
-              className="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-xl flex items-center justify-center gap-2 shadow-glow hover:shadow-glow/15 hover:-translate-y-0.5 transition-all text-base touch-target"
+              className="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary-hover text-white dark:text-slate-950 font-bold rounded-xl flex items-center justify-center gap-2 shadow-glow hover:shadow-glow/20 hover:-translate-y-0.5 transition-all text-base touch-target"
             >
               <span>Launch My Pocket Tracker</span>
               <ArrowRight className="w-4 h-4" />
@@ -143,7 +143,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
             >
               {isInstalled ? (
                 <>
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                  <CheckCircle2 className="w-5 h-5 text-aquatic" />
                   <span>Open Installed App</span>
                 </>
               ) : (
@@ -197,7 +197,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
           <div className="grid md:grid-cols-3 gap-8">
             {/* feature card 1 */}
             <div className="p-8 rounded-2xl bg-card border border-border hover:shadow-premium transition-all hover-lift">
-              <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl flex items-center justify-center text-primary mb-6">
+              <div className="w-12 h-12 bg-aquatic/10 dark:bg-aquatic/15 rounded-xl flex items-center justify-center text-aquatic mb-6">
                 <Wallet className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold mb-3">Unified Finance Hub</h3>
@@ -208,7 +208,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
 
             {/* feature card 2 */}
             <div className="p-8 rounded-2xl bg-card border border-border hover:shadow-premium transition-all hover-lift">
-              <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl flex items-center justify-center text-primary mb-6">
+              <div className="w-12 h-12 bg-sunshine/10 dark:bg-sunshine/15 rounded-xl flex items-center justify-center text-sunshine-600 dark:text-sunshine mb-6">
                 <Layers className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold mb-3">Multi-Business Accounts</h3>
@@ -219,7 +219,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
 
             {/* feature card 3 */}
             <div className="p-8 rounded-2xl bg-card border border-border hover:shadow-premium transition-all hover-lift">
-              <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl flex items-center justify-center text-primary mb-6">
+              <div className="w-12 h-12 bg-aquatic/10 dark:bg-aquatic/15 rounded-xl flex items-center justify-center text-aquatic mb-6">
                 <BarChart3 className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold mb-3">Forecasting & Invoices</h3>
@@ -235,7 +235,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       <section id="features-unlocked" className="py-20 border-t border-border">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-500 text-xs font-semibold mb-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-aquatic/30 bg-aquatic/10 text-aquatic text-xs font-semibold mb-4 shadow-glow">
               <Sparkles className="w-3.5 h-3.5" />
               <span>100% Free Platform — Zero Paywalls</span>
             </div>
@@ -258,7 +258,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
                 '100% Ad-Free Clean Interface'
               ].map((f, i) => (
                 <div key={i} className="flex items-center gap-2.5 text-sm">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <Check className="w-4 h-4 text-aquatic shrink-0" />
                   <span>{f}</span>
                 </div>
               ))}
@@ -266,7 +266,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
 
             <button
               onClick={onEnterApp}
-              className="w-full sm:w-auto px-8 py-3.5 bg-primary hover:bg-primary-hover text-white text-sm font-bold rounded-xl transition-all shadow-glow hover:shadow-glow/15 inline-flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-3.5 bg-primary hover:bg-primary-hover text-white dark:text-slate-950 text-sm font-bold rounded-xl transition-all shadow-glow hover:shadow-glow/20 inline-flex items-center justify-center gap-2"
             >
               <span>Get Started Free — Open Tracker</span>
               <ArrowRight className="w-4 h-4" />
