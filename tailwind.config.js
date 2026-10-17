@@ -85,8 +85,8 @@ module.exports = {
       boxShadow: {
         'premium': '0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 8px -1px rgba(0, 0, 0, 0.03)',
         'premium-hover': '0 12px 30px -4px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04)',
-        'glow': '0 0 24px rgba(250, 222, 133, 0.45)',
-        'glow-sunshine': '0 0 24px rgba(250, 222, 133, 0.45)',
+        'glow': 'none',
+        'glow-sunshine': 'none',
       },
     },
   },

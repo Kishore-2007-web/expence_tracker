@@ -50,10 +50,6 @@ export default function Home() {
   if (!mounted || authLoading) {
     return (
       <div className="relative min-h-screen bg-background flex flex-col items-center justify-center overflow-hidden">
-        {/* Ambient background glow */}
-        <div className="absolute w-[300px] h-[300px] bg-white/30 rounded-full blur-[80px] -top-10 -left-10 animate-pulse duration-[4000ms]" />
-        <div className="absolute w-[300px] h-[300px] bg-sunshine/30 rounded-full blur-[80px] -bottom-10 -right-10 animate-pulse duration-[3000ms]" />
-
         <div className="flex flex-col items-center gap-4 relative z-10">
           {/* Logo container with custom ring spinner */}
           <div className="relative w-16 h-16 flex items-center justify-center">
@@ -63,7 +59,7 @@ export default function Home() {
             <div className="absolute inset-0 rounded-2xl border-2 border-t-primary border-r-sunshine-600 animate-spin" />
             
             {/* logo mark in center */}
-            <div className="w-10 h-10 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-xl shadow-glow-sunshine">
+            <div className="w-10 h-10 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-xl shadow-sm">
               M
             </div>
           </div>
@@ -156,7 +152,7 @@ export default function Home() {
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8 relative">
               <div className="flex items-center gap-2 justify-center mb-8">
-                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-glow-sunshine">M</div>
+                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-sm">M</div>
                 <span className="font-bold text-sm tracking-tight">My Pocket Tracker</span>
               </div>
 
@@ -218,7 +214,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine flex items-center justify-center gap-1.5"
+                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
                   <span>Sign In</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -277,7 +273,7 @@ export default function Home() {
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8">
               <div className="flex items-center gap-2 justify-center mb-8">
-                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-glow-sunshine">M</div>
+                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-sm">M</div>
                 <span className="font-bold text-sm tracking-tight">My Pocket Tracker</span>
               </div>
 
@@ -329,7 +325,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine flex items-center justify-center gap-1.5"
+                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
                   <span>Sign Up</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -405,7 +401,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-2.5 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl shadow-glow-sunshine"
+                  className="w-full py-2.5 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl shadow-sm"
                 >
                   Send Reset Link
                 </button>
@@ -453,7 +449,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={handleVerificationConfirm}
-                className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine"
+                className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-sm"
               >
                 Confirm Verification
               </button>
@@ -472,7 +468,7 @@ export default function Home() {
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8 relative">
               <div className="flex items-center gap-2 justify-center mb-6">
-                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-glow-sunshine">M</div>
+                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-sm">M</div>
                 <span className="font-bold text-sm tracking-tight">My Pocket Tracker</span>
               </div>
 
@@ -509,7 +505,7 @@ export default function Home() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine flex items-center justify-center gap-1.5"
+                  className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
                   <span>Complete Onboarding</span>
                   <ArrowRight className="w-3.5 h-3.5" />

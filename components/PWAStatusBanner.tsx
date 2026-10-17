@@ -39,7 +39,7 @@ export function PWAStatusIndicator({
         className="px-2.5 py-1 bg-sunshine/15 border border-sunshine/30 rounded-lg text-[11px] font-semibold text-sunshine-700 dark:text-sunshine flex items-center gap-1.5 shrink-0"
         title="Offline mode: Records saved to device IndexedDB"
       >
-        <span className="w-2 h-2 rounded-full bg-sunshine animate-pulse shadow-glow-sunshine" />
+        <span className="w-2 h-2 rounded-full bg-sunshine animate-pulse" />
         <span className="tracking-tight">{compact ? 'Offline' : 'Offline • Local Mode'}</span>
       </div>
     );
@@ -55,16 +55,8 @@ export function PWAStatusIndicator({
     );
   }
 
-  // Saved Locally / Synced status
-  return (
-    <div 
-      className="px-2.5 py-1 bg-aquatic/10 border border-aquatic/25 rounded-lg text-[11px] font-semibold text-aquatic flex items-center gap-1.5 shrink-0"
-      title="Financial records saved locally and ready offline"
-    >
-      <span className="w-1.5 h-1.5 rounded-full bg-aquatic shadow-glow" />
-      <span className="tracking-tight">{compact ? 'Local Safe' : 'Saved Locally'}</span>
-    </div>
-  );
+  // Saved Locally / Synced status - return null to keep UI clean and uncluttered
+  return null;
 }
 
 export function PWAOfflineBanner({ isOnline }: { isOnline: boolean }) {

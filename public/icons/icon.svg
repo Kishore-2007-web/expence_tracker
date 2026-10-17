@@ -18,6 +18,5 @@
   <rect x="24" y="24" width="464" height="464" rx="96" fill="none" stroke="#96DFCE" stroke-width="3" stroke-opacity="0.35"/>
   <!-- Stylized M Emblem with Pantone Aquatic Green + Sunshine Yellow -->
   <path d="M128 384 V160 H180 L256 276 L332 160 H384 V384 H328 V240 L268 332 H244 L184 240 V384 Z" 
-        fill="url(#mGrad)" 
-        filter="url(#aquaticGlow)"/>
+        fill="url(#mGrad)"/>
 </svg>

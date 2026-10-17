@@ -60,10 +60,6 @@ export default function PWAInstallModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-md animate-fade-in">
       <div className="relative w-full max-w-lg bg-card border border-border rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden">
-        
-        {/* Glow ambient decoration */}
-        <div className="absolute w-[250px] h-[250px] bg-primary/10 rounded-full blur-[80px] -top-10 -right-10 pointer-events-none" />
-
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -75,7 +71,7 @@ export default function PWAInstallModal({
 
         {/* Modal Header */}
         <div className="flex items-center gap-3.5 mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-sunshine flex items-center justify-center text-[#072620] font-black text-xl shadow-glow-sunshine shrink-0">
+          <div className="w-12 h-12 rounded-2xl bg-sunshine flex items-center justify-center text-[#072620] font-black text-xl shadow-sm shrink-0">
             M
           </div>
           <div>
@@ -102,7 +98,7 @@ export default function PWAInstallModal({
             </div>
             <button
               onClick={handleNativeClick}
-              className="w-full sm:w-auto px-5 py-2.5 bg-sunshine hover:bg-sunshine-hover active:scale-95 text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine flex items-center justify-center gap-2 shrink-0"
+              className="w-full sm:w-auto px-5 py-2.5 bg-sunshine hover:bg-sunshine-hover active:scale-95 text-[#072620] text-xs font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 shrink-0"
             >
               <Download className="w-4 h-4" />
               <span>Install Now</span>
@@ -130,7 +126,7 @@ export default function PWAInstallModal({
             </div>
             <button
               onClick={onClose}
-              className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl shadow-glow-sunshine"
+              className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl shadow-sm"
             >
               Open Dashboard
             </button>

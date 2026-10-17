@@ -13,13 +13,9 @@ export default function OfflinePage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center p-6 relative overflow-hidden">
-      {/* Ambient background glows */}
-      <div className="absolute w-[400px] h-[400px] bg-white/25 rounded-full blur-[100px] -top-20 -left-20 pointer-events-none" />
-      <div className="absolute w-[400px] h-[400px] bg-sunshine/30 rounded-full blur-[100px] -bottom-20 -right-20 pointer-events-none" />
-
       <div className="w-full max-w-md bg-card border border-border rounded-3xl p-8 text-center relative z-10 shadow-2xl backdrop-blur-xl">
         {/* Offline Badge */}
-        <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-sunshine/20 border border-sunshine/40 flex items-center justify-center text-sunshine-700 dark:text-sunshine shadow-glow-sunshine">
+        <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-sunshine/20 border border-sunshine/40 flex items-center justify-center text-sunshine-700 dark:text-sunshine shadow-sm">
           <WifiOff className="w-8 h-8 animate-pulse text-amber-700 dark:text-sunshine" />
         </div>
 
@@ -45,7 +41,7 @@ export default function OfflinePage() {
         <div className="space-y-3">
           <Link
             href="/"
-            className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine flex items-center justify-center gap-2"
+            className="w-full py-3 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-sm flex items-center justify-center gap-2"
           >
             <span>Open Cached Dashboard</span>
             <ArrowRight className="w-4 h-4" />

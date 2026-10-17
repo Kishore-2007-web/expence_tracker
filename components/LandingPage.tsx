@@ -51,13 +51,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       <header className="border-b border-[#072620]/10 sticky top-0 bg-background/85 backdrop-blur-md z-40">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-xl shadow-glow-sunshine">
+            <div className="w-9 h-9 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-xl shadow-sm">
               M
             </div>
-            <span className="font-bold text-lg tracking-tight text-[#072620]">My Pocket <span className="text-amber-800 dark:text-sunshine font-black">Tracker</span></span>
+            <span className="font-bold text-lg tracking-tight text-black">My Pocket <span className="text-black font-black">Tracker</span></span>
           </div>
 
-          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-[#0c332d]">
+          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-black/80">
             <a href="#features" className="hover:text-black transition-colors">Features</a>
             <a href="#overview" className="hover:text-black transition-colors">Overview</a>
             <a href="#about" className="hover:text-black transition-colors">About Us</a>
@@ -66,28 +66,20 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
           </nav>
 
           <div className="flex items-center gap-3">
-            <PWAStatusIndicator 
-              isOnline={isOnline} 
-              syncStatus={syncStatus} 
-              isUpdateAvailable={isUpdateAvailable}
-              onApplyUpdate={applyUpdate}
-              compact
-            />
-
             {/* Launch / Install App Button */}
             <button
               onClick={handleInstallClick}
-              className="px-4 py-2 bg-sunshine/25 hover:bg-sunshine/35 text-[#072620] text-xs font-bold rounded-xl border border-sunshine/50 transition-all flex items-center gap-1.5 touch-target shadow-sm"
+              className="px-4 py-2 bg-sunshine/25 hover:bg-sunshine/35 text-black text-xs font-bold rounded-xl border border-sunshine/50 transition-all flex items-center gap-1.5 touch-target shadow-sm"
               title={isInstalled ? 'Launch installed application' : 'Install My Pocket Tracker on this device'}
             >
               {isInstalled ? (
                 <>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-900" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-black" />
                   <span>Launch App</span>
                 </>
               ) : (
                 <>
-                  <Download className="w-3.5 h-3.5 text-amber-900" />
+                  <Download className="w-3.5 h-3.5 text-black" />
                   <span>Install App</span>
                 </>
               )}
@@ -95,7 +87,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
 
             <button
               onClick={onEnterApp}
-              className="px-4 py-2.5 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-xl transition-all shadow-glow-sunshine hover:-translate-y-0.5 touch-target"
+              className="px-4 py-2.5 bg-sunshine hover:bg-sunshine-hover text-black text-xs font-black rounded-xl transition-all shadow-sm hover:-translate-y-0.5 touch-target"
             >
               Sign In
             </button>
@@ -112,14 +104,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sunshine/60 bg-sunshine text-[#072620] text-xs font-bold mb-6 shadow-glow-sunshine">
-              <Sparkles className="w-3.5 h-3.5 text-amber-900" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sunshine/60 bg-sunshine text-black text-xs font-bold mb-6 shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 text-black" />
               <span>100% Free & Open Platform — All Features Unlocked</span>
             </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6 text-[#072620]">
-              Manage personal wealth & <span className="bg-gradient-to-r from-amber-800 via-amber-600 to-[#3d2403] dark:from-sunshine dark:via-sunshine-300 dark:to-sunshine-600 bg-clip-text text-transparent">multiple businesses</span> in one app
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6 text-black">
+              Manage personal wealth & <span className="text-black font-black underline decoration-sunshine decoration-4 underline-offset-8">multiple businesses</span> in one app
             </h1>
-            <p className="text-base md:text-xl text-[#0d3b32] max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
+            <p className="text-base md:text-xl text-black/80 max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
               Track salaries, investments, grocery expense lists, invoices, tax calculations, and profit forecasts together under a single, unified workspace with zero fees and no ads.
             </p>
           </motion.div>
@@ -132,23 +124,23 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
           >
             <button
               onClick={onEnterApp}
-              className="w-full sm:w-auto px-8 py-4 bg-sunshine hover:bg-sunshine-hover text-[#072620] font-black rounded-xl flex items-center justify-center gap-2 shadow-glow-sunshine hover:shadow-glow-sunshine/40 hover:-translate-y-0.5 transition-all text-base touch-target"
+              className="w-full sm:w-auto px-8 py-4 bg-sunshine hover:bg-sunshine-hover text-black font-black rounded-xl flex items-center justify-center gap-2 shadow-md hover:-translate-y-0.5 transition-all text-base touch-target"
             >
               <span>Launch My Pocket Tracker</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 text-black" />
             </button>
             <button
               onClick={handleInstallClick}
-              className="w-full sm:w-auto px-8 py-4 bg-card border border-sunshine/40 text-foreground font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-sunshine/15 transition-all text-base touch-target"
+              className="w-full sm:w-auto px-8 py-4 bg-card border border-sunshine/40 text-black font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-sunshine/15 transition-all text-base touch-target"
             >
               {isInstalled ? (
                 <>
-                  <CheckCircle2 className="w-5 h-5 text-sunshine" />
+                  <CheckCircle2 className="w-5 h-5 text-black" />
                   <span>Open Installed App</span>
                 </>
               ) : (
                 <>
-                  <Download className="w-5 h-5 text-sunshine" />
+                  <Download className="w-5 h-5 text-black" />
                   <span>Install App (Offline Ready)</span>
                 </>
               )}
@@ -196,34 +188,34 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* feature card 1 */}
-            <div className="p-8 rounded-2xl bg-card border border-sunshine/25 hover:border-sunshine/50 hover:shadow-glow-sunshine transition-all hover-lift">
-              <div className="w-12 h-12 bg-sunshine/20 rounded-xl flex items-center justify-center text-sunshine-700 dark:text-sunshine border border-sunshine/40 mb-6 shadow-glow-sunshine">
-                <Wallet className="w-6 h-6 text-sunshine" />
+            <div className="p-8 rounded-2xl bg-card border border-sunshine/25 hover:border-sunshine/50 shadow-sm transition-all hover-lift">
+              <div className="w-12 h-12 bg-sunshine/20 rounded-xl flex items-center justify-center text-black border border-sunshine/40 mb-6 shadow-sm">
+                <Wallet className="w-6 h-6 text-black" />
               </div>
-              <h3 className="text-lg font-bold mb-3">Unified Finance Hub</h3>
-              <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+              <h3 className="text-lg font-bold mb-3 text-black">Unified Finance Hub</h3>
+              <p className="text-black/75 text-sm leading-relaxed">
                 Log personal income sources (Salary, Freelance) alongside dedicated corporate ledgers. Filter by business or view a consolidated balance sheet.
               </p>
             </div>
 
             {/* feature card 2 */}
-            <div className="p-8 rounded-2xl bg-card border border-sunshine/25 hover:border-sunshine/50 hover:shadow-glow-sunshine transition-all hover-lift">
-              <div className="w-12 h-12 bg-sunshine/20 rounded-xl flex items-center justify-center text-sunshine-700 dark:text-sunshine border border-sunshine/40 mb-6 shadow-glow-sunshine">
-                <Layers className="w-6 h-6 text-sunshine" />
+            <div className="p-8 rounded-2xl bg-card border border-sunshine/25 hover:border-sunshine/50 shadow-sm transition-all hover-lift">
+              <div className="w-12 h-12 bg-sunshine/20 rounded-xl flex items-center justify-center text-black border border-sunshine/40 mb-6 shadow-sm">
+                <Layers className="w-6 h-6 text-black" />
               </div>
-              <h3 className="text-lg font-bold mb-3">Multi-Business Accounts</h3>
-              <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+              <h3 className="text-lg font-bold mb-3 text-black">Multi-Business Accounts</h3>
+              <p className="text-black/75 text-sm leading-relaxed">
                 Add, manage, and scale unlimited business profiles with individual custom settings, full currency support, and no artificial limits.
               </p>
             </div>
 
             {/* feature card 3 */}
-            <div className="p-8 rounded-2xl bg-card border border-sunshine/25 hover:border-sunshine/50 hover:shadow-glow-sunshine transition-all hover-lift">
-              <div className="w-12 h-12 bg-sunshine/20 rounded-xl flex items-center justify-center text-sunshine-700 dark:text-sunshine border border-sunshine/40 mb-6 shadow-glow-sunshine">
-                <BarChart3 className="w-6 h-6 text-sunshine" />
+            <div className="p-8 rounded-2xl bg-card border border-sunshine/25 hover:border-sunshine/50 shadow-sm transition-all hover-lift">
+              <div className="w-12 h-12 bg-sunshine/20 rounded-xl flex items-center justify-center text-black border border-sunshine/40 mb-6 shadow-sm">
+                <BarChart3 className="w-6 h-6 text-black" />
               </div>
-              <h3 className="text-lg font-bold mb-3">Forecasting & Invoices</h3>
-              <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+              <h3 className="text-lg font-bold mb-3 text-black">Forecasting & Invoices</h3>
+              <p className="text-black/75 text-sm leading-relaxed">
                 Generate professional Invoice PDFs, upload logos, inspect AI-driven growth charts, forecast quarterly earnings, and budget with precision.
               </p>
             </div>
@@ -235,12 +227,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       <section id="features-unlocked" className="py-20 border-t border-border">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sunshine/50 bg-sunshine text-[#072620] text-xs font-bold mb-4 shadow-glow-sunshine">
-              <Sparkles className="w-3.5 h-3.5 text-amber-900" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sunshine/50 bg-sunshine text-black text-xs font-bold mb-4 shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 text-black" />
               <span>100% Free Platform — Zero Paywalls</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-[#072620]">Every Feature Included. Completely Free.</h2>
-            <p className="text-[#0d3b32] mb-6 max-w-xl mx-auto text-sm font-medium">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-black">Every Feature Included. Completely Free.</h2>
+            <p className="text-black/80 mb-6 max-w-xl mx-auto text-sm font-medium">
               No subscription tiers, no hidden charges, and zero advertisements. Manage personal wealth and multiple company books without restrictions.
             </p>
           </div>
@@ -257,19 +249,19 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
                 'Savings Goals & Milestones Progress',
                 '100% Ad-Free Clean Interface'
               ].map((f, i) => (
-                <div key={i} className="flex items-center gap-2.5 text-sm">
-                  <Check className="w-4 h-4 text-sunshine shrink-0" />
-                  <span>{f}</span>
+                <div key={i} className="flex items-center gap-2.5 text-sm text-black">
+                  <Check className="w-4 h-4 text-black shrink-0" />
+                  <span className="font-semibold">{f}</span>
                 </div>
               ))}
             </div>
 
             <button
               onClick={onEnterApp}
-              className="w-full sm:w-auto px-8 py-3.5 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-sm font-black rounded-xl transition-all shadow-glow-sunshine hover:shadow-glow-sunshine/40 inline-flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-3.5 bg-sunshine hover:bg-sunshine-hover text-black text-sm font-black rounded-xl transition-all shadow-sm inline-flex items-center justify-center gap-2"
             >
               <span>Get Started Free — Open Tracker</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 text-black" />
             </button>
           </div>
         </div>
@@ -279,11 +271,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       <section id="about" className="py-20 border-t border-border bg-black/[0.03] dark:bg-black/10 backdrop-blur-xs">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6 text-[#072620]">Our Mission to Simplify Finances</h2>
-            <p className="text-[#0d3b32] text-sm md:text-base leading-relaxed mb-6 font-medium">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6 text-black">Our Mission to Simplify Finances</h2>
+            <p className="text-black/80 text-sm md:text-base leading-relaxed mb-6 font-medium">
               My Pocket Tracker was founded by team of engineers and accountants who were frustrated with using multiple web interfaces. Your payroll was on one service, personal coffee budgets on another, and side-hustle invoices on a third.
             </p>
-            <p className="text-[#0d3b32] text-sm md:text-base leading-relaxed font-medium">
+            <p className="text-black/80 text-sm md:text-base leading-relaxed font-medium">
               We combined everything into one seamless dashboard with automated limits, secure local-storage syncing, and immediate Supabase configuration access, ensuring your private financial indicators remain reliable and scalable.
             </p>
           </div>
@@ -301,64 +293,64 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       <section id="contact" className="py-20 border-t border-border">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight mb-4 text-[#072620]">Contact Our Support Team</h2>
-            <p className="text-[#0d3b32] text-sm mb-8 font-medium">
+            <h2 className="text-3xl font-bold tracking-tight mb-4 text-black">Contact Our Support Team</h2>
+            <p className="text-black/80 text-sm mb-8 font-medium">
               Got a question about subscription billing, enterprise solutions, or integrating custom banks? Reach out, and our team will get back to you within 24 hours.
             </p>
 
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <MapPin className="w-5 h-5 text-sunshine shrink-0" />
-                <span className="text-sm font-medium">100 Pine Street, San Francisco, CA 94111</span>
+                <MapPin className="w-5 h-5 text-black shrink-0" />
+                <span className="text-sm font-semibold text-black">100 Pine Street, San Francisco, CA 94111</span>
               </div>
               <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-sunshine shrink-0" />
-                <span className="text-sm font-medium">+1 (415) 555-0189</span>
+                <Phone className="w-5 h-5 text-black shrink-0" />
+                <span className="text-sm font-semibold text-black">+1 (415) 555-0189</span>
               </div>
               <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-sunshine shrink-0" />
-                <span className="text-sm font-medium">support@mypockettracker.io</span>
+                <Mail className="w-5 h-5 text-black shrink-0" />
+                <span className="text-sm font-semibold text-black">support@mypockettracker.io</span>
               </div>
             </div>
           </div>
 
           <form onSubmit={handleContactSubmit} className="p-8 rounded-2xl border border-border bg-card shadow-sm space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-2 uppercase">Full Name</label>
+              <label className="block text-xs font-semibold text-black/70 mb-2 uppercase">Full Name</label>
               <input
                 type="text"
                 required
                 value={contactForm.name}
                 onChange={e => setContactForm({ ...contactForm, name: e.target.value })}
-                className="w-full bg-accent border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"
+                className="w-full bg-accent border border-border rounded-xl px-4 py-3 text-sm text-black focus:outline-none focus:border-black"
                 placeholder="Alex Mercer"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-2 uppercase">Email Address</label>
+              <label className="block text-xs font-semibold text-black/70 mb-2 uppercase">Email Address</label>
               <input
                 type="email"
                 required
                 value={contactForm.email}
                 onChange={e => setContactForm({ ...contactForm, email: e.target.value })}
-                className="w-full bg-accent border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary"
+                className="w-full bg-accent border border-border rounded-xl px-4 py-3 text-sm text-black focus:outline-none focus:border-black"
                 placeholder="alex@example.com"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-2 uppercase">Message</label>
+              <label className="block text-xs font-semibold text-black/70 mb-2 uppercase">Message</label>
               <textarea
                 rows={4}
                 required
                 value={contactForm.message}
                 onChange={e => setContactForm({ ...contactForm, message: e.target.value })}
-                className="w-full bg-accent border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary resize-none"
+                className="w-full bg-accent border border-border rounded-xl px-4 py-3 text-sm text-black focus:outline-none focus:border-black resize-none"
                 placeholder="How can we help?"
               ></textarea>
             </div>
             <button
               type="submit"
-              className="w-full py-3.5 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-sm font-black rounded-xl transition-all shadow-glow-sunshine hover:shadow-glow-sunshine/40"
+              className="w-full py-3.5 bg-sunshine hover:bg-sunshine-hover text-black text-sm font-black rounded-xl transition-all shadow-sm"
             >
               Send Message
             </button>
@@ -370,8 +362,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       <section id="faq" className="py-20 border-t border-border bg-black/[0.03] dark:bg-black/10 backdrop-blur-xs">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight mb-4 flex items-center justify-center gap-2 text-[#072620]">
-              <HelpCircle className="w-8 h-8 text-sunshine" />
+            <h2 className="text-3xl font-bold tracking-tight mb-4 flex items-center justify-center gap-2 text-black">
+              <HelpCircle className="w-8 h-8 text-black" />
               <span>Frequently Asked Questions</span>
             </h2>
           </div>
@@ -396,8 +388,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
               }
             ].map((faq, idx) => (
               <div key={idx} className="p-6 rounded-2xl bg-card border border-border">
-                <h3 className="font-bold text-base mb-2">{faq.q}</h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{faq.a}</p>
+                <h3 className="font-bold text-base mb-2 text-black">{faq.q}</h3>
+                <p className="text-sm text-black/75 leading-relaxed">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -408,15 +400,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       <footer className="border-t border-border py-12 bg-card">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-[#072620] font-black text-lg shadow-glow-sunshine">
+            <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-lg shadow-sm">
               M
             </div>
-            <span className="font-bold text-sm">My Pocket Tracker</span>
+            <span className="font-bold text-sm text-black">My Pocket Tracker</span>
           </div>
 
-          <div className="flex items-center gap-6 text-xs text-slate-500 dark:text-slate-400">
-            <a href="#" className="hover:text-foreground">Privacy Policy</a>
-            <a href="#" className="hover:text-foreground">Terms of Service</a>
+          <div className="flex items-center gap-6 text-xs text-black/70">
+            <a href="#" className="hover:text-black">Privacy Policy</a>
+            <a href="#" className="hover:text-black">Terms of Service</a>
             <span>&copy; {new Date().getFullYear()} My Pocket Tracker Inc. All rights reserved.</span>
           </div>
         </div>

@@ -5,84 +5,76 @@
 @layer base {
   :root {
     --background: #96DFCE; /* PANTONE 13-5412 TCX Aquatic Green */
-    --foreground: #072620; /* High-contrast deep aquatic forest */
+    --foreground: #000000; /* Pure black text */
 
     --card: rgba(255, 255, 255, 0.88);
-    --card-foreground: #072620;
+    --card-foreground: #000000;
 
-    --border: rgba(250, 222, 133, 0.35); /* Subtle Sunshine Yellow border */
+    --border: rgba(0, 0, 0, 0.15); /* Clean border */
 
     --primary: #FADE85; /* PANTONE 12-0727 TCX Sunshine Yellow */
     --primary-hover: #f3d16b;
-    --primary-foreground: #072620;
+    --primary-foreground: #000000;
 
     --aquatic: #96DFCE;
-    --aquatic-glow: rgba(150, 223, 206, 0.45);
-
     --sunshine: #FADE85;
     --sunshine-hover: #f3d16b;
-    --sunshine-glow: rgba(250, 222, 133, 0.45);
+    --success: #000000;
 
-    --success: #FADE85;
-
-    --accent: rgba(250, 222, 133, 0.2);
-    --accent-hover: rgba(250, 222, 133, 0.35);
+    --accent: rgba(0, 0, 0, 0.05);
+    --accent-hover: rgba(0, 0, 0, 0.1);
 
     --radius: 12px;
 
-    /* Slate variables mapped to deep aquatic dark greens for high readability on aquatic background */
+    /* Slate variables mapped to solid dark blacks for high readability */
     --slate-50: rgba(255, 255, 255, 0.6);
     --slate-100: rgba(255, 255, 255, 0.85);
-    --slate-200: rgba(7, 38, 32, 0.1);
-    --slate-300: rgba(7, 38, 32, 0.2);
-    --slate-400: #2d5e53;
-    --slate-500: #1b493f;
-    --slate-600: #123d34;
-    --slate-700: #0c2f28;
-    --slate-800: #07241e;
-    --slate-900: #041713;
-    --slate-950: #020c0a;
+    --slate-200: rgba(0, 0, 0, 0.08);
+    --slate-300: rgba(0, 0, 0, 0.16);
+    --slate-400: #334155;
+    --slate-500: #1e293b;
+    --slate-600: #0f172a;
+    --slate-700: #020617;
+    --slate-800: #000000;
+    --slate-900: #000000;
+    --slate-950: #000000;
   }
 
   .dark {
     --background: #96DFCE; /* PANTONE 13-5412 TCX Aquatic Green */
-    --foreground: #f0faf7; /* Luminous mint-white text for dark glass card surfaces */
+    --foreground: #000000; /* Pure black text */
 
     --card: rgba(6, 28, 23, 0.48); /* Translucent dark glass revealing blurred Aquatic Green */
-    --card-foreground: #f0faf7;
+    --card-foreground: #000000;
 
-    --border: rgba(255, 255, 255, 0.16); /* Frosted glass rim border */
+    --border: rgba(0, 0, 0, 0.2); /* Frosted rim border */
 
     --primary: #FADE85; /* PANTONE 12-0727 TCX Sunshine Yellow */
     --primary-hover: #f3d16b;
-    --primary-foreground: #072620;
+    --primary-foreground: #000000;
 
     --aquatic: #96DFCE;
-    --aquatic-glow: rgba(150, 223, 206, 0.35);
-
     --sunshine: #FADE85;
     --sunshine-hover: #f3d16b;
-    --sunshine-glow: rgba(250, 222, 133, 0.45);
+    --success: #000000;
 
-    --success: #FADE85;
-
-    --accent: rgba(255, 255, 255, 0.08); /* Inset glass tray layers */
-    --accent-hover: rgba(255, 255, 255, 0.16);
+    --accent: rgba(0, 0, 0, 0.08);
+    --accent-hover: rgba(0, 0, 0, 0.16);
 
     --radius: 12px;
 
-    /* Slate variables in dark card context */
+    /* Slate variables in dark context - crisp black shades */
     --slate-50: #07100e;
     --slate-100: #0d1a17;
     --slate-200: #142723;
     --slate-300: #1d3631;
-    --slate-400: #b4d8cf;
-    --slate-500: #cee6e0;
-    --slate-600: #e2f1ec;
-    --slate-700: #ecf6f3;
-    --slate-800: #f5faf8;
-    --slate-900: #0a1714;
-    --slate-950: #060e0c;
+    --slate-400: #334155;
+    --slate-500: #1e293b;
+    --slate-600: #0f172a;
+    --slate-700: #020617;
+    --slate-800: #000000;
+    --slate-900: #000000;
+    --slate-950: #000000;
   }
 }
 
@@ -138,13 +130,8 @@
   background: #4b5563;
 }
 
-/* Micro-animations */
 .hover-lift {
   @apply transition-transform duration-300 ease-out hover:-translate-y-0.5;
-}
-
-.glow-hover:hover {
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
 }
 
 /* Select option overrides to fix white-on-white and browser-blue highlights */
