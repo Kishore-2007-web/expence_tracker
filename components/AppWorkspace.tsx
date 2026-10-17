@@ -601,7 +601,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 md:hidden bg-slate-950/45 backdrop-blur-md flex"
+              className="fixed inset-0 z-50 md:hidden bg-black/35 backdrop-blur-xs flex"
               onClick={() => setShowMobileMenu(false)}
             >
               <motion.div
@@ -609,21 +609,26 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                 animate={{ x: 0 }}
                 exit={{ x: '-100%' }}
                 transition={{ type: 'spring', damping: 25, stiffness: 250 }}
-                className="w-4/5 max-w-xs bg-card border-r border-border h-full p-5 flex flex-col justify-between overflow-y-auto"
+                className="w-4/5 max-w-xs border-r border-black/15 h-full p-5 flex flex-col justify-between overflow-y-auto shadow-2xl relative z-10"
+                style={{
+                  backgroundColor: '#96DFCE',
+                  backgroundImage: 'linear-gradient(135deg, rgba(255, 255, 255, 0.68) 0%, rgba(255, 255, 255, 0.48) 100%)',
+                  boxShadow: '0 8px 32px 0 rgba(7, 38, 32, 0.15), inset 0 1px 1px 0 rgba(255, 255, 255, 0.7)'
+                }}
                 onClick={e => e.stopPropagation()}
               >
                 <div>
                   {/* Drawer Header */}
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-lg">
+                      <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-lg shadow-sm">
                         M
                       </div>
                       <span className="font-bold text-sm tracking-tight text-black">My Pocket <span className="text-black font-black">Tracker</span></span>
                     </div>
                     <button
                       onClick={() => setShowMobileMenu(false)}
-                      className="p-1.5 rounded-lg border border-border bg-accent text-slate-400 hover:text-foreground"
+                      className="p-1.5 rounded-lg border border-black/15 bg-white/40 hover:bg-white/60 text-black transition-colors"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -631,10 +636,10 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
                   {/* Business Switcher */}
                   <div className="relative mb-6">
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 tracking-wider">Active Workspace</label>
+                    <label className="block text-[10px] font-black text-black/70 uppercase mb-1.5 tracking-wider">Active Workspace</label>
                     <button
                       onClick={() => setShowBusinessDropdown(!showBusinessDropdown)}
-                      className="w-full flex items-center justify-between p-3 rounded-xl border border-border bg-accent hover:bg-accent-hover transition-all text-left text-xs font-semibold text-black"
+                      className="w-full flex items-center justify-between p-3 rounded-xl border border-black/15 bg-white/40 hover:bg-white/60 transition-all text-left text-xs font-semibold text-black"
                     >
                       <div className="flex items-center gap-2 truncate">
                         <div className="w-5 h-5 bg-gradient-to-br from-aquatic to-aquatic-700 rounded-full flex items-center justify-center text-slate-950 text-[10px] font-black shrink-0">
@@ -644,18 +649,18 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                           {currentBusiness ? currentBusiness.name : 'Home Workspace'}
                         </div>
                       </div>
-                      <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
+                      <ChevronDown className="w-4 h-4 text-black/60 shrink-0" />
                     </button>
 
                     {showBusinessDropdown && (
-                      <div className="mt-1 bg-card border border-border rounded-xl shadow-lg p-1.5 space-y-1">
+                      <div className="mt-1 bg-white/95 border border-black/15 rounded-xl shadow-lg p-1.5 space-y-1">
                         <button
                           onClick={() => {
                             setCurrentBusiness(null);
                             setShowBusinessDropdown(false);
                             setShowMobileMenu(false);
                           }}
-                          className={`w-full text-left px-3 py-2 text-xs font-medium rounded-lg hover:bg-accent transition-colors flex items-center gap-2 ${
+                          className={`w-full text-left px-3 py-2 text-xs font-medium rounded-lg hover:bg-black/5 transition-colors flex items-center gap-2 ${
                             currentBusiness === null ? 'bg-black/10 text-black font-bold' : 'text-black'
                           }`}
                         >
@@ -671,7 +676,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                               setShowBusinessDropdown(false);
                               setShowMobileMenu(false);
                             }}
-                            className={`w-full text-left px-3 py-2 text-xs font-medium rounded-lg hover:bg-accent transition-colors flex items-center gap-2 truncate ${
+                            className={`w-full text-left px-3 py-2 text-xs font-medium rounded-lg hover:bg-black/5 transition-colors flex items-center gap-2 truncate ${
                               currentBusiness?.id === biz.id ? 'bg-black/10 text-black font-bold' : 'text-black'
                             }`}
                           >
@@ -680,7 +685,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                           </button>
                         ))}
 
-                        <div className="h-px bg-border my-1"></div>
+                        <div className="h-px bg-black/10 my-1"></div>
 
                         <button
                           onClick={() => {
@@ -698,7 +703,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                   </div>
 
                   {/* Navigation Links */}
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 tracking-wider">Navigation Menu</label>
+                  <label className="block text-[10px] font-black text-black/70 uppercase mb-1.5 tracking-wider">Navigation Menu</label>
                   <nav className="space-y-1">
                     {[
                       { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -723,8 +728,8 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                           }}
                           className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                             isCurrent
-                              ? 'bg-sunshine text-black font-black'
-                              : 'text-black/70 hover:bg-accent hover:text-black'
+                              ? 'bg-sunshine text-black font-black shadow-sm'
+                              : 'text-black/80 hover:bg-white/40 hover:text-black'
                           }`}
                         >
                           <item.icon className="w-4 h-4 shrink-0" />
@@ -736,9 +741,9 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                 </div>
 
                 {/* Footer Controls */}
-                <div className="pt-4 border-t border-border space-y-3">
-                  <div className="flex items-center gap-2 p-2 bg-accent/40 rounded-xl">
-                    <div className="w-8 h-8 bg-accent border border-border rounded-full flex items-center justify-center text-slate-400 shrink-0">
+                <div className="pt-4 border-t border-black/15 space-y-3">
+                  <div className="flex items-center gap-2 p-2.5 bg-white/40 border border-black/10 rounded-xl">
+                    <div className="w-8 h-8 bg-white/70 border border-black/10 rounded-full flex items-center justify-center text-black shrink-0">
                       <User className="w-4 h-4" />
                     </div>
                     <div className="truncate flex-1">
