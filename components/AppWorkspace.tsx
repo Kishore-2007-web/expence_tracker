@@ -35,6 +35,16 @@ import {
 } from 'lucide-react';
 import { PWAStatusIndicator, PWAOfflineBanner } from './PWAStatusBanner';
 import PWAInstallModal from './PWAInstallModal';
+import TrackoChat from './TrackoChat';
+import TrackoFloatingWidget from './TrackoFloatingWidget';
+import TrackoMascot from './TrackoMascot';
+import { 
+  suggestCategory, 
+  detectDuplicateRisk, 
+  CategorySuggestion, 
+  DuplicateWarning,
+  filterTransactionsByWorkspace 
+} from '@/lib/tracko-engine';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -102,6 +112,11 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
   const [showAddGoalModal, setShowAddGoalModal] = useState(false);
   const [activeGoalInput, setActiveGoalInput] = useState<string | null>(null);
 
+  // TRACKO AI State
+  const [showTrackoChat, setShowTrackoChat] = useState(false);
+  const [categorySuggestion, setCategorySuggestion] = useState<CategorySuggestion | null>(null);
+  const [duplicateWarning, setDuplicateWarning] = useState<DuplicateWarning | null>(null);
+
   // Form states
   const [bizForm, setBizForm] = useState({ name: '', category: '', description: '', phone: '', email: '' });
   const [txForm, setTxForm] = useState({ type: 'expense' as 'income' | 'expense', category: 'Food', amount: '', description: '', date: '' });
@@ -143,6 +158,38 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
       type,
       category: type === 'income' ? 'Salary' : 'Food'
     }));
+    setCategorySuggestion(null);
+    setDuplicateWarning(null);
+  };
+
+  // TRACKO Smart Categorization & Duplicate Detection Trigger
+  const handleTxDescriptionChange = (desc: string) => {
+    setTxForm(prev => ({ ...prev, description: desc }));
+
+    // Suggest category
+    const availableCategories = txForm.type === 'expense' 
+      ? ['Food', 'Travel', 'Shopping', 'Bills', 'Salary', 'Rent', 'Marketing', 'Utilities', 'Inventory', 'Software & Cloud', 'Entertainment', 'Health & Fitness']
+      : ['Salary', 'Freelancing', 'Sales', 'Services', 'Investments'];
+
+    const suggestion = suggestCategory(desc, parseFloat(txForm.amount || '0') * 100, availableCategories);
+    if (suggestion.confidence >= 0.7) {
+      setCategorySuggestion(suggestion);
+    } else {
+      setCategorySuggestion(null);
+    }
+
+    // Detect duplicate
+    const wsTxs = filterTransactionsByWorkspace(transactions, currentBusiness ? currentBusiness.id : null);
+    const dupCheck = detectDuplicateRisk(
+      { amountCents: parseFloat(txForm.amount || '0') * 100, description: desc, date: txForm.date, type: txForm.type },
+      wsTxs
+    );
+    if (dupCheck.isDuplicateRisk) {
+      setDuplicateWarning(dupCheck);
+    } else {
+      setDuplicateWarning(null);
+    }
+  };
   };
 
   // Calculations for current workspace selection (Home vs Selected Business)
@@ -476,6 +523,20 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
           {/* Navigation Links */}
           <nav className="space-y-1.5">
+            {/* Dedicated TRACKO AI Companion Button */}
+            <button
+              onClick={() => setShowTrackoChat(true)}
+              className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-black bg-sunshine hover:bg-sunshine-hover border border-black/15 text-black shadow-sm transition-all mb-2 hover:scale-[1.01]"
+              title="Open TRACKO AI Companion"
+            >
+              <div className="flex items-center gap-2.5">
+                <Sparkles className="w-4 h-4 text-black animate-pulse" />
+                <span>TRACKO AI</span>
+              </div>
+              <span className="text-[10px] font-black uppercase px-1.5 py-0.5 bg-black text-white rounded-md">
+                Chat
+              </span>
+            </button>
             {[
               { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
               { id: 'transactions', label: 'Transactions', icon: Wallet },
@@ -704,6 +765,24 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
                   {/* Navigation Links */}
                   <label className="block text-[10px] font-black text-black/70 uppercase mb-1.5 tracking-wider">Navigation Menu</label>
+                  
+                  {/* Dedicated TRACKO Mobile Button */}
+                  <button
+                    onClick={() => {
+                      setShowMobileMenu(false);
+                      setShowTrackoChat(true);
+                    }}
+                    className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-black bg-sunshine hover:bg-sunshine-hover border border-black/15 text-black shadow-sm transition-all mb-2"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Sparkles className="w-4 h-4 text-black animate-pulse" />
+                      <span>TRACKO AI Assistant</span>
+                    </div>
+                    <span className="text-[10px] font-black uppercase px-1.5 py-0.5 bg-black text-white rounded-md">
+                      Chat
+                    </span>
+                  </button>
+
                   <nav className="space-y-1">
                     {[
                       { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -1445,6 +1524,13 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
                     <div className="flex flex-wrap gap-3">
                       <button
+                        onClick={() => setShowTrackoChat(true)}
+                        className="px-4 py-2 bg-sunshine hover:bg-sunshine-hover text-black border border-black/15 text-xs font-black rounded-xl transition-all flex items-center gap-1.5 shadow-sm"
+                      >
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>Generate AI Report with TRACKO</span>
+                      </button>
+                      <button
                         onClick={() => handleExport('csv')}
                         className="px-4 py-2 bg-accent hover:bg-accent-hover text-foreground border border-border text-xs font-semibold rounded-xl transition-all flex items-center gap-1.5"
                       >
@@ -1493,9 +1579,17 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                 <div className="space-y-6">
                   {/* AI Financial insights summary */}
                   <div className="p-6 bg-gradient-to-br from-aquatic/15 via-sunshine/5 to-transparent border border-aquatic/25 dark:border-aquatic/20 rounded-2xl shadow-premium">
-                    <div className="flex items-center gap-2 mb-4">
-                      <Sparkles className="w-5 h-5 text-black" />
-                      <h3 className="font-bold text-sm text-foreground">AI-Powered Financial Insights</h3>
+                    <div className="flex items-center justify-between gap-2 mb-4">
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="w-5 h-5 text-black" />
+                        <h3 className="font-bold text-sm text-foreground">AI-Powered Financial Insights</h3>
+                      </div>
+                      <button
+                        onClick={() => setShowTrackoChat(true)}
+                        className="px-3 py-1.5 bg-sunshine hover:bg-sunshine-hover text-black text-xs font-black rounded-xl flex items-center gap-1.5 shadow-sm transition-all"
+                      >
+                        <span>Chat with TRACKO</span>
+                      </button>
                     </div>
 
                     <div className="space-y-3">
@@ -1854,11 +1948,44 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. AWS Billing, Client payment"
+                  placeholder="e.g. Starbucks coffee, AWS Cloud, Client fee"
                   value={txForm.description}
-                  onChange={e => setTxForm({ ...txForm, description: e.target.value })}
+                  onChange={e => handleTxDescriptionChange(e.target.value)}
                   className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
                 />
+
+                {/* TRACKO Smart Category Suggestion Pill */}
+                {categorySuggestion && (
+                  <div className="mt-1.5 flex items-center justify-between p-2 bg-sunshine/30 border border-sunshine/60 rounded-xl text-[11px] font-bold text-black animate-in fade-in duration-200">
+                    <div className="flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-black" />
+                      <span>TRACKO suggests: <strong>{categorySuggestion.category}</strong></span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setTxForm(prev => ({ ...prev, category: categorySuggestion.category }));
+                        setCategorySuggestion(null);
+                      }}
+                      className="px-2 py-0.5 bg-black text-white hover:bg-black/80 rounded-md text-[10px] font-black transition-colors"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                )}
+
+                {/* TRACKO Duplicate Transaction Warning */}
+                {duplicateWarning && duplicateWarning.isDuplicateRisk && (
+                  <div className="mt-2 p-2.5 bg-amber-500/15 border border-amber-500/30 rounded-xl text-[11px] text-black space-y-1 animate-in fade-in duration-200">
+                    <div className="flex items-center gap-1.5 font-bold text-amber-950">
+                      <AlertCircle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                      <span>Potential Duplicate Warning</span>
+                    </div>
+                    <p className="text-[10px] text-black/80 leading-relaxed">
+                      {duplicateWarning.reason} (Please verify before saving).
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div>
@@ -2074,6 +2201,18 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
         onInstallNative={installApp}
         isInstallable={isInstallable}
         isInstalled={isInstalled}
+      />
+
+      {/* TRACKO AI Floating Mascot Action Trigger */}
+      <TrackoFloatingWidget
+        onOpen={() => setShowTrackoChat(true)}
+        isOpen={showTrackoChat}
+      />
+
+      {/* TRACKO AI Interactive Financial Chatbot */}
+      <TrackoChat
+        isOpen={showTrackoChat}
+        onClose={() => setShowTrackoChat(false)}
       />
 
     </div>
