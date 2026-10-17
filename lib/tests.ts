@@ -211,8 +211,8 @@ export function runValidationSuite() {
     assert(bizAlphaOnly.length === 1 && bizAlphaOnly[0].id === 'b1', `Business workspace filter strictly isolates business_id`);
 
     // Test 22 (Scenario 12): Switching workspaces isolates conversation storage keys
-    const personalKey = `tracko_chat_history_personal`;
-    const bizKey = `tracko_chat_history_biz_alpha`;
+    const personalKey: string = `tracko_chat_history_personal`;
+    const bizKey: string = `tracko_chat_history_biz_alpha`;
     assert(personalKey !== bizKey, `Workspace storage keys are strictly isolated per workspace`);
 
     // Test 23 (Scenario 13): Unauthorized workspace IDs are rejected

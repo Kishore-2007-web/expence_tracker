@@ -632,7 +632,7 @@ export const TrackoChat: React.FC<TrackoChatProps> = ({
                                   <span>Download PDF</span>
                                 </button>
                                 <button
-                                  onClick={() => handleExportCSV(msg.widget.data)}
+                                  onClick={() => msg.widget && handleExportCSV(msg.widget.data)}
                                   className="flex-1 py-1.5 bg-white/90 hover:bg-white text-black border border-black/15 text-[11px] font-bold rounded-lg transition-all flex items-center justify-center gap-1"
                                 >
                                   <FileSpreadsheet className="w-3.5 h-3.5" />
