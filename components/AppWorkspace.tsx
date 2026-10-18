@@ -1603,7 +1603,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             <XAxis dataKey="name" stroke="var(--foreground)" fontSize={11} />
                             <YAxis stroke="var(--foreground)" fontSize={11} />
                             <Tooltip />
-                            <Legend />
+                            <Legend formatter={(value) => <span className="text-black font-bold text-xs">{value}</span>} />
                             <Bar dataKey="Income" fill="#96DFCE" radius={[4, 4, 0, 0]} />
                             <Bar dataKey="Expense" fill="#f43f5e" radius={[4, 4, 0, 0]} />
                           </BarChart>
@@ -1618,16 +1618,16 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                           <AreaChart data={monthlyChartData}>
                             <defs>
                               <linearGradient id="colorAccum" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#FADE85" stopOpacity={0.3}/>
-                                <stop offset="95%" stopColor="#FADE85" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#000000" stopOpacity={0.25}/>
+                                <stop offset="95%" stopColor="#000000" stopOpacity={0}/>
                               </linearGradient>
                             </defs>
                             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                             <XAxis dataKey="name" stroke="var(--foreground)" fontSize={11} />
                             <YAxis stroke="var(--foreground)" fontSize={11} />
                             <Tooltip />
-                            <Legend />
-                            <Area type="monotone" name="Accumulated Balance" dataKey="Accumulated" stroke="#FADE85" strokeWidth={2} fillOpacity={1} fill="url(#colorAccum)" />
+                            <Legend formatter={(value) => <span className="text-black font-bold text-xs">{value}</span>} />
+                            <Area type="monotone" name="Accumulated Balance" dataKey="Accumulated" stroke="#000000" strokeWidth={2} fillOpacity={1} fill="url(#colorAccum)" />
                           </AreaChart>
                         </ResponsiveContainer>
                       </div>
