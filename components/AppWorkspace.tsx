@@ -611,25 +611,18 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Launch / Install App Button */}
-            <button
-              onClick={handleInstallClick}
-              className="px-2.5 py-1.5 sm:px-3 sm:py-2 bg-[#F0C965] hover:bg-[#E2B84E] text-black border border-black/20 shadow-sm text-[11px] sm:text-xs font-black rounded-xl transition-all flex items-center gap-1.5 shrink-0 touch-target"
-              title={isInstalled ? 'My Pocket Tracker is running as an installed PWA' : 'Install My Pocket Tracker app for offline use'}
-            >
-              {isInstalled ? (
-                <>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-black" />
-                  <span className="hidden sm:inline">Installed</span>
-                </>
-              ) : (
-                <>
-                  <Download className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Install App</span>
-                  <span className="sm:hidden">Install</span>
-                </>
-              )}
-            </button>
+            {/* Launch / Install App Button (hidden once installed) */}
+            {!isInstalled && (
+              <button
+                onClick={handleInstallClick}
+                className="px-2.5 py-1.5 sm:px-3 sm:py-2 bg-[#F0C965] hover:bg-[#E2B84E] text-black border border-black/20 shadow-sm text-[11px] sm:text-xs font-black rounded-xl transition-all flex items-center gap-1.5 shrink-0 touch-target"
+                title="Install My Pocket Tracker app for offline use"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Install App</span>
+                <span className="sm:hidden">Install</span>
+              </button>
+            )}
 
             <button
               onClick={() => setShowAddTxModal(true)}
