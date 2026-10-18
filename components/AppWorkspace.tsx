@@ -965,8 +965,8 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                           <AreaChart data={monthlyChartData}>
                             <defs>
                               <linearGradient id="colorInc" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#FADE85" stopOpacity={0.4}/>
-                                <stop offset="95%" stopColor="#FADE85" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#10b981" stopOpacity={0.4}/>
+                                <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
                               </linearGradient>
                               <linearGradient id="colorExp" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.2}/>
@@ -977,7 +977,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             <XAxis dataKey="name" stroke="var(--foreground)" fontSize={11} />
                             <YAxis stroke="var(--foreground)" fontSize={11} />
                             <Tooltip />
-                            <Area type="monotone" dataKey="Income" stroke="#FADE85" strokeWidth={2.5} fillOpacity={1} fill="url(#colorInc)" />
+                            <Area type="monotone" dataKey="Income" stroke="#10b981" strokeWidth={2.5} fillOpacity={1} fill="url(#colorInc)" />
                             <Area type="monotone" dataKey="Expense" stroke="#f43f5e" fillOpacity={1} fill="url(#colorExp)" />
                           </AreaChart>
                         </ResponsiveContainer>
@@ -1604,7 +1604,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                             <YAxis stroke="var(--foreground)" fontSize={11} />
                             <Tooltip />
                             <Legend formatter={(value) => <span className="text-black font-bold text-xs">{value}</span>} />
-                            <Bar dataKey="Income" fill="#96DFCE" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="Income" fill="#10b981" radius={[4, 4, 0, 0]} />
                             <Bar dataKey="Expense" fill="#f43f5e" radius={[4, 4, 0, 0]} />
                           </BarChart>
                         </ResponsiveContainer>
