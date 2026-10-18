@@ -450,9 +450,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
         <div>
           {/* Logo */}
           <div className="flex items-center gap-2 mb-8">
-            <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-lg">
-              M
-            </div>
+            <img src="/logo.png" alt="My Pocket Tracker Logo" className="w-8 h-8 rounded-xl object-contain shadow-sm shrink-0" />
             <span className="font-bold text-sm tracking-tight text-black">My Pocket <span className="text-black font-black">Tracker</span></span>
           </div>
 
@@ -601,9 +599,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
         <header className="h-16 border-b border-border bg-card px-4 sm:px-6 flex items-center justify-between shrink-0 sticky top-0 z-30">
           <div className="flex items-center gap-2.5 sm:gap-4 overflow-hidden">
             <div className="flex items-center gap-2 overflow-hidden">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-base sm:text-lg shrink-0">
-                M
-              </div>
+              <img src="/logo.png" alt="My Pocket Tracker Logo" className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl object-contain shadow-sm shrink-0" />
               <h1 className="text-xs sm:text-base font-bold tracking-tight truncate max-w-[130px] sm:max-w-none text-black">
                 {currentBusiness ? currentBusiness.name : 'Home Workspace'}
               </h1>
@@ -665,9 +661,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                   {/* Drawer Header */}
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-lg shadow-sm">
-                        M
-                      </div>
+                      <img src="/logo.png" alt="My Pocket Tracker Logo" className="w-8 h-8 rounded-xl object-contain shadow-sm shrink-0" />
                       <span className="font-bold text-sm tracking-tight text-black">My Pocket <span className="text-black font-black">Tracker</span></span>
                     </div>
                     <button

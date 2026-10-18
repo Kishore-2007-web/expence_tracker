@@ -51,9 +51,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       <header className="border-b border-[#072620]/10 sticky top-0 bg-background/85 backdrop-blur-md z-40">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-xl shadow-sm">
-              M
-            </div>
+            <img src="/logo.png" alt="My Pocket Tracker Logo" className="w-9 h-9 rounded-xl object-contain shadow-sm shrink-0" />
             <span className="font-bold text-lg tracking-tight text-black">My Pocket <span className="text-black font-black">Tracker</span></span>
           </div>
 
@@ -400,9 +398,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
       <footer className="border-t border-border py-12 bg-card">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-lg shadow-sm">
-              M
-            </div>
+            <img src="/logo.png" alt="My Pocket Tracker Logo" className="w-8 h-8 rounded-xl object-contain shadow-sm shrink-0" />
             <span className="font-bold text-sm text-black">My Pocket Tracker</span>
           </div>
 
