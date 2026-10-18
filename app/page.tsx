@@ -59,9 +59,7 @@ export default function Home() {
             <div className="absolute inset-0 rounded-2xl border-2 border-t-primary border-r-sunshine-600 animate-spin" />
             
             {/* logo mark in center */}
-            <div className="w-10 h-10 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-xl shadow-sm">
-              M
-            </div>
+            <img src="/logo.png" alt="My Pocket Tracker Logo" className="w-10 h-10 rounded-xl object-contain shadow-sm" />
           </div>
           
           <div className="flex flex-col items-center gap-1">
@@ -152,7 +150,7 @@ export default function Home() {
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8 relative">
               <div className="flex items-center gap-2 justify-center mb-8">
-                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-lg shadow-sm">M</div>
+                <img src="/logo.png" alt="My Pocket Tracker Logo" className="w-8 h-8 rounded-xl object-contain shadow-sm" />
                 <span className="font-bold text-sm tracking-tight text-black">My Pocket Tracker</span>
               </div>
 
@@ -273,7 +271,7 @@ export default function Home() {
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8">
               <div className="flex items-center gap-2 justify-center mb-8">
-                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-lg shadow-sm">M</div>
+                <img src="/logo.png" alt="My Pocket Tracker Logo" className="w-8 h-8 rounded-xl object-contain shadow-sm" />
                 <span className="font-bold text-sm tracking-tight text-black">My Pocket Tracker</span>
               </div>
 
@@ -468,7 +466,7 @@ export default function Home() {
           >
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-8 relative">
               <div className="flex items-center gap-2 justify-center mb-6">
-                <div className="w-8 h-8 bg-sunshine rounded-xl flex items-center justify-center text-black font-black text-lg shadow-sm">M</div>
+                <img src="/logo.png" alt="My Pocket Tracker Logo" className="w-8 h-8 rounded-xl object-contain shadow-sm" />
                 <span className="font-bold text-sm tracking-tight text-black">My Pocket Tracker</span>
               </div>
 
