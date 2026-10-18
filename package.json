@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "npx --yes tsx -e \"import { runValidationSuite } from './lib/tests'; runValidationSuite();\""
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.47.10",
