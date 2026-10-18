@@ -1849,39 +1849,46 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
       {/* Add Business Modal */}
       {showAddBizModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-md">
-          <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-6 max-h-[90vh] overflow-y-auto">
-            <h3 className="font-bold text-base mb-4">Register Business</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+          <div 
+            className="w-full max-w-md rounded-2xl border border-black/20 shadow-2xl p-6 max-h-[90vh] overflow-y-auto text-black"
+            style={{
+              backgroundColor: '#96DFCE',
+              backgroundImage: 'linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.15) 100%)',
+              boxShadow: '0 20px 40px -5px rgba(7, 38, 32, 0.3), inset 0 1px 1px 0 rgba(255, 255, 255, 0.6)'
+            }}
+          >
+            <h3 className="font-black text-base mb-4 text-black">Register Business</h3>
             
             <form onSubmit={handleAddBusinessSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Business Name</label>
+                <label className="block text-[11px] font-bold text-black uppercase tracking-wider mb-1.5">Business Name</label>
                 <input
                   type="text"
                   required
                   value={bizForm.name}
                   onChange={e => setBizForm({ ...bizForm, name: e.target.value })}
-                  className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
+                  className="w-full bg-white/80 border border-black/15 text-black placeholder:text-black/40 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-black focus:bg-white"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Industry Category</label>
+                <label className="block text-[11px] font-bold text-black uppercase tracking-wider mb-1.5">Industry Category</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Retail, Consulting"
                   value={bizForm.category}
                   onChange={e => setBizForm({ ...bizForm, category: e.target.value })}
-                  className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
+                  className="w-full bg-white/80 border border-black/15 text-black placeholder:text-black/40 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-black focus:bg-white"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Short Description</label>
+                <label className="block text-[11px] font-bold text-black uppercase tracking-wider mb-1.5">Short Description</label>
                 <textarea
                   rows={2}
                   value={bizForm.description}
                   onChange={e => setBizForm({ ...bizForm, description: e.target.value })}
-                  className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none resize-none"
+                  className="w-full bg-white/80 border border-black/15 text-black placeholder:text-black/40 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-black focus:bg-white resize-none"
                 />
               </div>
 
@@ -1889,13 +1896,13 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                 <button
                   type="button"
                   onClick={() => setShowAddBizModal(false)}
-                  className="px-4 py-2 border border-border text-slate-400 hover:text-foreground text-xs font-medium rounded-lg"
+                  className="px-4 py-2 border border-black/20 text-black hover:bg-black/5 text-xs font-bold rounded-xl transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-lg transition-all"
+                  className="px-5 py-2 bg-sunshine hover:bg-sunshine-hover text-black text-xs font-black rounded-xl border border-black/20 shadow-sm transition-all"
                 >
                   Add Business
                 </button>
@@ -1907,17 +1914,24 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
       {/* Add Transaction Modal */}
       {showAddTxModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-md">
-          <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-6 max-h-[90vh] overflow-y-auto">
-            <h3 className="font-bold text-base mb-4">Add Transaction</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+          <div 
+            className="w-full max-w-md rounded-2xl border border-black/20 shadow-2xl p-6 max-h-[90vh] overflow-y-auto text-black"
+            style={{
+              backgroundColor: '#96DFCE',
+              backgroundImage: 'linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.15) 100%)',
+              boxShadow: '0 20px 40px -5px rgba(7, 38, 32, 0.3), inset 0 1px 1px 0 rgba(255, 255, 255, 0.6)'
+            }}
+          >
+            <h3 className="font-black text-base mb-4 text-black">Add Transaction</h3>
             
             <form onSubmit={handleAddTransactionSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-3 p-1 bg-accent rounded-lg mb-2">
+              <div className="grid grid-cols-2 gap-2 p-1 bg-black/10 rounded-xl mb-2">
                 <button
                   type="button"
                   onClick={() => handleTxTypeChange('expense')}
-                  className={`py-1.5 text-xs font-semibold rounded-md transition-all ${
-                    txForm.type === 'expense' ? 'bg-card text-foreground shadow-sm' : 'text-slate-400'
+                  className={`py-1.5 text-xs font-bold rounded-lg transition-all ${
+                    txForm.type === 'expense' ? 'bg-white text-black shadow-sm' : 'text-black/60 hover:text-black'
                   }`}
                 >
                   Expense
@@ -1925,8 +1939,8 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                 <button
                   type="button"
                   onClick={() => handleTxTypeChange('income')}
-                  className={`py-1.5 text-xs font-semibold rounded-md transition-all ${
-                    txForm.type === 'income' ? 'bg-card text-foreground shadow-sm' : 'text-slate-400'
+                  className={`py-1.5 text-xs font-bold rounded-lg transition-all ${
+                    txForm.type === 'income' ? 'bg-white text-black shadow-sm' : 'text-black/60 hover:text-black'
                   }`}
                 >
                   Income
@@ -1934,19 +1948,19 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Description</label>
+                <label className="block text-[11px] font-bold text-black uppercase tracking-wider mb-1.5">Description</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Starbucks coffee, AWS Cloud, Client fee"
                   value={txForm.description}
                   onChange={e => handleTxDescriptionChange(e.target.value)}
-                  className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
+                  className="w-full bg-white/80 border border-black/15 text-black placeholder:text-black/40 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-black focus:bg-white"
                 />
 
                 {/* TRACKO Smart Category Suggestion Pill */}
                 {categorySuggestion && (
-                  <div className="mt-1.5 flex items-center justify-between p-2 bg-sunshine/30 border border-sunshine/60 rounded-xl text-[11px] font-bold text-black animate-in fade-in duration-200">
+                  <div className="mt-1.5 flex items-center justify-between p-2 bg-sunshine/40 border border-sunshine/80 rounded-xl text-[11px] font-bold text-black animate-in fade-in duration-200">
                     <div className="flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-black" />
                       <span>TRACKO suggests: <strong>{categorySuggestion.category}</strong></span>
@@ -1966,9 +1980,9 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
                 {/* TRACKO Duplicate Transaction Warning */}
                 {duplicateWarning && duplicateWarning.isDuplicateRisk && (
-                  <div className="mt-2 p-2.5 bg-amber-500/15 border border-amber-500/30 rounded-xl text-[11px] text-black space-y-1 animate-in fade-in duration-200">
+                  <div className="mt-2 p-2.5 bg-amber-500/20 border border-amber-500/40 rounded-xl text-[11px] text-black space-y-1 animate-in fade-in duration-200">
                     <div className="flex items-center gap-1.5 font-bold text-amber-950">
-                      <AlertCircle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                      <AlertCircle className="w-3.5 h-3.5 text-amber-700 shrink-0" />
                       <span>Potential Duplicate Warning</span>
                     </div>
                     <p className="text-[10px] text-black/80 leading-relaxed">
@@ -1979,7 +1993,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">
+                <label className="block text-[11px] font-bold text-black uppercase tracking-wider mb-1.5">
                   Amount ({getCurrencySymbol(profile.currency)})
                 </label>
                 <input
@@ -1989,16 +2003,16 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                   placeholder="0.00"
                   value={txForm.amount}
                   onChange={e => setTxForm({ ...txForm, amount: e.target.value })}
-                  className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
+                  className="w-full bg-white/80 border border-black/15 text-black placeholder:text-black/40 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-black focus:bg-white"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Category</label>
+                <label className="block text-[11px] font-bold text-black uppercase tracking-wider mb-1.5">Category</label>
                 <select
                   value={txForm.category}
                   onChange={e => setTxForm({ ...txForm, category: e.target.value })}
-                  className="w-full bg-accent border border-border rounded-xl px-3 py-2.5 text-xs focus:outline-none"
+                  className="w-full bg-white/80 border border-black/15 text-black rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-black focus:bg-white"
                 >
                   {txForm.type === 'expense' ? (
                     <>
@@ -2025,12 +2039,12 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Date</label>
+                <label className="block text-[11px] font-bold text-black uppercase tracking-wider mb-1.5">Date</label>
                 <input
                   type="date"
                   value={txForm.date}
                   onChange={e => setTxForm({ ...txForm, date: e.target.value })}
-                  className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
+                  className="w-full bg-white/80 border border-black/15 text-black rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-black focus:bg-white"
                 />
               </div>
 
@@ -2038,13 +2052,13 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                 <button
                   type="button"
                   onClick={() => setShowAddTxModal(false)}
-                  className="px-4 py-2 border border-border text-slate-400 hover:text-foreground text-xs font-medium rounded-lg"
+                  className="px-4 py-2 border border-black/20 text-black hover:bg-black/5 text-xs font-bold rounded-xl transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-lg transition-all"
+                  className="px-5 py-2 bg-sunshine hover:bg-sunshine-hover text-black text-xs font-black rounded-xl border border-black/20 shadow-sm transition-all"
                 >
                   Submit
                 </button>
@@ -2056,24 +2070,31 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
 
       {/* Add Goal Modal */}
       {showAddGoalModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-md">
-          <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-premium p-6 max-h-[90vh] overflow-y-auto">
-            <h3 className="font-bold text-base mb-4">Set Savings Target Goal</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+          <div 
+            className="w-full max-w-md rounded-2xl border border-black/20 shadow-2xl p-6 max-h-[90vh] overflow-y-auto text-black"
+            style={{
+              backgroundColor: '#96DFCE',
+              backgroundImage: 'linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.15) 100%)',
+              boxShadow: '0 20px 40px -5px rgba(7, 38, 32, 0.3), inset 0 1px 1px 0 rgba(255, 255, 255, 0.6)'
+            }}
+          >
+            <h3 className="font-black text-base mb-4 text-black">Set Savings Target Goal</h3>
             
             <form onSubmit={handleAddGoalSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Goal Target Name</label>
+                <label className="block text-[11px] font-bold text-black uppercase tracking-wider mb-1.5">Goal Target Name</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Vacation, Emergency Fund"
                   value={goalForm.name}
                   onChange={e => setGoalForm({ ...goalForm, name: e.target.value })}
-                  className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
+                  className="w-full bg-white/80 border border-black/15 text-black placeholder:text-black/40 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-black focus:bg-white"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">
+                <label className="block text-[11px] font-bold text-black uppercase tracking-wider mb-1.5">
                   Target Amount ({getCurrencySymbol(profile.currency)})
                 </label>
                 <input
@@ -2082,17 +2103,17 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                   placeholder="5000"
                   value={goalForm.target}
                   onChange={e => setGoalForm({ ...goalForm, target: e.target.value })}
-                  className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
+                  className="w-full bg-white/80 border border-black/15 text-black placeholder:text-black/40 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-black focus:bg-white"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Target Deadline</label>
+                <label className="block text-[11px] font-bold text-black uppercase tracking-wider mb-1.5">Target Deadline</label>
                 <input
                   type="date"
                   required
                   value={goalForm.deadline}
                   onChange={e => setGoalForm({ ...goalForm, deadline: e.target.value })}
-                  className="w-full bg-accent border border-border rounded-xl px-3 py-2 text-xs focus:outline-none"
+                  className="w-full bg-white/80 border border-black/15 text-black rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-black focus:bg-white"
                 />
               </div>
 
@@ -2100,13 +2121,13 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                 <button
                   type="button"
                   onClick={() => setShowAddGoalModal(false)}
-                  className="px-4 py-2 border border-border text-slate-400 hover:text-foreground text-xs font-medium rounded-lg"
+                  className="px-4 py-2 border border-black/20 text-black hover:bg-black/5 text-xs font-bold rounded-xl transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-sunshine hover:bg-sunshine-hover text-[#072620] text-xs font-black rounded-lg transition-all"
+                  className="px-5 py-2 bg-sunshine hover:bg-sunshine-hover text-black text-xs font-black rounded-xl border border-black/20 shadow-sm transition-all"
                 >
                   Save Goal
                 </button>
