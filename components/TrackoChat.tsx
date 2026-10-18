@@ -726,13 +726,6 @@ export const TrackoChat: React.FC<TrackoChatProps> = ({
               </button>
             </form>
 
-            <div className="flex items-center justify-between px-1 pt-2 text-[10px] text-black/60">
-              <span className="flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3 text-black" />
-                <span>Isolated to {activeWorkspaceName}</span>
-              </span>
-              <span>Enter to send • Shift+Enter for new line</span>
-            </div>
           </div>
         </motion.div>
       </div>
