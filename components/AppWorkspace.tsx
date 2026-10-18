@@ -614,7 +614,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
             {/* Launch / Install App Button */}
             <button
               onClick={handleInstallClick}
-              className="px-2.5 py-1.5 sm:px-3 sm:py-2 bg-sunshine/20 hover:bg-sunshine/30 text-black border border-sunshine/40 text-[11px] sm:text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shrink-0 touch-target"
+              className="px-2.5 py-1.5 sm:px-3 sm:py-2 bg-[#F0C965] hover:bg-[#E2B84E] text-black border border-black/20 shadow-sm text-[11px] sm:text-xs font-black rounded-xl transition-all flex items-center gap-1.5 shrink-0 touch-target"
               title={isInstalled ? 'My Pocket Tracker is running as an installed PWA' : 'Install My Pocket Tracker app for offline use'}
             >
               {isInstalled ? (
@@ -1768,7 +1768,7 @@ export const AppWorkspace: React.FC<AppWorkspaceProps> = ({ onLogout }) => {
                       <button
                         type="button"
                         onClick={handleInstallClick}
-                        className="px-4 py-2 bg-sunshine/20 hover:bg-sunshine/30 text-black text-xs font-bold rounded-xl border border-sunshine/40 transition-all flex items-center gap-1.5 touch-target"
+                        className="px-4 py-2 bg-[#F0C965] hover:bg-[#E2B84E] text-black text-xs font-black rounded-xl border border-black/20 shadow-sm transition-all flex items-center gap-1.5 touch-target"
                       >
                         <Download className="w-3.5 h-3.5 text-black" />
                         <span>{isInstalled ? 'App Already Installed' : 'Install My Pocket Tracker'}</span>

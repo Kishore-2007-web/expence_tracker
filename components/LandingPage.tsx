@@ -69,7 +69,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp }) => {
             {/* Launch / Install App Button */}
             <button
               onClick={handleInstallClick}
-              className="px-4 py-2 bg-sunshine/25 hover:bg-sunshine/35 text-black text-xs font-bold rounded-xl border border-sunshine/50 transition-all flex items-center gap-1.5 touch-target shadow-sm"
+              className="px-4 py-2 bg-[#F0C965] hover:bg-[#E2B84E] text-black text-xs font-black rounded-xl border border-black/20 shadow-sm transition-all flex items-center gap-1.5 touch-target"
               title={isInstalled ? 'Launch installed application' : 'Install My Pocket Tracker on this device'}
             >
               {isInstalled ? (
